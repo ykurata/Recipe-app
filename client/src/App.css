@@ -1,7 +1,40 @@
-.left-half {
-    background: url(images/recipe-app-landing.jpg);
-    width: 50%;
+.Landing {
+  height: 100vh;
+  background-size: cover;
+  position: absolute;
+  width: 50%;
+  left: 0px;
+}
+
+@media (max-width: 650px) {
+  .Landing {
+    height: 100vh;
+    background-size: cover;
     position: absolute;
-    left: 0px;
-    height: 100%;
- }
+    width: 100%;
+  }
+}
+
+/* .Landing-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 40px;
+}
+
+@media only screen and (min-width: 650px ) {
+  .Landing {
+      /* background-position: center center; */
+      /* background-size: cover;
+      height: 100vh;
+      width:50%;
+  }
+  
+
+  .Landing-content {
+      align-items: flex-end;
+      justify-content: center;
+  }
+} */ 
