@@ -1,0 +1,7 @@
+.left-half {
+    background: url(images/recipe-app-landing.jpg);
+    width: 50%;
+    position: absolute;
+    left: 0px;
+    height: 100%;
+ }
