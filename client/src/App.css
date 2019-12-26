@@ -14,27 +14,3 @@
     width: 100%;
   }
 }
-
-/* .Landing-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 40px;
-}
-
-@media only screen and (min-width: 650px ) {
-  .Landing {
-      /* background-position: center center; */
-      /* background-size: cover;
-      height: 100vh;
-      width:50%;
-  }
-  
-
-  .Landing-content {
-      align-items: flex-end;
-      justify-content: center;
-  }
-} */ 
