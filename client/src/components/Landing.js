@@ -1,21 +1,18 @@
 import React from 'react';
-import landing from '../images/recipe-app-landing.jpg';
-import landing2 from '../images/recipe-app-landing2.jpg';
+import '../App.css';
+import landing from '../images/recipe-app-landing2.jpg';
 
+const Landing = () => {
 
-const landingStyles = {
-  backgroundImage : `url(${landing2})` ,
-  width: "50%",
-  position: "absolute",
-  left: "0px",
-  backgroundSize: 'cover',
-  height: '100vh',
-}
+    return (
+        <div className="Landing" style={{backgroundImage: `url(${landing})` }}>
+            {/* <div className="Landing-content">
+                <h1>Pineapples</h1>
+                <p>They are good</p>
+            </div> */}
+        </div>
+    );
 
-export default function Landing() {
-  return (
-    <div style={landingStyles}>
+};
 
-    </div>
-  );
-}
+export default Landing;
