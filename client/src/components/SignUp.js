@@ -63,7 +63,7 @@ class SignUp extends Component {
 
     axios.post("/users/register", newUser)
     .then(res => {
-      console.log(res.token);
+      console.log(res.data);
     })
     .catch(err => {
       console.log(err);

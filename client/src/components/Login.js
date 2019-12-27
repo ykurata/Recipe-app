@@ -4,8 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -60,7 +58,7 @@ class Login extends Component {
 
     axios.post("/users/login", user)
     .then(res => {
-      console.log(res.token);
+      console.log(res.data);
     })
     .catch(err => {
       console.log(err);
@@ -103,10 +101,6 @@ class Login extends Component {
               id="password"
               autoComplete="current-password"
               onChange={this.onChange}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"
