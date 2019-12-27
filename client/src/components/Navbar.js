@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import RestaurantIcon from '@material-ui/icons/Restaurant';
 import '../App.css';
 
 const NavbarStyles = theme => ({
@@ -32,12 +32,13 @@ class Navbar extends Component {
         <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
           <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="default" aria-label="menu">
-              <MenuIcon />
+              <RestaurantIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              News
+            <Typography variant="h6" color="textPrimary" className={classes.title}>
+              Recipes
             </Typography>
             <Button color="default">Login</Button>
+            <Button color="default">Sign Up</Button>
           </Toolbar>
         </AppBar>
        </div>
