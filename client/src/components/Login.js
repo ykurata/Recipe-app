@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -39,6 +40,8 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      validationErrors: [],
+      error: "",
     };
   }
 
@@ -57,12 +60,18 @@ class Login extends Component {
     };
 
     axios.post("/users/login", user)
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .then(res => {
+        const { token } = res.data;
+        const decoded = jwt_decode(token);
+        localStorage.setItem("jwtToken", token);
+        localStorage.setItem("name", decoded.name);
+      })
+      .catch(err => {
+        this.setState({
+          validationErrors: err.response.data,
+          error: err.response
+        });
+      });
   }
 
   render() {
