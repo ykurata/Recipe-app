@@ -69,13 +69,14 @@ class Login extends Component {
       .catch(err => {
         this.setState({
           validationErrors: err.response.data,
-          error: err.response
+          error: err.response.data
         });
       });
   }
 
   render() {
     const { classes } = this.props;
+
     return (
         <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -87,6 +88,10 @@ class Login extends Component {
             Log in
           </Typography>
           <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+            {this.state.error ? 
+              <Typography color="secondary">{this.state.error.error}</Typography>
+              : null
+            } 
             <TextField
               variant="outlined"
               margin="normal"
@@ -99,6 +104,10 @@ class Login extends Component {
               autoFocus
               onChange={this.onChange}
             />
+            {this.state.validationErrors ? 
+              <Typography color="secondary">{this.state.validationErrors.email}</Typography>
+              : null
+            } 
             <TextField
               variant="outlined"
               margin="normal"
@@ -111,6 +120,10 @@ class Login extends Component {
               autoComplete="current-password"
               onChange={this.onChange}
             />
+            {this.state.validationErrors ? 
+              <Typography color="secondary">{this.state.validationErrors.password}</Typography>
+              : null
+            } 
             <Button
               type="submit"
               fullWidth
