@@ -14,3 +14,12 @@
     width: 100%;
   }
 }
+
+.appbar {
+  display: flex;
+  position: absolute;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
