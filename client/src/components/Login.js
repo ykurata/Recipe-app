@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -38,13 +39,32 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      email: "",
+      password: "",
     };
   }
 
   // Update user input
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const { email, password } = this.state;
+    const user = {
+      email: email,
+      password: password
+    };
+
+    axios.post("/users/login", user)
+    .then(res => {
+      console.log(res.token);
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
@@ -59,7 +79,7 @@ class Login extends Component {
           <Typography component="h1" variant="h5">
             Log in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={this.onSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -70,6 +90,7 @@ class Login extends Component {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={this.onChange}
             />
             <TextField
               variant="outlined"
@@ -81,6 +102,7 @@ class Login extends Component {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={this.onChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
