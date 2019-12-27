@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,9 +22,9 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+    
     };
-  } 
+  }
   
   render() {
     const { classes } = this.props;
@@ -37,8 +38,8 @@ class Navbar extends Component {
             <Typography variant="h6" color="textPrimary" className={classes.title}>
               Recipes
             </Typography>
-            <Button color="default">Login</Button>
-            <Button color="default">Sign Up</Button>
+            <Button color="default" component={Link}  to="/login">Login</Button>
+            <Button color="default" component={Link} to="/signup" >Sign Up</Button>
           </Toolbar>
         </AppBar>
        </div>

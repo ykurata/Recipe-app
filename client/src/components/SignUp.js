@@ -36,13 +36,28 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      name: "",
+      email: "",
+      password: "",
+      password2: ""
     };
   }
 
   // Update user input
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const { name, email, password, password2 } = this.state;
+    const newUser = {
+      name: name,
+      email: email,
+      password: password,
+      password2: password2
+    }
   }
 
   render() {
@@ -69,6 +84,7 @@ class SignUp extends Component {
                   id="name"
                   label="Name"
                   autoFocus
+                  onChange={this.onChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -80,6 +96,7 @@ class SignUp extends Component {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={this.onChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -92,6 +109,7 @@ class SignUp extends Component {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange={this.onChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -99,11 +117,12 @@ class SignUp extends Component {
                   variant="outlined"
                   required
                   fullWidth
-                  name="confirmPassword"
+                  name="password2"
                   label="Confirm Password"
                   type="password"
-                  id="confirmPassword"
+                  id="password2"
                   autoComplete="current-password"
+                  onChange={this.onChange}
                 />
               </Grid>
             </Grid>
