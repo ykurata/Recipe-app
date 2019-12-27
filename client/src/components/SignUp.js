@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
-
+import jwt_decode from "jwt-decode";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -41,7 +41,9 @@ class SignUp extends Component {
       name: "",
       email: "",
       password: "",
-      password2: ""
+      password2: "",
+      validationErrors: [],
+      error: ""
     };
   }
 
@@ -62,12 +64,19 @@ class SignUp extends Component {
     };
 
     axios.post("/users/register", newUser)
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .then(res => {
+        const { token } = res.data;
+        const decoded = jwt_decode(token);
+        localStorage.setItem("jwtToken", token);
+        localStorage.setItem("name", decoded.name);
+      })
+      .catch(err => {
+        this.setState({
+          validationErrors: err.response.data,
+          error: err.response.data
+        });
+       
+      });
   }
 
   render() {
@@ -85,6 +94,10 @@ class SignUp extends Component {
           <form className={classes.form} noValidate onSubmit={this.onSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
+                {this.state.error ? 
+                  <Typography color="secondary">{this.state.error.error}</Typography>
+                  : null
+                } 
                 <TextField
                   autoComplete="name"
                   name="name"
@@ -96,6 +109,10 @@ class SignUp extends Component {
                   autoFocus
                   onChange={this.onChange}
                 />
+                {this.state.validationErrors ? 
+                  <Typography color="secondary">{this.state.validationErrors.name}</Typography>
+                  : null
+                } 
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -108,6 +125,10 @@ class SignUp extends Component {
                   autoComplete="email"
                   onChange={this.onChange}
                 />
+                {this.state.validationErrors ? 
+                  <Typography color="secondary">{this.state.validationErrors.email}</Typography>
+                  : null
+                } 
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -121,6 +142,10 @@ class SignUp extends Component {
                   autoComplete="current-password"
                   onChange={this.onChange}
                 />
+                {this.state.validationErrors ? 
+                  <Typography color="secondary">{this.state.validationErrors.password}</Typography>
+                  : null
+                } 
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -134,6 +159,10 @@ class SignUp extends Component {
                   autoComplete="current-password"
                   onChange={this.onChange}
                 />
+                {this.state.validationErrors ? 
+                  <Typography color="secondary">{this.state.validationErrors.password2}</Typography>
+                  : null
+                } 
               </Grid>
             </Grid>
             <Button
