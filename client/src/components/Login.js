@@ -65,6 +65,7 @@ class Login extends Component {
         const decoded = jwt_decode(token);
         localStorage.setItem("jwtToken", token);
         localStorage.setItem("name", decoded.name);
+        this.props.history.push("/");
       })
       .catch(err => {
         this.setState({
