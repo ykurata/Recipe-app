@@ -7,6 +7,7 @@ const passport = require("passport");
 const cors = require("cors");
 
 const users = require("./routes/users");
+const recipes = require("./routes/recipes");
 
 app.use(logger("dev"));
 
@@ -39,6 +40,7 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/users", users);
+app.use("/recipes", recipes);
 
 // Set up cors
 app.use(cors());
