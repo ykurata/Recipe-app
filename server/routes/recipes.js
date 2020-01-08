@@ -12,10 +12,13 @@ router.post("/", auth, (req, res, next) => {
     steps: req.body.steps
   });
 
-  newRecipe.save((err, recipe) => {
-    if (err) return next(err);
-    res.json(recipe);
-  });
+  newRecipe.save()
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(err => {
+      res.json(err);
+    });
 });
 
 
@@ -26,10 +29,13 @@ router.put("/update/:id", auth, (req, res, next) => {
     recipe.name = req.body.name,
     recipe.ingredients = req.body.ingredients,
     recipe.steps = req.body.steps
-
-    recipe.save((err, recipe) => {
-      if (err) return next(err);
+    
+    recipe.save()
+    .then(recipe => {
       res.status(200).json(recipe);
+    })
+    .catch(err => {
+      res.json(err);
     });
   });
 });
