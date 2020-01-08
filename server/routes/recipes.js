@@ -35,4 +35,21 @@ router.put("/update/:id", auth, (req, res, next) => {
 });
 
 
+// Get all recipes 
+router.get("/list", auth, (req, res, next) => {
+  Recipe.find({}, (err, recipes) => {
+    if (err) return next(err);
+    res.status(200).json(recipes);
+  });
+});
+
+
+// Delete a recipe
+router.delete("/delete/:id", auth, (req, res, next) => {
+  Recipe.remove({ _id: req.params.id}, (err, recipe) => {
+    if (err) return next(err);
+    res.json({ message: "Successfully deleted" });
+  })
+})
+
 module.exports = router;
