@@ -14,7 +14,7 @@ router.post("/", auth, (req, res, next) => {
 
   newRecipe.save((err, recipe) => {
     if (err) return next(err);
-    req.json(recipe);
+    res.json(recipe);
   });
 });
 
