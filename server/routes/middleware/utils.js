@@ -1,19 +1,21 @@
 const jwt = require("jsonwebtoken");
+const config = require('../../config/keys');
 
-module.exports = (req, res, next) => {
-  try{
-    const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
-    const userId = decoded.userId;
-    if (req.body.userId && req.body.userId !== userId) {
-      throw "Invalid user ID";
-    } else {
-      req.user = userId;
-      next();
+module.exports = function authenticate(req, res, next) {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    if (!token) {
+      throw new Error({ error: "Access denied" });
     }
-  } catch {
-    res.status(401).json({
-      error: "Invalid request"
+    jwt.verify(token, config.secretOrKey, (err, decoded) => {
+      if (err) {
+        throw new Error({ error: "Access denied" });
+      } else {
+        req.user = decoded.id;
+        next();
+      }
     });
+  } catch {
+    res.status(401).json({ error: "Access denied" });
   }
 };
