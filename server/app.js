@@ -19,6 +19,8 @@ app.use(
 );
 app.use(bodyParser.json());
 
+app.use('/uploads', express.static('uploads'));
+
 // Set up mondoDB connection
 mongoose.connect("mongodb://localhost:27017/recipe-api", { useNewUrlParser: true, useUnifiedTopology: true });
 

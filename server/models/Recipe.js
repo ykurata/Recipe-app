@@ -19,6 +19,9 @@ const RecipeSchema = new Schema(
     steps: {
       type: String,
       required: true
+    },
+    recipeImage: {
+      type: String
     }
   },
   {
