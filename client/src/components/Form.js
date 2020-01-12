@@ -107,15 +107,17 @@ class Form extends Component {
                 <Typography color="secondary">{this.state.validationErrors.email}</Typography>
                 : null
               } 
+              <Typography className={classes.label}>Ingredients</Typography>
               <TextField
-                variant="outlined"
+                id="outlined-multiline-static"
                 margin="normal"
-                required
+                multiline
+                rows="5"
+                id="ingredients"
                 fullWidth
                 name="ingredients"
-                id="ingredients"
                 placeholder="Ingredients"
-                onChange={this.onChange}
+                variant="outlined"
               />
               {this.state.validationErrors ? 
                 <Typography color="secondary">{this.state.validationErrors.password}</Typography>
@@ -128,7 +130,7 @@ class Form extends Component {
                 color="primary"
                 className={classes.submit}
               >
-                Sign In
+                Create
               </Button>
               <Grid container>
                 <Grid item xs>
