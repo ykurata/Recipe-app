@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -34,6 +35,11 @@ const FormStyles = theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  square: {
+    marginTop: "50px",
+    width: 400,
+    height: 300
+  }
 });
 
 
@@ -80,73 +86,78 @@ class Form extends Component {
     return (
         <div>
           <Navbar></Navbar>
-
-          <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Typography component="h1" variant="h5">
-              Create a Recipe
-            </Typography>
-            <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-              {this.state.error ? 
-                <Typography color="secondary">{this.state.error.error}</Typography>
-                : null
-              } 
-              <Typography className={classes.label}>Recipe Title</Typography>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                name="title"
-                placeholder="Title"
-                onChange={this.onChange}
-              />
-              {this.state.validationErrors ? 
-                <Typography color="secondary">{this.state.validationErrors.email}</Typography>
-                : null
-              } 
-              <Typography className={classes.label}>Ingredients</Typography>
-              <TextField
-                id="outlined-multiline-static"
-                margin="normal"
-                multiline
-                rows="5"
-                id="ingredients"
-                fullWidth
-                name="ingredients"
-                placeholder="Ingredients"
-                variant="outlined"
-              />
-              {this.state.validationErrors ? 
-                <Typography color="secondary">{this.state.validationErrors.password}</Typography>
-                : null
-              } 
+          <Grid container>
+            <Grid item xs={6}>
+              <Container component="main" maxWidth="xs">
+              <CssBaseline />
+              <div className={classes.paper}>
+                <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+                  <Typography className={classes.label}>Recipe Title</Typography>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    name="title"
+                    placeholder="Title"
+                    onChange={this.onChange}
+                  />
+                  <Typography className={classes.label}>Ingredients</Typography>
+                  <TextField
+                    id="outlined-multiline-static"
+                    margin="normal"
+                    multiline
+                    rows="5"
+                    id="ingredients"
+                    fullWidth
+                    name="ingredients"
+                    placeholder="Ingredients"
+                    variant="outlined"
+                  />
+                  <Typography className={classes.label}>Steps</Typography>
+                  <TextField
+                    id="outlined-multiline-static"
+                    margin="normal"
+                    multiline
+                    rows="5"
+                    id="steps"
+                    fullWidth
+                    name="steps"
+                    placeholder="Steps"
+                    variant="outlined"
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Create
+                  </Button>
+                </form>
+              </div>
+            </Container>
+          </Grid> 
+          <Grid item xs={6} >
+            <div className={classes.paper}>
+              <Avatar variant="square" className={classes.square}>
+                No Image
+              </Avatar>
               <Button
-                type="submit"
-                fullWidth
                 variant="contained"
-                color="primary"
-                className={classes.submit}
+                component="label"
               >
-                Create
+                Upload File
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                />
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-            </form>
-          </div>
-        </Container>
+            </div>  
+          </Grid>
+        </Grid>
       </div>
     );
   }
