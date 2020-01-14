@@ -15,6 +15,8 @@ const ColorNavbarStyles = theme => ({
   },
   title: {
     flexGrow: 1,
+    textDecoration: "none",
+    color: "white"
   },
   button: { 
     color: "white"
@@ -36,10 +38,10 @@ class ColorNavbar extends Component {
     if (this.state.name) {
       buttons = <AppBar position="static" style={{ boxShadow: 'none'}}>
                   <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton}  aria-label="menu">
+                    <IconButton component={Link} to="/" edge="start" className={classes.menuButton}  aria-label="menu">
                       <RestaurantIcon />
                     </IconButton>
-                    <Typography variant="h6"  className={classes.title}>
+                    <Typography component={Link} to="/" variant="h6"  className={classes.title}>
                       Recipes
                     </Typography>
                     <Typography variant="button" >Welocome, {this.state.name}</Typography>
@@ -50,10 +52,10 @@ class ColorNavbar extends Component {
     } else {
       buttons = <AppBar position="static" style={{ boxShadow: 'none'}}>
                   <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} aria-label="menu">
+                    <IconButton component={Link} to="/" edge="start" className={classes.menuButton} aria-label="menu">
                       <RestaurantIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography component={Link} to="/"  variant="h6" className={classes.title}>
                       Recipes
                     </Typography>
                     <Button className={classes.button} component={Link}  to="/create">Create Recipe</Button>
