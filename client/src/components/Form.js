@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import Navbar from "./Navbar";
+import ColorNavbar from "./ColorNavbar";
 
 
 const FormStyles = theme => ({
@@ -86,7 +86,7 @@ class Form extends Component {
 
     return (
         <div>
-          <Navbar></Navbar>
+          <ColorNavbar></ColorNavbar>
           <Grid container>
             <Grid item xs={6}>
               <Container component="main" maxWidth="sm">
