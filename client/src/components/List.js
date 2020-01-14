@@ -22,7 +22,7 @@ const ListStyles = theme => ({
     marginLeft: 15
   },
   media: {
-    height: 250,
+    height: 300,
   },
   container: {
     backgroundColor: "grey"

@@ -58,6 +58,7 @@ class ColorNavbar extends Component {
                     <Typography component={Link} to="/"  variant="h6" className={classes.title}>
                       Recipes
                     </Typography>
+                    <Button className={classes.button} component={Link}  to="/list">Search</Button>
                     <Button className={classes.button} component={Link}  to="/create">Create Recipe</Button>
                     <Button className={classes.button} component={Link}  to="/login">Login</Button>
                     <Button className={classes.button} component={Link}  to="/signup" >Sign Up</Button>

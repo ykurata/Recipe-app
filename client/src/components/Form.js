@@ -46,10 +46,9 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      validationErrors: [],
-      error: "",
+      name: "",
+      ingredients: "",
+      steps: "",
     };
   }
 
@@ -61,13 +60,14 @@ class Form extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { email, password } = this.state;
-    const user = {
-      email: email,
-      password: password
+    const { name, ingredients, steps } = this.state;
+    const recipe = {
+      name: name,
+      ingredients: ingredients,
+      steps: steps
     };
 
-    axios.post("/users/login", user)
+    axios.post("/users/login", recipe)
       .then(res => {
         const { token } = res.data;
       })
@@ -119,7 +119,7 @@ class Form extends Component {
                     id="outlined-multiline-static"
                     margin="normal"
                     multiline
-                    rows="5"
+                    rows="8"
                     id="steps"
                     fullWidth
                     name="steps"

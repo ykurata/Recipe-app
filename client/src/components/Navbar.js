@@ -53,6 +53,7 @@ class Navbar extends Component {
                     <Typography variant="h6" color="textPrimary" className={classes.title}>
                       Recipes
                     </Typography>
+                    <Button color="default" component={Link}  to="/list">Search</Button>
                     <Button color="default" component={Link}  to="/create">Create Recipe</Button>
                     <Button color="default" component={Link}  to="/login">Login</Button>
                     <Button color="default" component={Link} to="/signup" >Sign Up</Button>
