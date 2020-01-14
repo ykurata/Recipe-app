@@ -36,7 +36,7 @@ class ColorNavbar extends Component {
 
     let buttons;
     if (this.state.name) {
-      buttons = <AppBar position="static" style={{ boxShadow: 'none'}}>
+      buttons = <AppBar position="static"  className="colorNav">
                   <Toolbar>
                     <IconButton component={Link} to="/" edge="start" className={classes.menuButton}  aria-label="menu">
                       <RestaurantIcon />
@@ -50,7 +50,7 @@ class ColorNavbar extends Component {
                 </AppBar>
 
     } else {
-      buttons = <AppBar position="static" style={{ boxShadow: 'none'}}>
+      buttons = <AppBar position="static" className="colorNav">
                   <Toolbar>
                     <IconButton component={Link} to="/" edge="start" className={classes.menuButton} aria-label="menu">
                       <RestaurantIcon />
