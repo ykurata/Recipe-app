@@ -38,7 +38,8 @@ const FormStyles = theme => ({
   square: {
     marginTop: "50px",
     width: 400,
-    height: 300
+    height: 300,
+    marginBottom: "30px"
   }
 });
 
@@ -88,7 +89,7 @@ class Form extends Component {
           <Navbar></Navbar>
           <Grid container>
             <Grid item xs={6}>
-              <Container component="main" maxWidth="xs">
+              <Container component="main" maxWidth="sm">
               <CssBaseline />
               <div className={classes.paper}>
                 <form className={classes.form} noValidate onSubmit={this.onSubmit}>
@@ -149,7 +150,7 @@ class Form extends Component {
                 variant="contained"
                 component="label"
               >
-                Upload File
+                Upload Image
                 <input
                   type="file"
                   style={{ display: "none" }}
