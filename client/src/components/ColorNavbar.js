@@ -9,16 +9,21 @@ import IconButton from '@material-ui/core/IconButton';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import '../App.css';
 
-const NavbarStyles = theme => ({
+const ColorNavbarStyles = theme => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
+    textDecoration: "none",
+    color: "white"
   },
+  button: { 
+    color: "white"
+  }
 });
 
-class Navbar extends Component {
+class ColorNavbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,31 +36,31 @@ class Navbar extends Component {
 
     let buttons;
     if (this.state.name) {
-      buttons = <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
+      buttons = <AppBar position="static"  className="colorNav">
                   <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="default" aria-label="menu">
+                    <IconButton component={Link} to="/" edge="start" className={classes.menuButton}  aria-label="menu">
                       <RestaurantIcon />
                     </IconButton>
-                    <Typography variant="h6" color="textPrimary" className={classes.title}>
+                    <Typography component={Link} to="/" variant="h6"  className={classes.title}>
                       Recipes
                     </Typography>
-                    <Typography variant="button" color="textPrimary">Welocome, {this.state.name}</Typography>
-                    <Button color="default" component={Link}  to="/login">Create Recipe</Button>
+                    <Typography variant="button" >Welocome, {this.state.name}</Typography>
+                    <Button  className={classes.button} component={Link}  to="/login">Create Recipe</Button>
                   </Toolbar>
                 </AppBar>
 
     } else {
-      buttons = <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
+      buttons = <AppBar position="static" className="colorNav">
                   <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="default" aria-label="menu">
+                    <IconButton component={Link} to="/" edge="start" className={classes.menuButton} aria-label="menu">
                       <RestaurantIcon />
                     </IconButton>
-                    <Typography variant="h6" color="textPrimary" className={classes.title}>
+                    <Typography component={Link} to="/"  variant="h6" className={classes.title}>
                       Recipes
                     </Typography>
-                    <Button color="default" component={Link}  to="/create">Create Recipe</Button>
-                    <Button color="default" component={Link}  to="/login">Login</Button>
-                    <Button color="default" component={Link} to="/signup" >Sign Up</Button>
+                    <Button className={classes.button} component={Link}  to="/create">Create Recipe</Button>
+                    <Button className={classes.button} component={Link}  to="/login">Login</Button>
+                    <Button className={classes.button} component={Link}  to="/signup" >Sign Up</Button>
                   </Toolbar>
                 </AppBar>
     }
@@ -68,4 +73,4 @@ class Navbar extends Component {
   }
 }
 
-export default withStyles(NavbarStyles)(Navbar);
+export default withStyles(ColorNavbarStyles)(ColorNavbar);

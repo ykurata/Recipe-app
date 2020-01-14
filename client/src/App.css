@@ -23,3 +23,8 @@
   left: 0;
   width: 100%;
 }
+
+.colorNav {
+  background: linear-gradient(to top left, #0066ff 0%, #33ccff 100%);
+  box-shadow: none;
+}
