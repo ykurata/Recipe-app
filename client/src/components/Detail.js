@@ -33,7 +33,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipe: "",
+      recipe: {},
       token: localStorage.getItem("jwtToken")
     };
   }
@@ -48,7 +48,6 @@ class Detail extends Component {
       this.setState({
         recipe: res.data
       });
-      console.log(res.data);
     })
     .catch(err => {
       console.log(err);

@@ -78,13 +78,13 @@ class List extends Component {
                   className={classes.media}
                   image={item.recipeImage}
                   component={Link}
-                  to={`/recipe/${item._id}`} 
+                  to={`/${item._id}`} 
                 />
               : <Avatar 
                   variant="square" 
                   className={classes.avatar}
                   component={Link}
-                  to={`/recipe/${item._id}`} 
+                  to={`/${item._id}`} 
                 >No Image</Avatar>
               }
             </CardActionArea>     
