@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Landing from "./components/Landing";
 import Form from "./components/Form";
 import List from "./components/List";
+import Detail from "./components/Detail";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/create" component={Form} />
         <Route path="/list" component={List} />
+        <Route path="/:id" component={Detail} />
       </Switch>
     </BrowserRouter>
   );

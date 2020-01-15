@@ -15,6 +15,7 @@ const NavbarStyles = theme => ({
   },
   title: {
     flexGrow: 1,
+    textDecoration: "none",
   },
 });
 
@@ -33,26 +34,29 @@ class Navbar extends Component {
     if (this.state.name) {
       buttons = <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
                   <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="default" aria-label="menu">
+                    <IconButton component={Link} to="/" edge="start" className={classes.menuButton} color="default" aria-label="menu">
                       <RestaurantIcon />
                     </IconButton>
-                    <Typography variant="h6" color="textPrimary" className={classes.title}>
+                    <Typography component={Link} to="/" variant="h6" color="textPrimary" className={classes.title}>
                       Recipes
                     </Typography>
-                    <Typography variant="button" color="textPrimary">Welocome, {this.state.name}</Typography>
-                    <Button color="default" component={Link}  to="/login">Create Recipe</Button>
+                    {/* <Typography variant="button" color="textPrimary">Welocome, {this.state.name}</Typography> */}
+                    <Button color="default" component={Link}  to="/list">Search</Button>
+                    <Button color="default" component={Link}  to="/create">Create Recipe</Button>
+                    <Button color="default" component={Link}  to="/logout">Log Out</Button>
                   </Toolbar>
                 </AppBar>
 
     } else {
       buttons = <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
                   <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="default" aria-label="menu">
+                    <IconButton component={Link} to="/" edge="start" className={classes.menuButton} color="default" aria-label="menu">
                       <RestaurantIcon />
                     </IconButton>
-                    <Typography variant="h6" color="textPrimary" className={classes.title}>
-                      Recipes
+                    <Typography component={Link} to="/" variant="h6" color="textPrimary" className={classes.title}>
+                      My Recipes
                     </Typography>
+                    <Button color="default" component={Link}  to="/list">Search</Button>
                     <Button color="default" component={Link}  to="/create">Create Recipe</Button>
                     <Button color="default" component={Link}  to="/login">Login</Button>
                     <Button color="default" component={Link} to="/signup" >Sign Up</Button>

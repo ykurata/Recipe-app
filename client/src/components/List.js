@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -12,6 +14,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 
 import ColorNavbar from "./ColorNavbar";
+import axios from 'axios';
 
 const ListStyles = theme => ({
   card: {
@@ -22,18 +25,85 @@ const ListStyles = theme => ({
     marginLeft: 15
   },
   media: {
-    height: 250,
+    height: 300,
   },
-  container: {
-    backgroundColor: "grey"
+  avatar: {
+    height: 300,
+    width: 350,
+    textDecoration: "none",
   },
+  content: {
+    textDecoration: "none"
+  }
 });
 
 class List extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      recipes : [],
+      token: localStorage.getItem("jwtToken"),
+    }
+  }
 
+  componentDidMount() {
+    this.getRecipes();
+  }
+
+  getRecipes() {
+    axios.get('/recipes/list', { headers: { Authorization: `Bearer ${this.state.token}` }})
+      .then(res => {
+        this.setState({
+          recipes: res.data
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   render() {
     const { classes } = this.props;
+
+    let recipes;
+    if (this.state.recipes.length > 0) {
+      recipes = this.state.recipes.map((item, i) => (
+        <Grid item key={i} >
+          <Card className={classes.card} >
+            <CardActionArea>
+              {item.recipeImage ?
+                <CardMedia
+                  id={item._id}
+                  title="recipe image"
+                  className={classes.media}
+                  image={item.recipeImage}
+                  component={Link}
+                  to={`/${item._id}`} 
+                />
+              : <Avatar 
+                  variant="square" 
+                  className={classes.avatar}
+                  component={Link}
+                  to={`/${item._id}`} 
+                >No Image</Avatar>
+              }
+            </CardActionArea>     
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {item.name}
+              </Typography>
+              <Typography noWrap variant="body2" color="textSecondary" component="p">
+                {item.ingredients}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      ));
+    } else {
+      recipes = <Grid containeralign="center" style={{ marginTop: 50 }}>
+                  <Typography variant="h4">No Recipes</Typography>
+                </Grid>
+    }
 
     return (
       <div>
@@ -57,65 +127,7 @@ class List extends Component {
               value=""
             />  
           </Grid>
-
-          <Grid item >
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image="/static/images/cards/contemplative-reptile.jpg"
-                  title="Contemplative Reptile"
-                />
-              </CardActionArea> 
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Omurice
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Easy to make!
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item >
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image="/static/images/cards/contemplative-reptile.jpg"
-                  title="Contemplative Reptile"
-                />
-              </CardActionArea> 
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Omurice
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Easy to make!
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item >
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image="/static/images/cards/contemplative-reptile.jpg"
-                  title="Contemplative Reptile"
-                />
-              </CardActionArea> 
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Omurice
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Easy to make!
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+          {recipes}
         </Grid>
     </div>
     );
