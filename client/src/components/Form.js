@@ -13,12 +13,6 @@ import ColorNavbar from "./ColorNavbar";
 
 
 const FormStyles = theme => ({
-  paper: {
-    marginTop: theme.spacing(10),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   label: {
     margin: theme.spacing(1, 1, 0, 0),
   },
@@ -28,7 +22,9 @@ const FormStyles = theme => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(10),
+    display: 'flex',
+    flexDirection: 'column',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -37,7 +33,14 @@ const FormStyles = theme => ({
     marginTop: "50px",
     width: 400,
     height: 300,
-    marginBottom: "30px"
+    marginBottom: "30px",
+    marginLeft: "50px"
+  },
+  formGrid: {
+    marginLeft: 100
+  },
+  imageGrid: {
+    marginLeft: 50
   }
 });
 
@@ -49,6 +52,7 @@ class Form extends Component {
       name: "",
       ingredients: "",
       steps: "",
+      image: null,
     };
   }
 
@@ -86,11 +90,9 @@ class Form extends Component {
         <div>
           <ColorNavbar></ColorNavbar>
           <Grid container>
-            <Grid item xs={6}>
-              <Container component="main" maxWidth="sm">
-              <CssBaseline />
-              <div className={classes.paper}>
-                <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+            <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+              <Grid container justify="center">
+                <Grid item xs={5} >
                   <Typography className={classes.label}>Recipe Title</Typography>
                   <TextField
                     variant="outlined"
@@ -113,6 +115,7 @@ class Form extends Component {
                     name="ingredients"
                     placeholder="Ingredients"
                     variant="outlined"
+                    onChange={this.onChange}
                   />
                   <Typography className={classes.label}>Steps</Typography>
                   <TextField
@@ -125,6 +128,7 @@ class Form extends Component {
                     name="steps"
                     placeholder="Steps"
                     variant="outlined"
+                    onChange={this.onChange}
                   />
                   <Button
                     type="submit"
@@ -132,31 +136,31 @@ class Form extends Component {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                  >
+                  > 
                     Create
                   </Button>
-                </form>
-              </div>
-            </Container>
-          </Grid> 
-          <Grid item xs={6} >
-            <div className={classes.paper}>
-              <Avatar variant="square" className={classes.square}>
-                No Image
-              </Avatar>
-              <Button
-                variant="contained"
-                component="label"
-              >
-                Upload Image
-                <input
-                  type="file"
-                  style={{ display: "none" }}
-                />
-              </Button>
-            </div>  
+                </Grid>
+
+                {/* Image upload */}
+                <Grid item xs={4} >
+                  <Avatar variant="square" className={classes.square}>
+                    No Image
+                  </Avatar>
+                  <Button
+                    variant="contained"
+                    component="label"
+                    style={{ marginLeft: 180 }}
+                  >
+                    Upload Image
+                    <input
+                      type="file"
+                      style={{ display: "none" }}
+                    />
+                  </Button>  
+                </Grid>
+              </Grid>
+            </form>
           </Grid>
-        </Grid>
       </div>
     );
   }
