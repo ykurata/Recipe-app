@@ -54,12 +54,13 @@ router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
 
 
 // Update a recipe
-router.put("/update/:id", auth, (req, res, next) => {
+router.put("/update/:id", upload.single('recipeImage'), auth, (req, res, next) => {
   Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
     if (err) return next(err);
     recipe.name = req.body.name,
     recipe.ingredients = req.body.ingredients,
     recipe.steps = req.body.steps
+    recipe.recipeImage = req.file.path
     
     recipe.save()
     .then(recipe => {
@@ -77,6 +78,14 @@ router.get("/list", auth, (req, res, next) => {
   Recipe.find({}, (err, recipes) => {
     if (err) return next(err);
     res.status(200).json(recipes);
+  });
+});
+
+// Get a specific recipes 
+router.get("/get/:id", auth, (req, res, next) => {
+  Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
+    if (err) return next(err);
+    res.status(200).json(recipe);
   });
 });
 

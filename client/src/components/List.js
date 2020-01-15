@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -30,6 +31,9 @@ const ListStyles = theme => ({
     height: 300,
     width: 350,
     textDecoration: "none",
+  },
+  content: {
+    textDecoration: "none"
   }
 });
 
@@ -64,34 +68,34 @@ class List extends Component {
     let recipes;
     if (this.state.recipes.length > 0) {
       recipes = this.state.recipes.map((item, i) => (
-        <Grid item key={i} id={item._id}>
+        <Grid item key={i} >
           <Card className={classes.card} >
             <CardActionArea>
               {item.recipeImage ?
                 <CardMedia
+                  id={item._id}
                   title="recipe image"
                   className={classes.media}
                   image={item.recipeImage}
                   component={Link}
-                  to="/recipe"
+                  to={`/recipe/${item._id}`} 
                 />
               : <Avatar 
                   variant="square" 
                   className={classes.avatar}
                   component={Link}
-                  to="/recipe"
+                  to={`/recipe/${item._id}`} 
                 >No Image</Avatar>
               }
-              
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {item.name}
-                </Typography>
-                <Typography noWrap variant="body2" color="textSecondary" component="p">
-                  {item.ingredients}
-                </Typography>
-              </CardContent>
-            </CardActionArea>   
+            </CardActionArea>     
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {item.name}
+              </Typography>
+              <Typography noWrap variant="body2" color="textSecondary" component="p">
+                {item.ingredients}
+              </Typography>
+            </CardContent>
           </Card>
         </Grid>
       ));

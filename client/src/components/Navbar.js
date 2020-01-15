@@ -40,8 +40,10 @@ class Navbar extends Component {
                     <Typography component={Link} to="/" variant="h6" color="textPrimary" className={classes.title}>
                       Recipes
                     </Typography>
-                    <Typography variant="button" color="textPrimary">Welocome, {this.state.name}</Typography>
-                    <Button color="default" component={Link}  to="/login">Create Recipe</Button>
+                    {/* <Typography variant="button" color="textPrimary">Welocome, {this.state.name}</Typography> */}
+                    <Button color="default" component={Link}  to="/list">Search</Button>
+                    <Button color="default" component={Link}  to="/create">Create Recipe</Button>
+                    <Button color="default" component={Link}  to="/logout">Log Out</Button>
                   </Toolbar>
                 </AppBar>
 

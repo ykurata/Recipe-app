@@ -30,30 +30,57 @@ const DetailStyles = theme => ({
 
 
 class Detail extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      recipe: "",
+      token: localStorage.getItem("jwtToken")
+    };
+  }
+
+  componentDidMount() {
+    this.getRecipe();
+  }
+
+  getRecipe() {
+    axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    .then(res => {
+      this.setState({
+        recipe: res.data
+      });
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
+
   render() {
     const { classes } = this.props;
+    const { recipe } = this.state;
 
     return (
       <div>
         <ColorNavbar></ColorNavbar>
         <Grid container justify="center" style={{ marginTop: 100 }}>
           <Grid item xs={12} align="center">
-            <Typography variant="h4">Recipes</Typography>
+            <Typography variant="h4">{recipe.name}</Typography>
           </Grid>
         </Grid>
 
         <Grid container justify="center">
           <Grid item xs={4}>
-            <Avatar variant="square" className={classes.square}>No Image</Avatar>
+            {recipe.recipeImage ?
+              <Avatar variant="square" className={classes.square} src={recipe.recipeImage} />
+            : <Avatar variant="square" className={classes.square}>No Image</Avatar>
+            }
           </Grid>
           <Grid item xs={4} style={{ marginTop: 50 }} align="center">
             <Typography variant="h5">Ingredients</Typography>
             <Card className={classes.card} variant="outlined" align="left">
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  This impressive paella is a perfect party dish and a fun meal to cook together with your
-                  guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                  {recipe.ingredients}
                 </Typography>
               </CardContent>
             </Card>
@@ -61,8 +88,7 @@ class Detail extends Component {
             <Card className={classes.steps} variant="outlined" align="left">
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  This impressive paella is a perfect party dish and a fun meal to cook together with your
-                  guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                  {recipe.steps}
                 </Typography>
               </CardContent>
             </Card>

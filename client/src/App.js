@@ -17,7 +17,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/create" component={Form} />
         <Route path="/list" component={List} />
-        <Route path="/recipe" component={Detail} />
+        <Route path="/recipe/:id" component={Detail} />
       </Switch>
     </BrowserRouter>
   );
