@@ -56,7 +56,7 @@ class ColorNavbar extends Component {
                       <RestaurantIcon />
                     </IconButton>
                     <Typography component={Link} to="/"  variant="h6" className={classes.title}>
-                      Recipes
+                      My Recipes
                     </Typography>
                     <Button className={classes.button} component={Link}  to="/list">Search</Button>
                     <Button className={classes.button} component={Link}  to="/create">Create Recipe</Button>

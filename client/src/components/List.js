@@ -71,8 +71,8 @@ class List extends Component {
                 <Typography gutterBottom variant="h5" component="h2">
                   Omurice
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Easy to make!
+                <Typography noWrap variant="body2" color="textSecondary" component="p">
+                  ingredients 
                 </Typography>
               </CardContent>
             </Card>
