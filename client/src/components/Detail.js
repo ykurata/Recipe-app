@@ -18,7 +18,13 @@ const DetailStyles = theme => ({
   },
   card: {
     marginTop: 10,
-    height: 200,
+    maxheight: 200,
+    overflow: 'auto'
+  },
+  steps: {
+    marginTop: 10,
+    maxHeight: 400,
+    overflow: 'auto'
   }
 });
 
@@ -52,7 +58,7 @@ class Detail extends Component {
               </CardContent>
             </Card>
             <Typography variant="h5" style={{ marginTop: 10 }}>Steps</Typography>
-            <Card className={classes.card} variant="outlined" align="left">
+            <Card className={classes.steps} variant="outlined" align="left">
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
                   This impressive paella is a perfect party dish and a fun meal to cook together with your
