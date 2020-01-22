@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 
 import ColorNavbar from "./ColorNavbar";
 
@@ -53,39 +51,52 @@ class Form extends Component {
       ingredients: "",
       steps: "",
       image: null,
+      sendImage: null,
+      token: localStorage.getItem("jwtToken")
     };
   }
 
-  // Update user input
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+  }
+  
+  imageChange = e => {
+    this.setState({
+      image: URL.createObjectURL(e.target.files[0]),
+      sendImage: e.target.files[0]
+    });
   }
 
   onSubmit = e => {
     e.preventDefault();
 
-    const { name, ingredients, steps } = this.state;
-    const recipe = {
-      name: name,
-      ingredients: ingredients,
-      steps: steps
-    };
+    const { name, ingredients, steps, sendImage } = this.state;
+    const image = this.state.sendImage;
+    let formData = new FormData();
+    formData.append("image", image);
+    console.log(formData);
+    // formData.append("file", this.state.sendImage);
+    // console.log(formData);
 
-    axios.post("/users/login", recipe)
-      .then(res => {
-        const { token } = res.data;
-      })
-      .catch(err => {
-        this.setState({
-          validationErrors: err.response.data,
-          error: err.response.data
-        });
-      });
+    // const recipe = {
+    //   name: name,
+    //   ingredients: ingredients,
+    //   steps: steps,
+    //   recipeImage: formData
+    // };
+
+    // axios.post("/recipes", formData, recipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    //   .then(res => {
+    //     console.log(res.data);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
   render() {
     const { classes } = this.props;
-
+    console.log(this.state.sendImage);
     return (
         <div>
           <ColorNavbar></ColorNavbar>
@@ -99,36 +110,37 @@ class Form extends Component {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
-                    name="title"
+                    id="name"
+                    name="name"
                     placeholder="Title"
                     onChange={this.onChange}
+                    value={this.state.name}
                   />
                   <Typography className={classes.label}>Ingredients</Typography>
                   <TextField
-                    id="outlined-multiline-static"
+                    id="ingredients"
                     margin="normal"
                     multiline
                     rows="5"
-                    id="ingredients"
                     fullWidth
                     name="ingredients"
                     placeholder="Ingredients"
                     variant="outlined"
                     onChange={this.onChange}
+                    value={this.state.ingredients}
                   />
                   <Typography className={classes.label}>Steps</Typography>
                   <TextField
-                    id="outlined-multiline-static"
+                    id="steps"
                     margin="normal"
                     multiline
                     rows="8"
-                    id="steps"
                     fullWidth
                     name="steps"
                     placeholder="Steps"
                     variant="outlined"
                     onChange={this.onChange}
+                    value={this.state.steps}
                   />
                   <Button
                     type="submit"
@@ -143,9 +155,12 @@ class Form extends Component {
 
                 {/* Image upload */}
                 <Grid item xs={4} >
-                  <Avatar variant="square" className={classes.square}>
+                  <Avatar variant="square" 
+                    className={classes.square}
+                    src={this.state.image}
+                  >
                     No Image
-                  </Avatar>
+                  </Avatar> 
                   <Button
                     variant="contained"
                     component="label"
@@ -154,6 +169,8 @@ class Form extends Component {
                     Upload Image
                     <input
                       type="file"
+                      name="image"
+                      onChange={this.imageChange}
                       style={{ display: "none" }}
                     />
                   </Button>  
