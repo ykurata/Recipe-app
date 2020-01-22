@@ -26,6 +26,12 @@ class Navbar extends Component {
       name: localStorage.getItem("name")
     };
   }
+
+  handleLogout = e => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "/";
+  };
   
   render() {
     const { classes } = this.props;
@@ -43,7 +49,7 @@ class Navbar extends Component {
                     {/* <Typography variant="button" color="textPrimary">Welocome, {this.state.name}</Typography> */}
                     <Button color="default" component={Link}  to="/list">Search</Button>
                     <Button color="default" component={Link}  to="/create">Create Recipe</Button>
-                    <Button color="default" component={Link}  to="/logout">Log Out</Button>
+                    <Button color="default" component={Link}  to="/logout" onClick={this.handleLogout}>Log Out</Button>
                   </Toolbar>
                 </AppBar>
 
