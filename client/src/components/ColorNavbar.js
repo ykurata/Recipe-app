@@ -30,6 +30,12 @@ class ColorNavbar extends Component {
       name: localStorage.getItem("name")
     };
   }
+
+  handleLogout = e => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "/";
+  };
   
   render() {
     const { classes } = this.props;
@@ -46,7 +52,7 @@ class ColorNavbar extends Component {
                     </Typography>
                     <Button className={classes.button} component={Link}  to="/list">Search</Button>
                     <Button className={classes.button} component={Link}  to="/create">Create Recipe</Button>
-                    <Button className={classes.button} component={Link}  to="/logout">Log Out</Button>
+                    <Button className={classes.button} component={Link}  to="/logout" onClick={this.handleLogout}>Log Out</Button>
                   </Toolbar>
                 </AppBar>
 
