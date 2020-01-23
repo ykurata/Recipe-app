@@ -20,6 +20,10 @@ html, body {
   padding-right: .7rem;
 }
 
+.navbar i {
+  padding-left: .8rem;
+}
+
 
 /* Landing page */
 #image {
