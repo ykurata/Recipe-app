@@ -1,23 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import RestaurantIcon from '@material-ui/icons/Restaurant';
-import '../App.css';
-
-const NavbarStyles = theme => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-    textDecoration: "none",
-  },
-});
 
 class Navbar extends Component {
   constructor(props) {
@@ -34,48 +15,50 @@ class Navbar extends Component {
   };
   
   render() {
-    const { classes } = this.props;
-
     let buttons;
-    if (this.state.name) {
-      buttons = <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
-                  <Toolbar>
-                    <IconButton component={Link} to="/" edge="start" className={classes.menuButton} color="default" aria-label="menu">
-                      <RestaurantIcon />
-                    </IconButton>
-                    <Typography component={Link} to="/" variant="h6" color="textPrimary" className={classes.title}>
-                      Recipes
-                    </Typography>
-                    {/* <Typography variant="button" color="textPrimary">Welocome, {this.state.name}</Typography> */}
-                    <Button color="default" component={Link}  to="/list">Search</Button>
-                    <Button color="default" component={Link}  to="/create">Create Recipe</Button>
-                    <Button color="default" component={Link}  to="/logout" onClick={this.handleLogout}>Log Out</Button>
-                  </Toolbar>
-                </AppBar>
 
+    if (this.state.name) {
+      buttons = <div className="collapse navbar-collapse" id="navbarResponsive">
+                  <ul className="navbar-nav ml-auto">
+                    <li className="nav-item">
+                      <a className="nav-link" href="#about">Recipes</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#skills">Login</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#projects">Sign Up</a>
+                    </li>
+                  </ul>
+                </div>
     } else {
-      buttons = <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
-                  <Toolbar>
-                    <IconButton component={Link} to="/" edge="start" className={classes.menuButton} color="default" aria-label="menu">
-                      <RestaurantIcon />
-                    </IconButton>
-                    <Typography component={Link} to="/" variant="h6" color="textPrimary" className={classes.title}>
-                      My Recipes
-                    </Typography>
-                    <Button color="default" component={Link}  to="/list">Search</Button>
-                    <Button color="default" component={Link}  to="/create">Create Recipe</Button>
-                    <Button color="default" component={Link}  to="/login">Login</Button>
-                    <Button color="default" component={Link} to="/signup" >Sign Up</Button>
-                  </Toolbar>
-                </AppBar>
+      buttons = <div className="collapse navbar-collapse" id="navbarResponsive">
+                  <ul className="navbar-nav ml-auto">
+                    <li className="nav-item">
+                      <a className="nav-link" href="#about">Recipes</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#skills">Create</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#projects">Log Out</a>
+                    </li>
+                  </ul>
+                </div>
     }
 
     return (
-      <div className="appbar">
+      <nav className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="#">My Recipes<i className="fas fa-utensils"></i></a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+          <span className="navbar-toggler-icon"></span>
+        </button>
         {buttons}
       </div>
+    </nav>
     );
   }
 }
 
-export default withStyles(NavbarStyles)(Navbar);
+export default Navbar;
