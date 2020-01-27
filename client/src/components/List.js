@@ -12,7 +12,6 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 
-import ColorNavbar from "./ColorNavbar";
 import axios from 'axios';
 
 const ListStyles = theme => ({
@@ -106,8 +105,7 @@ class List extends Component {
 
     return (
       <div>
-        <ColorNavbar></ColorNavbar>
-
+      
         <Grid container justify="center">
           <Grid item xs={12} style={{ marginTop: 100 }} align="center">
             <TextField

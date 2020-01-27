@@ -48,7 +48,7 @@ class Navbar extends Component {
     }
 
     return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+      <nav className="navbar navbar-expand-md navbar-dark bg-info fixed-top">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">My Recipes<i className="fas fa-utensils"></i></a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">

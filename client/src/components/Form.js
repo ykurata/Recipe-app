@@ -1,46 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import food from '../images/food-pic1.jpg';
 
-import ColorNavbar from "./ColorNavbar";
-
-
-const FormStyles = theme => ({
-  label: {
-    margin: theme.spacing(1, 1, 0, 0),
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(10),
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  square: {
-    marginTop: "50px",
-    width: 400,
-    height: 300,
-    marginBottom: "30px",
-    marginLeft: "50px"
-  },
-  formGrid: {
-    marginLeft: 100
-  },
-  imageGrid: {
-    marginLeft: 50
-  }
-});
+import Navbar from "./Navbar";
 
 
 class Form extends Component {
@@ -69,7 +31,6 @@ class Form extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-
     const { name, ingredients, steps, sendImage } = this.state;
     const image = this.state.sendImage;
     let formData = new FormData();
@@ -95,92 +56,40 @@ class Form extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    console.log(this.state.sendImage);
     return (
-        <div>
-          <ColorNavbar></ColorNavbar>
-          <Grid container>
-            <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-              <Grid container justify="center">
-                <Grid item xs={5} >
-                  <Typography className={classes.label}>Recipe Title</Typography>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    name="name"
-                    placeholder="Title"
-                    onChange={this.onChange}
-                    value={this.state.name}
-                  />
-                  <Typography className={classes.label}>Ingredients</Typography>
-                  <TextField
-                    id="ingredients"
-                    margin="normal"
-                    multiline
-                    rows="5"
-                    fullWidth
-                    name="ingredients"
-                    placeholder="Ingredients"
-                    variant="outlined"
-                    onChange={this.onChange}
-                    value={this.state.ingredients}
-                  />
-                  <Typography className={classes.label}>Steps</Typography>
-                  <TextField
-                    id="steps"
-                    margin="normal"
-                    multiline
-                    rows="8"
-                    fullWidth
-                    name="steps"
-                    placeholder="Steps"
-                    variant="outlined"
-                    onChange={this.onChange}
-                    value={this.state.steps}
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  > 
-                    Create
-                  </Button>
-                </Grid>
-
-                {/* Image upload */}
-                <Grid item xs={4} >
-                  <Avatar variant="square" 
-                    className={classes.square}
-                    src={this.state.image}
-                  >
-                    No Image
-                  </Avatar> 
-                  <Button
-                    variant="contained"
-                    component="label"
-                    style={{ marginLeft: 180 }}
-                  >
-                    Upload Image
-                    <input
-                      type="file"
-                      name="image"
-                      onChange={this.imageChange}
-                      style={{ display: "none" }}
-                    />
-                  </Button>  
-                </Grid>
-              </Grid>
-            </form>
-          </Grid>
-      </div>
+      <div>
+        <Navbar></Navbar>
+        <div id="form">
+          <div className="container-fluid">
+            <div className="col-12 text-center">
+              <h2 className="heading">Create Recipe</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12 col-lg-6">
+              <div className="text-center">
+                <img src="" className="rounded" />
+                <input
+                  type="file"
+                  name="image"
+                  onChange={this.imageChange}
+                />
+              </div>
+            </div>
+            <div className="col-md-12 col-lg-6">
+              <form className="text-center border border-light p-5 w-5" action="#!">
+                  <input type="text" name="title" id="title" className="form-control mb-4" placeholder="Recipe Title" />
+                  <textarea className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                  <textarea className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
+                  <button className="btn btn-info btn-block my-4" type="submit">Create</button>
+                  <a href="/"><p>Cancel</p></a>
+              </form>
+            </div>
+          </div>
+        </div>  
+      </div>    
     );
   }
 }
 
-export default withStyles(FormStyles)(Form);
+export default Form;

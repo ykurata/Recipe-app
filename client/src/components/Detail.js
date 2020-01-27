@@ -7,8 +7,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import ColorNavbar from "./ColorNavbar";
-
 const DetailStyles = theme => ({
   square: {
     marginTop: "60px",
@@ -60,7 +58,6 @@ class Detail extends Component {
 
     return (
       <div>
-        <ColorNavbar></ColorNavbar>
         <Grid container justify="center" style={{ marginTop: 100 }}>
           <Grid item xs={12} align="center">
             <Typography variant="h4">{recipe.name}</Typography>

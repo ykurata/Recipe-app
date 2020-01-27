@@ -50,7 +50,6 @@ class Login extends Component {
             <p className="h4 mb-4">Log in</p>
             <input type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
             <input type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
-            <input type="password" name="confirmPassword" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Confirm Password" />
             <button className="btn btn-info btn-block my-4" type="submit">Log In</button>
             <p>Not a member?
                 <a href="/signup">Register</a>

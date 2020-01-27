@@ -40,3 +40,33 @@ html, body {
   width: 40%;
   margin: 4rem auto;
 }
+
+
+/* Recipe form */
+#form .container-fluid {
+  padding-top: 5rem;
+}
+
+#form .col-lg-6 {
+  padding-top: 1rem;
+}
+
+h2.heading {
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+#form img {
+  width: 450px;
+  height: 400px;
+  padding-top: 3rem;
+}
+
+@media (max-width: 576px) {
+  #form img {
+    width: 300px;
+    height: 300px;
+  }
+}
