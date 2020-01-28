@@ -64,6 +64,12 @@ h2.heading {
   padding-top: 3rem;
 }
 
+
+/* List of recipes  */
+#list .container-fluid {
+  padding-top: 5rem;
+}
+ 
 @media (max-width: 576px) {
   #form img {
     width: 300px;
