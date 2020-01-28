@@ -60,7 +60,7 @@ class Form extends Component {
       <div>
         <Navbar></Navbar>
         <div id="form">
-          <div className="container-fluid">
+          <div className="main container-fluid">
             <div className="col-12 text-center">
               <h2 className="heading">Create Recipe</h2>
             </div>

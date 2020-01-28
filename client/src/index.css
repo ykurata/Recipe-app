@@ -43,7 +43,7 @@ html, body {
 
 
 /* Recipe form */
-#form .container-fluid {
+.main {
   padding-top: 5rem;
 }
 
@@ -68,6 +68,26 @@ h2.heading {
 /* List of recipes  */
 #list .container-fluid {
   padding-top: 5rem;
+}
+
+
+/* Recipe Detail */
+#detail .row {
+  padding-top: 5rem;
+}
+
+#detail .inner-div {
+  width: 85%;
+  margin: 1.5rem auto;
+  padding-bottom: 3rem;
+}
+
+.title {
+  padding-top: 2rem;
+}
+
+.text-left {
+  border: 1px grey solid;
 }
  
 @media (max-width: 576px) {

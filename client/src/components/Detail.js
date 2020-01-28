@@ -1,31 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Avatar from '@material-ui/core/Avatar';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 
-const DetailStyles = theme => ({
-  square: {
-    marginTop: "60px",
-    width: 400,
-    height: 300,
-    marginBottom: "30px"
-  },
-  card: {
-    marginTop: 10,
-    maxheight: 200,
-    overflow: 'auto'
-  },
-  steps: {
-    marginTop: 10,
-    maxHeight: 400,
-    overflow: 'auto'
-  }
-});
-
+import Navbar from "./Navbar";
 
 class Detail extends Component {
   constructor(props) {
@@ -53,47 +29,39 @@ class Detail extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const { recipe } = this.state;
 
     return (
       <div>
-        <Grid container justify="center" style={{ marginTop: 100 }}>
-          <Grid item xs={12} align="center">
-            <Typography variant="h4">{recipe.name}</Typography>
-          </Grid>
-        </Grid>
+       <Navbar></Navbar>
 
-        <Grid container justify="center">
-          <Grid item xs={4}>
-            {recipe.recipeImage ?
-              <Avatar variant="square" className={classes.square} src={recipe.recipeImage} />
-            : <Avatar variant="square" className={classes.square}>No Image</Avatar>
-            }
-          </Grid>
-          <Grid item xs={4} style={{ marginTop: 50 }} align="center">
-            <Typography variant="h5">Ingredients</Typography>
-            <Card className={classes.card} variant="outlined" align="left">
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  {recipe.ingredients}
-                </Typography>
-              </CardContent>
-            </Card>
-            <Typography variant="h5" style={{ marginTop: 10 }}>Steps</Typography>
-            <Card className={classes.steps} variant="outlined" align="left">
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  {recipe.steps}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          
-        </Grid>
+       <div id="detail" className="container-fluid padding">
+        <div className="inner-div">
+          <div className="row padding">
+            <div className="col-md-12 col-lg-6">
+              <div className="title text-center">
+                <img src="" className="rounded" alt="No Image" />
+              </div>
+            </div>
+            <div className="col-md-12 col-lg-6 text-center">
+              <div className="title">
+                <h2>Pizza</h2>
+              </div>
+              <div className="title text-left">
+                <h5>ingredients</h5>
+                <p>egg, milk, tomato</p>
+              </div>
+              
+              <div className="title">
+                <p>steps</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
       </div>
     );
   };
 }
 
-export default withStyles(DetailStyles)(Detail);
+export default Detail;
