@@ -35,8 +35,12 @@ class Detail extends Component {
       <div>
        <Navbar></Navbar>
 
-       <div id="detail" className="container-fluid padding">
+       <div id="detail" className="main container-fluid padding">
         <div className="inner-div">
+          <div className="col-12 text-center">
+            <h2 className="heading">Pizza</h2>
+          </div>
+        
           <div className="row padding">
             <div className="col-md-12 col-lg-6">
               <div className="title text-center">
@@ -44,16 +48,21 @@ class Detail extends Component {
               </div>
             </div>
             <div className="col-md-12 col-lg-6 text-center">
-              <div className="title">
-                <h2>Pizza</h2>
+              <div className="content">
+                <h5>Ingredients</h5>
+                <div class="card">
+                  <div class="card-body text-left">
+                    This is some text within a card body.
+                  </div>
+                </div>
               </div>
-              <div className="title text-left">
-                <h5>ingredients</h5>
-                <p>egg, milk, tomato</p>
-              </div>
-              
-              <div className="title">
-                <p>steps</p>
+              <div className="content">
+                <h5>Steps</h5>
+                <div class="card">
+                  <div class="card-body text-left">
+                    This is some text within a card body.
+                  </div>
+                </div>
               </div>
             </div>
           </div>

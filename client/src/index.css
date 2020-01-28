@@ -82,12 +82,17 @@ h2.heading {
   padding-bottom: 3rem;
 }
 
-.title {
-  padding-top: 2rem;
+#detail img {
+  padding-bottom: 3rem;
 }
 
-.text-left {
-  border: 1px grey solid;
+h5 {
+  font-weight: bold;
+  padding-bottom: 1rem;
+}
+
+.content {
+  padding-bottom: 3rem;
 }
  
 @media (max-width: 576px) {
