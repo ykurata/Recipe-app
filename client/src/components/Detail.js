@@ -38,29 +38,29 @@ class Detail extends Component {
        <div id="detail" className="main container-fluid padding">
         <div className="inner-div">
           <div className="col-12 text-center">
-            <h2 className="heading">Pizza</h2>
+            <h2 className="heading">{recipe.name}</h2>
           </div>
         
           <div className="row padding">
             <div className="col-md-12 col-lg-6">
               <div className="title text-center">
-                <img src="" className="rounded" alt="No Image" />
+                <img src={recipe.recipeImage} className="rounded" alt="No Image" />
               </div>
             </div>
             <div className="col-md-12 col-lg-6 text-center">
               <div className="content">
                 <h5>Ingredients</h5>
-                <div class="card">
-                  <div class="card-body text-left">
-                    This is some text within a card body.
+                <div className="card">
+                  <div className="card-body text-left">
+                    {recipe.ingredients}
                   </div>
                 </div>
               </div>
               <div className="content">
                 <h5>Steps</h5>
-                <div class="card">
-                  <div class="card-body text-left">
-                    This is some text within a card body.
+                <div className="card">
+                  <div className="card-body text-left">
+                    {recipe.steps}
                   </div>
                 </div>
               </div>

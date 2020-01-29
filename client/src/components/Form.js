@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import food from '../images/food-pic1.jpg';
 
 import Navbar from "./Navbar";
 
@@ -36,23 +35,23 @@ class Form extends Component {
     let formData = new FormData();
     formData.append("image", image);
     console.log(formData);
-    // formData.append("file", this.state.sendImage);
-    // console.log(formData);
+    formData.append("file", this.state.sendImage);
+    console.log(formData);
 
-    // const recipe = {
-    //   name: name,
-    //   ingredients: ingredients,
-    //   steps: steps,
-    //   recipeImage: formData
-    // };
+    const recipe = {
+      name: name,
+      ingredients: ingredients,
+      steps: steps,
+      recipeImage: formData
+    };
 
-    // axios.post("/recipes", formData, recipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
-    //   .then(res => {
-    //     console.log(res.data);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axios.post("/recipes", formData, recipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -64,26 +63,26 @@ class Form extends Component {
             <div className="col-12 text-center">
               <h2 className="heading">Create Recipe</h2>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12 col-lg-6">
-              <div className="text-center">
-                <img src="" className="rounded" />
-                <input
-                  type="file"
-                  name="image"
-                  onChange={this.imageChange}
-                />
+            <div className="row">
+              <div className="col-md-12 col-lg-6">
+                <div className="text-center">
+                  <img src={this.state.image} className="rounded" />
+                  <input
+                    type="file"
+                    name="image"
+                    onChange={this.imageChange}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-md-12 col-lg-6">
-              <form className="text-center border border-light p-5 w-5" action="#!">
-                  <input type="text" name="title" id="title" className="form-control mb-4" placeholder="Recipe Title" />
-                  <textarea className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
-                  <textarea className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
-                  <button className="btn btn-info btn-block my-4" type="submit">Create</button>
-                  <a href="/"><p>Cancel</p></a>
-              </form>
+              <div className="col-md-12 col-lg-6">
+                <form className="text-center border border-light p-5 w-5" action="#!">
+                    <input type="text" name="title" id="title" className="form-control mb-4" placeholder="Recipe Title" />
+                    <textarea className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                    <textarea className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
+                    <button className="btn btn-info btn-block my-4" type="submit">Create</button>
+                    <a href="/"><p>Cancel</p></a>
+                </form>
+              </div>
             </div>
           </div>
         </div>  
