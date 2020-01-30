@@ -34,7 +34,7 @@ const upload = multer({
 
 // Create a recipe 
 router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
-  console.log(req.file);
+  // console.log(req.file);
   const newRecipe = new Recipe({
     userId: req.user,
     name: req.body.name,

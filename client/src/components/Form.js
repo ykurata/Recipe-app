@@ -13,8 +13,13 @@ class Form extends Component {
       steps: "",
       image: null,
       sendImage: null,
+      formData: {},
       token: localStorage.getItem("jwtToken")
     };
+  }
+
+  componentDidMount() {
+    this.setState({ formData: new FormData() });
   }
 
   onChange = e => {
@@ -30,22 +35,13 @@ class Form extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { name, ingredients, steps, sendImage } = this.state;
-    const image = this.state.sendImage;
-    let formData = new FormData();
-    formData.append("image", image);
-    console.log(formData);
-    formData.append("file", this.state.sendImage);
-    console.log(formData);
+    const { name, ingredients, steps, sendImage, formData } = this.state;
+    formData.append("name", name);
+    formData.append("ingredients", ingredients);
+    formData.append("steps", steps);
+    formData.append("recipeImage", sendImage);
 
-    const recipe = {
-      name: name,
-      ingredients: ingredients,
-      steps: steps,
-      recipeImage: formData
-    };
-
-    axios.post("/recipes", formData, recipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    axios.post("/recipes", formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
         console.log(res.data);
       })
@@ -65,8 +61,8 @@ class Form extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 col-lg-6">
-                <div className="text-center">
-                  <img src={this.state.image} className="rounded" />
+                <div className="image-center text-center">
+                  <img src={this.state.image} className="img-thumbnail img-fluid" alt="" />
                   <input
                     type="file"
                     name="image"
@@ -75,10 +71,10 @@ class Form extends Component {
                 </div>
               </div>
               <div className="col-md-12 col-lg-6">
-                <form className="text-center border border-light p-5 w-5" action="#!">
-                    <input type="text" name="title" id="title" className="form-control mb-4" placeholder="Recipe Title" />
-                    <textarea className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
-                    <textarea className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
+                <form className="text-center border border-light p-5 w-5" onSubmit={this.onSubmit}>
+                    <input onChange={this.onChange} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
+                    <textarea onChange={this.onChange} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                    <textarea onChange={this.onChange} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
                     <button className="btn btn-info btn-block my-4" type="submit">Create</button>
                     <a href="/"><p>Cancel</p></a>
                 </form>

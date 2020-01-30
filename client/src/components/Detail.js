@@ -43,8 +43,8 @@ class Detail extends Component {
         
           <div className="row padding">
             <div className="col-md-12 col-lg-6">
-              <div className="title text-center">
-                <img src={recipe.recipeImage} className="rounded" alt="No Image" />
+              <div className="image text-center">
+                <img src={recipe.recipeImage} className="img-thumbnail img-fluid" alt="No Image" />
               </div>
             </div>
             <div className="col-md-12 col-lg-6 text-center">
