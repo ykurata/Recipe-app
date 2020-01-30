@@ -71,7 +71,7 @@ class Form extends Component {
                 </div>
               </div>
               <div className="col-md-12 col-lg-6">
-                <form className="text-center border border-light p-5 w-5" onSubmit={this.onSubmit}>
+                <form className="text-center border border-light" onSubmit={this.onSubmit}>
                     <input onChange={this.onChange} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
                     <textarea onChange={this.onChange} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
                     <textarea onChange={this.onChange} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
