@@ -71,6 +71,10 @@ h2.heading {
   margin-bottom: 3rem;
 }
 
+.image {
+  padding-bottom: 3rem;
+}
+
 textarea {
   white-space: pre-wrap;
 }

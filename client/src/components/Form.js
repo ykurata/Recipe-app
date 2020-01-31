@@ -61,8 +61,8 @@ class Form extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 col-lg-6">
-                <div className="image-center text-center">
-                  <img src={this.state.image} className="img-thumbnail img-fluid" alt="" />
+                <div className="image text-center">
+                  <img src={this.state.image} className="img-fluid" alt="" />
                   <label className="btn btn-info">
                     Select Image
                     <input
