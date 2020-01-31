@@ -15,7 +15,6 @@ class SignUp extends Component {
     };
   }
 
-  // Update user input
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -52,12 +51,12 @@ class SignUp extends Component {
    
     return (
       <div className="login-form">
-        <form className="text-center border border-light p-5 w-5" action="#!">
+        <form className="text-center border border-light p-5 w-5" onSubmit={this.onSubmit}>
           <p className="h4 mb-4">Sign Up</p>
-          <input type="text" id="defaultRegisterFormName" class="form-control mb-4" placeholder="Name"></input>
-          <input type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
-          <input type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
-          <input type="password" name="confirmPassword" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Confirm Password" />
+          <input onChange={this.onChange} type="text" id="defaultRegisterFormName" class="form-control mb-4" placeholder="Name"></input>
+          <input onChange={this.onChange} type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
+          <input onChange={this.onChange} type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
+          <input onChange={this.onChange} type="password" name="confirmPassword" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Confirm Password" />
           <button className="btn btn-info btn-block my-4" type="submit">Sign Up</button>
           <p>Already a member?
               <a href="/login">Log In</a>

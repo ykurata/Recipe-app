@@ -4,7 +4,7 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: localStorage.getItem("name")
+      token: localStorage.getItem("jwtToken")
     };
   }
 
@@ -17,17 +17,17 @@ class Navbar extends Component {
   render() {
     let buttons;
 
-    if (this.state.name) {
+    if (this.state.token) {
       buttons = <div className="collapse navbar-collapse" id="navbarResponsive">
                   <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
                       <a className="nav-link" href="/list">Recipes</a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="/login">Login</a>
+                      <a className="nav-link" href="/create">Create</a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="/signup">Sign Up</a>
+                      <a className="nav-link" href="/logout" onClick={this.handleLogout}>Log Out</a>
                     </li>
                   </ul>
                 </div>
@@ -38,10 +38,10 @@ class Navbar extends Component {
                       <a className="nav-link" href="/list">Recipes</a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="/create">Create</a>
+                      <a className="nav-link" href="/login">Login</a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="/logout">Log Out</a>
+                      <a className="nav-link" href="/signup">Sign Up</a>
                     </li>
                   </ul>
                 </div>

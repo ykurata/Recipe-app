@@ -46,10 +46,10 @@ class Login extends Component {
   render() {
     return (
       <div className="login-form">
-        <form className="text-center border border-light p-5 w-5" action="#!">
+        <form className="text-center border border-light p-5 w-5" onSubmit={this.onSubmit}>
             <p className="h4 mb-4">Log in</p>
-            <input type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
-            <input type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
+            <input onChange={this.onChange} type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
+            <input onChange={this.onChange} type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
             <button className="btn btn-info btn-block my-4" type="submit">Log In</button>
             <p>Not a member?
                 <a href="/signup">Register</a>
