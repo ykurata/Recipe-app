@@ -63,11 +63,15 @@ class Form extends Component {
               <div className="col-md-12 col-lg-6">
                 <div className="image-center text-center">
                   <img src={this.state.image} className="img-thumbnail img-fluid" alt="" />
-                  <input
-                    type="file"
-                    name="image"
-                    onChange={this.imageChange}
-                  />
+                  <label className="btn btn-info">
+                    Select Image
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={this.imageChange}
+                      hidden
+                    />
+                  </label>
                 </div>
               </div>
               <div className="col-md-12 col-lg-6">

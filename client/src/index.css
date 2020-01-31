@@ -48,6 +48,13 @@ html, body {
   width: 85%;
 }
 
+h2.heading {
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
 #form .row {
   padding-top: 2rem;
 }
@@ -62,13 +69,6 @@ html, body {
   width: 100%;
   max-height: 450px;
   margin-bottom: 3rem;
-}
-
-h2.heading {
-  font-size: 1.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-top: 1rem;
 }
 
 textarea {
