@@ -127,6 +127,12 @@ h5 {
 
  
 @media (max-width: 576px) {
+  .login-form {
+    width: 80%;
+    margin: 4rem auto;
+  }
+  
+
   #form img {
     object-fit: cover; 
     object-position: center; /* Center the image within the element */

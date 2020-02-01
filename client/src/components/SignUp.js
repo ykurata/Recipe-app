@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
+import Navbar from "./Navbar";
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -50,18 +52,21 @@ class SignUp extends Component {
   render() {
    
     return (
-      <div className="login-form">
-        <form className="text-center border border-light p-5 w-5" onSubmit={this.onSubmit}>
-          <p className="h4 mb-4">Sign Up</p>
-          <input onChange={this.onChange} type="text" id="defaultRegisterFormName" class="form-control mb-4" placeholder="Name"></input>
-          <input onChange={this.onChange} type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
-          <input onChange={this.onChange} type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
-          <input onChange={this.onChange} type="password" name="confirmPassword" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Confirm Password" />
-          <button className="btn btn-info btn-block my-4" type="submit">Sign Up</button>
-          <p>Already a member?
-              <a href="/login">Log In</a>
-          </p>
-      </form>
+      <div>
+        <Navbar></Navbar>
+        <div className="login-form">
+          <form className="text-center border border-light pt-5" onSubmit={this.onSubmit}>
+            <p className="h4 mb-4">Sign Up</p>
+            <input onChange={this.onChange} type="text" id="defaultRegisterFormName" class="form-control mb-4" placeholder="Name"></input>
+            <input onChange={this.onChange} type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
+            <input onChange={this.onChange} type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
+            <input onChange={this.onChange} type="password" name="confirmPassword" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Confirm Password" />
+            <button className="btn btn-info btn-block my-4" type="submit">Sign Up</button>
+            <p>Already a member?
+                <a href="/login">Log In</a>
+            </p>
+          </form>
+        </div>
       </div>
     );
   }
