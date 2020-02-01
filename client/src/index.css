@@ -104,6 +104,10 @@ textarea {
   margin-bottom: 3rem;
 }
 
+p {
+  color: grey;
+}
+
 h5 {
   font-weight: bold;
   padding-bottom: 1rem;
@@ -115,6 +119,10 @@ h5 {
 
 .card-body {
   white-space: pre-wrap;
+}
+
+.btn {
+  margin-right: 2rem;
 }
 
  

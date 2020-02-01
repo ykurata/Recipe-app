@@ -8,7 +8,8 @@ class Detail extends Component {
     super(props);
     this.state = {
       recipe: {},
-      token: localStorage.getItem("jwtToken")
+      token: localStorage.getItem("jwtToken"),
+      name: localStorage.getItem("name")
     };
   }
 
@@ -39,6 +40,7 @@ class Detail extends Component {
         <div className="inner-div">
           <div className="col-12 text-center">
             <h2 className="heading">{recipe.name}</h2>
+            <p>Created by {this.state.name}</p>
           </div>
         
           <div className="row padding">
@@ -64,6 +66,13 @@ class Detail extends Component {
                   </div>
                 </div>
               </div>
+              {this.state.token ?
+                <div className="content">
+                  <button type="button" className="btn btn-info">Update</button>
+                  <button type="button" className="btn btn-outline-info">Delete</button>
+                </div>
+              : null  
+              }
             </div>
           </div>
         </div>
