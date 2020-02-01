@@ -9,7 +9,8 @@ class Detail extends Component {
     this.state = {
       recipe: {},
       token: localStorage.getItem("jwtToken"),
-      name: localStorage.getItem("name")
+      name: localStorage.getItem("name"),
+      userId: localStorage.getItem("userId")
     };
   }
 
@@ -66,7 +67,7 @@ class Detail extends Component {
                   </div>
                 </div>
               </div>
-              {this.state.token ?
+              {this.state.userId === recipe.userId ?
                 <div className="content">
                   <button type="button" className="btn btn-info">Update</button>
                   <button type="button" className="btn btn-outline-info">Delete</button>

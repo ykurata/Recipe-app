@@ -41,6 +41,10 @@ html, body {
   margin: 4rem auto;
 }
 
+.error {
+  color: red;
+  text-align: left;
+}
 
 /* Recipe form */
 .main {

@@ -38,6 +38,7 @@ class SignUp extends Component {
         const decoded = jwt_decode(token);
         localStorage.setItem("jwtToken", token);
         localStorage.setItem("name", decoded.name);
+        localStorage.setItem("userId", decoded.id);
         this.props.history.push("/");
       })
       .catch(err => {
@@ -45,7 +46,6 @@ class SignUp extends Component {
           validationErrors: err.response.data,
           error: err.response.data
         });
-       
       });
   }
 
@@ -57,7 +57,7 @@ class SignUp extends Component {
         <div className="login-form">
           <form className="text-center border border-light pt-5" onSubmit={this.onSubmit}>
             <p className="h4 mb-4">Sign Up</p>
-            <input onChange={this.onChange} type="text" id="defaultRegisterFormName" class="form-control mb-4" placeholder="Name"></input>
+            <input onChange={this.onChange} type="text" id="defaultRegisterFormName" className="form-control mb-4" placeholder="Name"></input>
             <input onChange={this.onChange} type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
             <input onChange={this.onChange} type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
             <input onChange={this.onChange} type="password" name="confirmPassword" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Confirm Password" />
