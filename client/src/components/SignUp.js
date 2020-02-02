@@ -44,7 +44,7 @@ class SignUp extends Component {
       .catch(err => {
         this.setState({
           validationErrors: err.response.data,
-          error: err.response.data
+          error: err.response.data.error
         });
       });
   }
@@ -57,10 +57,25 @@ class SignUp extends Component {
         <div className="login-form">
           <form className="text-center border border-light pt-5" onSubmit={this.onSubmit}>
             <p className="h4 mb-4">Sign Up</p>
-            <input onChange={this.onChange} type="text" id="defaultRegisterFormName" className="form-control mb-4" placeholder="Name"></input>
+            {this.state.error ? 
+              <p className="error">{this.state.error}</p>
+            : null}
+            {this.state.validationErrors ? 
+              <p className="error">{this.state.validationErrors.name}</p>
+            : null}
+            <input onChange={this.onChange} type="text" name="name" id="defaultRegisterFormName" className="form-control mb-4" placeholder="Name"></input>
+            {this.state.validationErrors ? 
+              <p className="error">{this.state.validationErrors.email}</p>
+            : null}
             <input onChange={this.onChange} type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
+            {this.state.validationErrors ? 
+              <p className="error">{this.state.validationErrors.password}</p>
+            : null}
             <input onChange={this.onChange} type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
-            <input onChange={this.onChange} type="password" name="confirmPassword" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Confirm Password" />
+            {this.state.validationErrors ? 
+              <p className="error">{this.state.validationErrors.password2}</p>
+            : null}
+            <input onChange={this.onChange} type="password" name="password2" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Confirm Password" />
             <button className="btn btn-info btn-block my-4" type="submit">Sign Up</button>
             <p>Already a member?
                 <a href="/login">Log In</a>
