@@ -5,6 +5,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Landing from "./components/Landing";
 import Form from "./components/Form";
+import Update from "./components/Update";
 import List from "./components/List";
 import Detail from "./components/Detail";
 import PrivateRoute from "./components/PrivateRoute";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/list" component={List} />
         <Route path="/:id" component={Detail} />
+        <Route path="/update/:id" component={Update} />
       </Switch>
     </BrowserRouter>
   );

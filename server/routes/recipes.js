@@ -74,10 +74,16 @@ router.put("/update/:id", upload.single('recipeImage'), auth, (req, res, next) =
 
 // Get all recipes 
 router.get("/list", (req, res, next) => {
-  Recipe.find({}, (err, recipes) => {
+  Recipe.find({})
+  .populate("userId", "name")
+  .exec(function(err, recipes){
     if (err) return next(err);
-    res.status(200).json(recipes);
-  });
+    res.json(recipes);
+  })
+  // Recipe.find({}, (err, recipes) => {
+  //   if (err) return next(err);
+  //   res.status(200).json(recipes);
+  // });
 });
 
 // Get a specific recipes 

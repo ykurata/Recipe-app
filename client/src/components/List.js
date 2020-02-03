@@ -33,6 +33,9 @@ const ListStyles = theme => ({
   },
   content: {
     textDecoration: "none"
+  },
+  userName: {
+    fontSize: 12
   }
 });
 
@@ -42,6 +45,7 @@ class List extends Component {
     this.state = {
       recipes : [],
       token: localStorage.getItem("jwtToken"),
+      userId: localStorage.getItem("userId"),
     }
   }
 
@@ -88,12 +92,22 @@ class List extends Component {
               }
             </CardActionArea>     
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {item.name}
+              <Typography  variant="h5" component="h2">
+                {item.name} 
               </Typography>
-              <Typography noWrap variant="body2" color="textSecondary" component="p">
-                {item.ingredients}
+              <Typography gutterBottom className={classes.userName} variant="body1" color="textSecondary">
+                Created by {item.userId.name}
               </Typography>
+              <Typography noWrap variant="body2" color="textSecondary" >
+                Ingredients: {item.ingredients}
+              </Typography>
+              {this.state.userId === item.userId._id ?
+                <div className="button-div">
+                  <button component={Link} to={"/update/:id"} type="button" className="btn btn-info">Update</button>
+                  <button type="button" className="btn btn-outline-info">Delete</button>
+                </div>
+              : null  
+              }
             </CardContent>
           </Card>
         </Grid>

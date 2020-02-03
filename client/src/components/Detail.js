@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 import Navbar from "./Navbar";
@@ -67,13 +68,6 @@ class Detail extends Component {
                   </div>
                 </div>
               </div>
-              {this.state.userId === recipe.userId ?
-                <div className="content">
-                  <button type="button" className="btn btn-info">Update</button>
-                  <button type="button" className="btn btn-outline-info">Delete</button>
-                </div>
-              : null  
-              }
             </div>
           </div>
         </div>

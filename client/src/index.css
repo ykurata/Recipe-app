@@ -84,8 +84,12 @@ textarea {
 }
 
 /* List of recipes  */
-#list .container-fluid {
-  padding-top: 5rem;
+.button-div {
+  padding-top:  1rem;
+}
+
+.btn  {
+  margin-right: 1rem;
 }
 
 
@@ -125,11 +129,7 @@ h5 {
   white-space: pre-wrap;
 }
 
-.btn {
-  margin-right: 2rem;
-}
 
- 
 @media (max-width: 576px) {
   .login-form {
     width: 80%;
