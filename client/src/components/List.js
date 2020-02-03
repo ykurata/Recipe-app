@@ -103,7 +103,7 @@ class List extends Component {
               </Typography>
               {this.state.userId === item.userId._id ?
                 <div className="button-div">
-                  <button component={Link} to={"/update/:id"} type="button" className="btn btn-info">Update</button>
+                  <a href={`update/${item._id}`} type="button" className="btn btn-info">Update</a>
                   <button type="button" className="btn btn-outline-info">Delete</button>
                 </div>
               : null  

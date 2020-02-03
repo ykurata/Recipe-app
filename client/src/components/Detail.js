@@ -10,7 +10,6 @@ class Detail extends Component {
     this.state = {
       recipe: {},
       token: localStorage.getItem("jwtToken"),
-      name: localStorage.getItem("name"),
       userId: localStorage.getItem("userId")
     };
   }
