@@ -20,6 +20,7 @@ class Update extends Component {
   }
 
   componentDidMount() {
+    this.setState({ formData: new FormData() });
     this.getRecipe();
   }
    
@@ -30,7 +31,8 @@ class Update extends Component {
         recipe: res.data,
         name: res.data.name,
         ingredients: res.data.ingredients,
-        steps: res.data.steps
+        steps: res.data.steps,
+        image: res.data.recipeImage
       });
     })
     .catch(err => {
@@ -57,7 +59,7 @@ class Update extends Component {
     formData.append("steps", steps);
     formData.append("recipeImage", sendImage);
 
-    axios.put(`update/${this.state.recipe._id}`, formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    axios.put(`/recipes/update/${this.state.recipe._id}`, formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
         console.log(res.data);
       })
@@ -67,8 +69,6 @@ class Update extends Component {
   }
 
   render() {
-    console.log(this.state.recipeImage);
-  
     return (
       <div>
         <Navbar></Navbar>
@@ -79,22 +79,22 @@ class Update extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 col-lg-6">
-              <div className="image text-center">
-                <img src={this.state.image} className="img-thumbnail img-fluid" alt="No Image" />
-                <label className="btn btn-info">
-                  Select Image
-                  <input
-                    type="file"
-                    name="image"
-                    onChange={this.imageChange}
-                    hidden
-                  />
-                </label>
-              </div>
+                <div className="image text-center">
+                  <img src={this.state.image} className="img-fluid" alt="" />
+                  <label className="btn btn-info">
+                    Select Image
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={this.imageChange}
+                      hidden
+                    />
+                  </label>
+                </div>
               </div>
               <div className="col-md-12 col-lg-6">
-                <form className="text-center border border-light">
-                    <input onChange={this.onChange} type="text" value={this.state.name} name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
+                <form className="text-center border border-light" onSubmit={this.onSubmit}>
+                    <input onChange={this.onChange} value={this.state.name} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
                     <textarea onChange={this.onChange} value={this.state.ingredients} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
                     <textarea onChange={this.onChange} value={this.state.steps} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
                     <button className="btn btn-info btn-block my-4" type="submit">Edit</button>

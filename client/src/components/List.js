@@ -100,10 +100,7 @@ class List extends Component {
               </Typography>
               <Typography noWrap variant="body2" color="textSecondary" >
                 Ingredients: {item.ingredients} 
-              </Typography>       
-              <Typography noWrap variant="body2" color="textSecondary" >
-                {item.userId._id} 
-              </Typography>      
+              </Typography>         
             </CardContent>
           </Card>
         </Grid>
