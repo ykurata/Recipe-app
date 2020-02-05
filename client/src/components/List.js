@@ -99,9 +99,11 @@ class List extends Component {
                 Created by {item.userId.name}
               </Typography>
               <Typography noWrap variant="body2" color="textSecondary" >
-                Ingredients: {item.ingredients}
-              </Typography>
-             
+                Ingredients: {item.ingredients} 
+              </Typography>       
+              <Typography noWrap variant="body2" color="textSecondary" >
+                {item.userId._id} 
+              </Typography>      
             </CardContent>
           </Card>
         </Grid>

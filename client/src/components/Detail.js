@@ -9,6 +9,7 @@ class Detail extends Component {
     super(props);
     this.state = {
       recipe: {},
+      userid: "",
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
       name: localStorage.getItem("name")
@@ -23,7 +24,8 @@ class Detail extends Component {
     axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
     .then(res => {
       this.setState({
-        recipe: res.data
+        recipe: res.data,
+        userid: res.data.userId._id
       });
     })
     .catch(err => {
@@ -33,8 +35,6 @@ class Detail extends Component {
 
   render() {
     const { recipe } = this.state;
-    console.log(this.state.userId);
-    console.log(this.state.recipe.userId);
     return (
       <div>
        <Navbar></Navbar>
@@ -69,7 +69,7 @@ class Detail extends Component {
                   </div>
                 </div>
               </div>
-              {this.state.userId === recipe.userId ?
+              {this.state.userId === this.state.userid ?
                 <div className="button-div">
                   <a href={`/update/${recipe._id}`} type="button" className="btn btn-info">Update</a>
                   <button type="button" className="btn btn-outline-info">Delete</button>
