@@ -15,13 +15,12 @@ function App() {
     <BrowserRouter>
       <Switch>
         <PrivateRoute path="/create" component={Form} />
-        <PrivateRoute path="/update" />
+        <PrivateRoute path="/update/:id" component={Update} />
         <Route exact path="/" component={Landing} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
         <Route path="/list" component={List} />
         <Route path="/:id" component={Detail} />
-        <Route path="/update/:id" component={Update} />
       </Switch>
     </BrowserRouter>
   );

@@ -10,7 +10,8 @@ class Detail extends Component {
     this.state = {
       recipe: {},
       token: localStorage.getItem("jwtToken"),
-      userId: localStorage.getItem("userId")
+      userId: localStorage.getItem("userId"),
+      name: localStorage.getItem("name")
     };
   }
 
@@ -32,7 +33,8 @@ class Detail extends Component {
 
   render() {
     const { recipe } = this.state;
-
+    console.log(this.state.userId);
+    console.log(this.state.recipe.userId);
     return (
       <div>
        <Navbar></Navbar>
@@ -67,6 +69,13 @@ class Detail extends Component {
                   </div>
                 </div>
               </div>
+              {this.state.userId === recipe.userId ?
+                <div className="button-div">
+                  <a href={`/update/${recipe._id}`} type="button" className="btn btn-info">Update</a>
+                  <button type="button" className="btn btn-outline-info">Delete</button>
+                </div>
+              : null  
+              }
             </div>
           </div>
         </div>

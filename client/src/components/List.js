@@ -81,13 +81,13 @@ class List extends Component {
                   className={classes.media}
                   image={item.recipeImage}
                   component={Link}
-                  to={`/${item._id}`} 
+                  to={`/${item._id}`}
                 />
               : <Avatar 
                   variant="square" 
                   className={classes.avatar}
                   component={Link}
-                  to={`/${item._id}`} 
+                  to={`/${item._id}`}
                 >No Image</Avatar>
               }
             </CardActionArea>     
@@ -101,13 +101,7 @@ class List extends Component {
               <Typography noWrap variant="body2" color="textSecondary" >
                 Ingredients: {item.ingredients}
               </Typography>
-              {this.state.userId === item.userId._id ?
-                <div className="button-div">
-                  <a href={`update/${item._id}`} type="button" className="btn btn-info">Update</a>
-                  <button type="button" className="btn btn-outline-info">Delete</button>
-                </div>
-              : null  
-              }
+             
             </CardContent>
           </Card>
         </Grid>

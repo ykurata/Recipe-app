@@ -59,8 +59,8 @@ router.put("/update/:id", upload.single('recipeImage'), auth, (req, res, next) =
     recipe.name = req.body.name,
     recipe.ingredients = req.body.ingredients,
     recipe.steps = req.body.steps
-    recipe.recipeImage = req.file.path
-    
+    recipe.recipeImage= req.file.path
+  
     recipe.save()
     .then(recipe => {
       res.status(200).json(recipe);
@@ -75,23 +75,21 @@ router.put("/update/:id", upload.single('recipeImage'), auth, (req, res, next) =
 // Get all recipes 
 router.get("/list", (req, res, next) => {
   Recipe.find({})
-  .populate("userId", "name")
-  .exec(function(err, recipes){
-    if (err) return next(err);
-    res.json(recipes);
-  })
-  // Recipe.find({}, (err, recipes) => {
-  //   if (err) return next(err);
-  //   res.status(200).json(recipes);
-  // });
+    .populate("userId", "name")
+    .exec(function(err, recipes){
+      if (err) return next(err);
+      res.json(recipes);
+    })
 });
 
 // Get a specific recipes 
 router.get("/get/:id", (req, res, next) => {
-  Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
-    if (err) return next(err);
-    res.status(200).json(recipe);
-  });
+  Recipe.findOne({ _id: req.params.id })
+    .populate("userId", "name")
+    .exec(function(err, recipe) {
+      if (err) return next(err);
+      res.json(recipe);
+    });
 });
 
 
