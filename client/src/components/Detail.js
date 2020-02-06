@@ -10,9 +10,9 @@ class Detail extends Component {
     this.state = {
       recipe: {},
       userid: "",
+      username: "",
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
-      name: localStorage.getItem("name")
     };
   }
 
@@ -25,7 +25,8 @@ class Detail extends Component {
     .then(res => {
       this.setState({
         recipe: res.data,
-        userid: res.data.userId._id
+        userid: res.data.userId._id,
+        username:res.data.userId.name
       });
     })
     .catch(err => {
@@ -43,7 +44,7 @@ class Detail extends Component {
         <div className="inner-div">
           <div className="col-12 text-center">
             <h2 className="heading">{recipe.name}</h2>
-            <p>Created by {this.state.name}</p>
+            <p>Created by {this.state.username}</p>
           </div>
         
           <div className="row padding">

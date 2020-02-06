@@ -14,7 +14,8 @@ class Form extends Component {
       image: null,
       sendImage: null,
       formData: {},
-      token: localStorage.getItem("jwtToken")
+      token: localStorage.getItem("jwtToken"),
+      validationErrors: []
     };
   }
 
@@ -46,7 +47,9 @@ class Form extends Component {
         console.log(res.data);
       })
       .catch(err => {
-        console.log(err);
+        this.setState({
+          validationErrors: err.response.data
+        })
       });
   }
 
@@ -76,8 +79,17 @@ class Form extends Component {
               </div>
               <div className="col-md-12 col-lg-6">
                 <form className="text-center border border-light" onSubmit={this.onSubmit}>
+                    {this.state.validationErrors ? 
+                      <p className="error">{this.state.validationErrors.name}</p>
+                    : null}
                     <input onChange={this.onChange} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
+                    {this.state.validationErrors ? 
+                      <p className="error">{this.state.validationErrors.ingredients}</p>
+                    : null}
                     <textarea onChange={this.onChange} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                    {this.state.validationErrors ? 
+                      <p className="error">{this.state.validationErrors.steps}</p>
+                    : null}
                     <textarea onChange={this.onChange} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
                     <button className="btn btn-info btn-block my-4" type="submit">Create</button>
                     <a href="/"><p>Cancel</p></a>

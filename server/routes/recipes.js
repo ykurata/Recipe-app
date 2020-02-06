@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 
+// Load input validation
+const validateRecipeInput = require("../validation/recipe");
+
 // import model and auth middleware
 const Recipe = require("../models/Recipe");
 const auth = require("./middleware/utils");
@@ -34,6 +37,13 @@ const upload = multer({
 
 // Create a recipe 
 router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
+  // Form validation
+  const { errors, isValid } = validateRecipeInput(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const newRecipe = new Recipe({
     userId: req.user,
     name: req.body.name,
@@ -54,6 +64,13 @@ router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
 
 // Update a recipe
 router.put("/update/:id", upload.single('recipeImage'), auth, (req, res, next) => {
+  // Form validation
+  const { errors, isValid } = validateRecipeInput(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
     if (err) return next(err);
     recipe.name = req.body.name,
