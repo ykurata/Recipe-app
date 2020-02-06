@@ -15,7 +15,8 @@ class Form extends Component {
       sendImage: null,
       formData: {},
       token: localStorage.getItem("jwtToken"),
-      validationErrors: []
+      validationErrors: [],
+      error: ""
     };
   }
 
@@ -36,6 +37,13 @@ class Form extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    if (this.state.sendImage === null) {
+      this.setState({
+        error: "Please select Image"
+      });
+    }
+
     const { name, ingredients, steps, sendImage, formData } = this.state;
     formData.append("name", name);
     formData.append("ingredients", ingredients);
@@ -65,6 +73,9 @@ class Form extends Component {
             <div className="row">
               <div className="col-md-12 col-lg-6">
                 <div className="image text-center">
+                  {this.state.error ? 
+                    <label className="error">{this.state.error}</label>
+                  : null}
                   <img src={this.state.image} className="img-fluid" alt="" />
                   <label className="btn btn-info">
                     Select Image
@@ -75,6 +86,9 @@ class Form extends Component {
                       hidden
                     />
                   </label>
+                  {/* {this.state.error ? 
+                    <p className="error" style={{marginLeft: "180px"}}>{this.state.error}</p>
+                  : null} */}
                 </div>
               </div>
               <div className="col-md-12 col-lg-6">
