@@ -63,7 +63,7 @@ router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
 
 
 // Update a recipe
-router.put("/update/:id", upload.single('recipeImage'), auth, (req, res, next) => {
+router.put("/update/:id", auth, (req, res, next) => {
   // Form validation
   const { errors, isValid } = validateRecipeInput(req.body);
   // Check validation
@@ -76,8 +76,7 @@ router.put("/update/:id", upload.single('recipeImage'), auth, (req, res, next) =
     recipe.name = req.body.name,
     recipe.ingredients = req.body.ingredients,
     recipe.steps = req.body.steps
-    recipe.recipeImage= req.file.path
-  
+
     recipe.save()
     .then(recipe => {
       res.status(200).json(recipe);

@@ -58,6 +58,7 @@ class Form extends Component {
         this.setState({
           validationErrors: err.response.data
         })
+        console.log(err.response.data.errors);
       });
   }
 

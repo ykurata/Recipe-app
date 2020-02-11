@@ -46,6 +46,7 @@ html, body {
   text-align: left;
 }
 
+
 /* Recipe form */
 .main {
   padding-top: 5rem;
@@ -81,6 +82,17 @@ h2.heading {
 
 textarea {
   white-space: pre-wrap;
+}
+
+
+/* Update Form */
+#update {
+  width: 50%;
+  margin: auto;
+}
+
+#update .updateMain {
+  padding-top: 5rem;
 }
 
 /* List of recipes  */
@@ -134,6 +146,10 @@ h5 {
   .login-form {
     width: 80%;
     margin: 4rem auto;
+  }
+
+  #update {
+    width: 100%;
   }
   
 

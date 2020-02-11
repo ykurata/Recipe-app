@@ -15,7 +15,9 @@ class Update extends Component {
       image: null,
       sendImage: null,
       formData: {},
-      token: localStorage.getItem("jwtToken")
+      token: localStorage.getItem("jwtToken"),
+      validationErrors: [],
+      error: ""
     };
   }
 
@@ -53,18 +55,28 @@ class Update extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { name, ingredients, steps, sendImage, formData } = this.state;
-    formData.append("name", name);
-    formData.append("ingredients", ingredients);
-    formData.append("steps", steps);
-    formData.append("recipeImage", sendImage);
 
-    axios.put(`/recipes/update/${this.state.recipe._id}`, formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    if (this.state.sendImage === null) {
+      this.setState({
+        error: "Please select Image"
+      });
+    }
+
+    const { name, ingredients, steps, sendImage } = this.state;
+    const updatedRecipe = {
+      name: name,
+      ingredients: ingredients,
+      steps: steps
+    }
+
+    axios.put(`/recipes/update/${this.state.recipe._id}`, updatedRecipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
         console.log(res.data);
       })
       .catch(err => {
-        console.log(err);
+        this.setState({
+          validationErrors: err.response.data
+        })
       });
   }
 
@@ -72,38 +84,31 @@ class Update extends Component {
     return (
       <div>
         <Navbar></Navbar>
-        <div id="form">
-          <div className="main container-fluid">
+        <div id="update">
+          <div className="updateMain container-fluid">
             <div className="col-12 text-center">
               <h2 className="heading">Edit Recipe</h2>
             </div>
-            <div className="row">
-              <div className="col-md-12 col-lg-6">
-                <div className="image text-center">
-                  <img src={this.state.image} className="img-fluid" alt="" />
-                  <label className="btn btn-info">
-                    Select Image
-                    <input
-                      type="file"
-                      name="image"
-                      onChange={this.imageChange}
-                      hidden
-                    />
-                  </label>
-                </div>
-              </div>
-              <div className="col-md-12 col-lg-6">
-                <form className="text-center border border-light" onSubmit={this.onSubmit}>
-                    <input onChange={this.onChange} value={this.state.name} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
-                    <textarea onChange={this.onChange} value={this.state.ingredients} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
-                    <textarea onChange={this.onChange} value={this.state.steps} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
-                    <button className="btn btn-info btn-block my-4" type="submit">Edit</button>
-                    <a href="/"><p>Cancel</p></a>
-                </form>
-              </div>
+            <div className="col-12 text-center">
+              <form className="update text-center border border-light" onSubmit={this.onSubmit}>
+                  {this.state.validationErrors ? 
+                    <p className="error">{this.state.validationErrors.name}</p>
+                  : null}
+                  <input onChange={this.onChange} value={this.state.name} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
+                  {this.state.validationErrors ? 
+                    <p className="error">{this.state.validationErrors.ingredients}</p>
+                  : null}
+                  <textarea onChange={this.onChange} value={this.state.ingredients} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                  {this.state.validationErrors ? 
+                    <p className="error">{this.state.validationErrors.steps}</p>
+                  : null}
+                  <textarea onChange={this.onChange} value={this.state.steps} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
+                  <button className="btn btn-info btn-block my-4" type="submit">Edit</button>
+                  <a href="/"><p>Cancel</p></a>
+              </form>
             </div>
           </div>
-        </div>  
+        </div>
       </div>    
     );
   }
