@@ -95,8 +95,11 @@ router.put("/like/:id", auth, (req, res, next) => {
     if (recipe.likes.filter(like => like.user.toString() === req.user).length > 0) {
       return res.json("You already liked the recipe");
     }
-
-    recipe.likes.push(req.user);
+    
+    const newLike = {
+      user: req.user
+    }
+    recipe.likes.push(newLike);
     recipe.save()
       .then(recipe => {
         res.status(200).json(recipe);
