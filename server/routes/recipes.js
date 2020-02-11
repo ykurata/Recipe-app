@@ -88,6 +88,14 @@ router.put("/update/:id", upload.single('recipeImage'), auth, (req, res, next) =
   });
 });
 
+// Post rating and review
+router.put("/review/:id", auth, (req, res, next) => {
+  Recipe.findOne({ _id: req.params.id })
+  .then(recipe => {
+
+  })
+})
+
 
 // Get all recipes 
 router.get("/list", (req, res, next) => {

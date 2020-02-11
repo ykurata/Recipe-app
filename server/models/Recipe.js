@@ -22,7 +22,23 @@ const RecipeSchema = new Schema(
     },
     recipeImage: {
       type: String
-    }
+    },
+    rating: [{
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+      },
+      type: Number
+    }],
+    review: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "users"
+        },
+        type: String
+      }
+    ]
   },
   {
     timestamps: { createdAt: true }

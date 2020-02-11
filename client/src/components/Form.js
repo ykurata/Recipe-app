@@ -86,9 +86,6 @@ class Form extends Component {
                       hidden
                     />
                   </label>
-                  {/* {this.state.error ? 
-                    <p className="error" style={{marginLeft: "180px"}}>{this.state.error}</p>
-                  : null} */}
                 </div>
               </div>
               <div className="col-md-12 col-lg-6">
