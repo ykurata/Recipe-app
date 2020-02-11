@@ -23,20 +23,24 @@ const RecipeSchema = new Schema(
     recipeImage: {
       type: String
     },
-    rating: [{
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users"
-      },
-      type: Number
-    }],
-    review: [
+    likes: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "users"
+        }
+      }
+    ],
+    reviews: [
       {
         user: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "users"
         },
-        type: String
+        text:{
+          type: String,
+          required: true
+        }
       }
     ]
   },

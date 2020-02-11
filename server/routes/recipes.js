@@ -88,13 +88,50 @@ router.put("/update/:id", upload.single('recipeImage'), auth, (req, res, next) =
   });
 });
 
-// Post rating and review
+// Post like to a recipe
+router.put("/like/:id", auth, (req, res, next) => {
+  Recipe.findOne({ _id: req.params.id })
+  .then(recipe => {
+    if (recipe.likes.filter(like => like.user.toString() === req.user).length > 0) {
+      return res.json("You already liked the recipe");
+    }
+
+    recipe.likes.push(req.user);
+    recipe.save()
+      .then(recipe => {
+        res.status(200).json(recipe);
+      })
+      .catch(err => {
+        res.status(404).json(err);
+      });
+  })
+  .catch(err => {
+    res.json(err);
+  });
+});
+
+
+// Post a review to a recipe
 router.put("/review/:id", auth, (req, res, next) => {
   Recipe.findOne({ _id: req.params.id })
   .then(recipe => {
-
+    const newReview = {
+      user: req.user,
+      text: req.body.text
+    }
+    recipe.reviews.push(newReview);
+    recipe.save()
+      .then(recipe => {
+        res.status(200).json(recipe);
+      })
+      .catch(err => {
+        res.status(404).json(err);
+      });
   })
-})
+  .catch(err => {
+    res.json(err);
+  });
+});
 
 
 // Get all recipes 
