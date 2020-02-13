@@ -132,6 +132,10 @@ h5 {
   white-space: pre-wrap;
 }
 
+#detail .delete {
+  margin-left: 2rem;
+}
+
 #detail .icon {
   margin-right: 2rem;
   font-size: 1.3rem;
@@ -153,6 +157,15 @@ h5 {
 #detail .review-button {
   margin-top: 1rem;
   background-color: blanchedalmond;
+}
+
+#detail .card-review {
+  margin: .5rem;
+}
+
+#detail .name {
+  text-decoration: underline;
+  text-decoration-color: grey;
 }
 
 
@@ -189,6 +202,10 @@ h5 {
 
   #detail .inner-div {
     width: 100%;
+  }
+
+  #detail .title-review {
+    text-align: center;
   }
   
   input textarea {

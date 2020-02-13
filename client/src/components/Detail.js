@@ -11,6 +11,7 @@ class Detail extends Component {
       userid: "",
       username: "",
       likes: "",
+      reviews: [],
       reviewLength: "",
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
@@ -30,6 +31,7 @@ class Detail extends Component {
       this.setState({
         recipe: res.data,
         likes: res.data.likes.length,
+        reviews: res.data.reviews,
         reviewLength: res.data.reviews.length,
         userid: res.data.userId._id,
         username:res.data.userId.name
@@ -83,7 +85,8 @@ class Detail extends Component {
 
   render() {
     const { recipe } = this.state;
-    console.log(recipe);
+    const { reviews } = this.state;
+
     return (
       <div>
        <Navbar></Navbar>
@@ -118,12 +121,14 @@ class Detail extends Component {
                   </div>
                 </div>
               </div>
+
+              {/* Display Update & Delete buttons only for a user who created the recipe */}
               {this.state.userId === this.state.userid ?
                 <div className="button-div">
                   <a href={`/update/${recipe._id}`} type="button" className="btn btn-info">Update</a>
                   <button 
                     type="button" 
-                    className="btn btn-outline-info"
+                    className="delete btn btn-outline-info"
                     onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) this.deleteRecipe() } }
                   >
                     Delete
@@ -131,6 +136,8 @@ class Detail extends Component {
                 </div>
               : null  
               }
+              
+              {/* Display Like & Write a Review buttons  */}
               {this.state.userId !== this.state.userid ?
                 <div className="button-div text-center">
                     <span className="likes-num">{this.state.likes}</span><i className="fas fa-heart icon" onClick={this.sendLike} type="button">Like</i>
@@ -159,7 +166,15 @@ class Detail extends Component {
           {/* Display reviews */}
           {this.state.reviewLength !== 0 ? 
             <div className="col-12 review">
-              <h5>Reviews</h5>
+              <h5 className="title-review">Reviews ({this.state.reviewLength}) </h5>
+              {reviews.map((item, i) => 
+                <div className="card" key={i}>
+                  <div className="card-review">
+                    <span className="name">{item.user.name} {item.createdAt}</span><br></br>
+                    {item.text}
+                  </div>
+                </div>
+              )}
             </div>
           : null  
           }

@@ -12,9 +12,6 @@ class Update extends Component {
       name: "",
       ingredients: "",
       steps: "",
-      image: null,
-      sendImage: null,
-      formData: {},
       token: localStorage.getItem("jwtToken"),
       validationErrors: [],
       error: ""
@@ -22,7 +19,6 @@ class Update extends Component {
   }
 
   componentDidMount() {
-    this.setState({ formData: new FormData() });
     this.getRecipe();
   }
    
@@ -34,7 +30,6 @@ class Update extends Component {
         name: res.data.name,
         ingredients: res.data.ingredients,
         steps: res.data.steps,
-        image: res.data.recipeImage
       });
     })
     .catch(err => {
@@ -46,23 +41,10 @@ class Update extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
   
-  imageChange = e => {
-    this.setState({
-      image: URL.createObjectURL(e.target.files[0]),
-      sendImage: e.target.files[0]
-    });
-  }
-
   onSubmit = e => {
     e.preventDefault();
 
-    if (this.state.sendImage === null) {
-      this.setState({
-        error: "Please select Image"
-      });
-    }
-
-    const { name, ingredients, steps, sendImage } = this.state;
+    const { name, ingredients, steps } = this.state;
     const updatedRecipe = {
       name: name,
       ingredients: ingredients,
