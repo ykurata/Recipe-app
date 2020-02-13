@@ -83,6 +83,7 @@ class Detail extends Component {
 
   render() {
     const { recipe } = this.state;
+    console.log(recipe);
     return (
       <div>
        <Navbar></Navbar>
@@ -157,7 +158,7 @@ class Detail extends Component {
           
           {/* Display reviews */}
           {this.state.reviewLength !== 0 ? 
-            <div className="col-12 text-center review">
+            <div className="col-12 review">
               <h5>Reviews</h5>
             </div>
           : null  

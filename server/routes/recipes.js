@@ -150,6 +150,7 @@ router.get("/list", (req, res, next) => {
 router.get("/get/:id", (req, res, next) => {
   Recipe.findOne({ _id: req.params.id })
     .populate("userId", "name")
+    .populate("reviews.user", "name")
     .exec(function(err, recipe) {
       if (err) return next(err);
       res.json(recipe);
