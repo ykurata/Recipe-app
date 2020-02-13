@@ -142,6 +142,10 @@ h5 {
   color: #000066;
 }
 
+#detail .likes-num {
+  margin-right: .5rem;
+}
+
 
 @media (max-width: 576px) {
   .login-form {

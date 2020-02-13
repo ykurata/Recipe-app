@@ -10,6 +10,7 @@ class Detail extends Component {
       recipe: {},
       userid: "",
       username: "",
+      likes: "",
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
       error: "",
@@ -27,6 +28,7 @@ class Detail extends Component {
     .then(res => {
       this.setState({
         recipe: res.data,
+        likes: res.data.likes.length,
         userid: res.data.userId._id,
         username:res.data.userId.name
       });
@@ -40,6 +42,15 @@ class Detail extends Component {
     axios.put(`/recipes/like/${this.props.match.params.id}`, this.state.userId, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
         console.log(res.data);
+        axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+          .then(res => {
+            this.setState({
+              recipe: res.data,
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
         this.setState({
@@ -118,7 +129,7 @@ class Detail extends Component {
               }
               {this.state.userId !== this.state.userid ?
                 <div className="button-div text-center">
-                    <i className="fas fa-heart icon" onClick={this.sendLike} type="button">Like</i>
+                    <span className="likes-num">{this.state.likes}</span><i className="fas fa-heart icon" onClick={this.sendLike} type="button">Like</i>
                     <i className="fas fa-pen icon">Write a Review</i>
                     {this.state.error ?
                       <p className="error">{this.state.error}</p>
