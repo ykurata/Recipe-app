@@ -76,7 +76,7 @@ h2.heading {
   margin-bottom: 3rem;
 }
 
-.image {
+#form .image {
   padding-bottom: 3rem;
 }
 
@@ -144,6 +144,14 @@ h5 {
 
 #detail .likes-num {
   margin-right: .5rem;
+}
+
+#detail .review {
+  margin-top: 2rem;
+}
+
+#detail .review-button {
+  margin-top: 1rem;
 }
 
 

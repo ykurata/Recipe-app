@@ -11,6 +11,7 @@ class Detail extends Component {
       userid: "",
       username: "",
       likes: "",
+      reviewLength: "",
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
       error: "",
@@ -29,6 +30,7 @@ class Detail extends Component {
       this.setState({
         recipe: res.data,
         likes: res.data.likes.length,
+        reviewLength: res.data.reviews.length,
         userid: res.data.userId._id,
         username:res.data.userId.name
       });
@@ -70,7 +72,8 @@ class Detail extends Component {
   };
   
   // Display text input field by click
-  showInput() {
+  showInput = e =>  {
+    e.preventDefault();
     this.setState({
       show: true
     });
@@ -130,7 +133,7 @@ class Detail extends Component {
               {this.state.userId !== this.state.userid ?
                 <div className="button-div text-center">
                     <span className="likes-num">{this.state.likes}</span><i className="fas fa-heart icon" onClick={this.sendLike} type="button">Like</i>
-                    <i className="fas fa-pen icon">Write a Review</i>
+                    <i className="fas fa-pen icon" onClick={this.showInput}>Write a Review</i>
                     {this.state.error ?
                       <p className="error">{this.state.error}</p>
                     : null  
@@ -140,13 +143,26 @@ class Detail extends Component {
               }
             </div>
           </div>
-
-          <div className="col-12 text-center">
-            <form>
-              <input type="text" className="form-control"></input>
-              <button type="submit" className="btn btn-info">Submit</button>
-            </form>
-          </div>
+          
+          {/* Review input field */}
+          {this.state.show === true ?
+            <div className="col-12 text-center review">
+              <form>
+                <input type="text" className="form-control"></input>
+                <button type="submit" className="review-button btn btn-info">Submit</button>
+              </form>
+            </div>
+          : null  
+          }
+          
+          {/* Display reviews */}
+          {this.state.reviewLength !== 0 ? 
+            <div className="col-12 text-center review">
+              <h5>Reviews</h5>
+            </div>
+          : null  
+          }
+        
         </div>
       </div>  
       </div>
