@@ -36,15 +36,15 @@ class Detail extends Component {
   };
 
   sendLike()  {
-    axios.put(`/recipes/like/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    axios.put(`/recipes/like/${this.props.match.params.id}`, this.state.userId, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
         console.log(res.data);
       })
       .catch(err => {
         this.setState({
-          validationErrors: err.response.data
-        })
-        console.log(err.response.data);
+          error: err
+        });
+        console.log(err);
       });
   };
 
