@@ -92,7 +92,7 @@ router.put("/like/:id", auth, (req, res, next) => {
   Recipe.findOne({ _id: req.params.id })
   .then(recipe => {
     if (recipe.likes.filter(like => like.user.toString() === req.user).length > 0) {
-      return res.json("You already liked the recipe");
+      return res.json({error: "You already liked the recipe"});
     }
     
     const newLike = {

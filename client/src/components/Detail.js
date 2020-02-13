@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 import Navbar from "./Navbar";
@@ -13,7 +12,9 @@ class Detail extends Component {
       username: "",
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
+      err: ""
     };
+    this.sendLike = this.sendLike.bind(this);
   }
 
   componentDidMount() {
@@ -34,6 +35,31 @@ class Detail extends Component {
     });
   };
 
+  sendLike()  {
+    axios.put(`/recipes/like/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        this.setState({
+          validationErrors: err.response.data
+        })
+        console.log(err.response.data);
+      });
+  };
+
+  deleteRecipe() {
+    axios.delete(`/recipes/delete/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    .then(res => {
+      alert("Successfully deleted");
+    })
+    .catch(err => {
+      console.log(err.response.data);
+    })
+  }
+
+
+
   render() {
     const { recipe } = this.state;
     return (
@@ -50,7 +76,7 @@ class Detail extends Component {
           <div className="row padding">
             <div className="col-md-12 col-lg-6">
               <div className="image text-center">
-                <img src={recipe.recipeImage} className="img-thumbnail img-fluid" alt="No Image" />
+                <img src={recipe.recipeImage} className="img-thumbnail img-fluid" alt="Recipe" />
               </div>
             </div>
             <div className="col-md-12 col-lg-6 text-center">
@@ -73,7 +99,26 @@ class Detail extends Component {
               {this.state.userId === this.state.userid ?
                 <div className="button-div">
                   <a href={`/update/${recipe._id}`} type="button" className="btn btn-info">Update</a>
-                  <button type="button" className="btn btn-outline-info">Delete</button>
+                  <button 
+                    type="button" 
+                    className="btn btn-outline-info"
+                    onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) this.deleteRecipe() } }
+                  >
+                    Delete
+                  </button>
+                </div>
+              : null  
+              }
+              {this.state.userId !== this.state.userid ?
+                <div className="button-div">
+                    <button  
+                      onClick={this.sendLike}
+                      type="button" 
+                      className="btn btn-outline-info"
+                    >
+                      Like
+                    </button>
+                    <a href="" type="button" className="btn btn-info">Write a Review</a>
                 </div>
               : null  
               }
