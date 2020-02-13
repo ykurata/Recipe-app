@@ -95,15 +95,6 @@ textarea {
   padding-top: 5rem;
 }
 
-/* List of recipes  */
-.button-div {
-  padding-top:  1rem;
-}
-
-.btn  {
-  margin-right: 1rem;
-}
-
 
 /* Recipe Detail */
 #detail .row {
@@ -139,6 +130,16 @@ h5 {
 
 .card-body {
   white-space: pre-wrap;
+}
+
+#detail .icon {
+  margin-right: 2rem;
+  font-size: 1.3rem;
+  color: grey;
+}
+
+#detail .icon:hover {
+  color: #000066;
 }
 
 

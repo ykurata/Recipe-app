@@ -12,7 +12,8 @@ class Detail extends Component {
       username: "",
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
-      err: ""
+      error: "",
+      show: false
     };
     this.sendLike = this.sendLike.bind(this);
   }
@@ -42,9 +43,8 @@ class Detail extends Component {
       })
       .catch(err => {
         this.setState({
-          error: err
+          error: err.response.data.error
         });
-        console.log(err);
       });
   };
 
@@ -56,7 +56,14 @@ class Detail extends Component {
     .catch(err => {
       console.log(err.response.data);
     })
-  }
+  };
+  
+  // Display text input field by click
+  showInput() {
+    this.setState({
+      show: true
+    });
+  };
 
 
 
@@ -110,19 +117,24 @@ class Detail extends Component {
               : null  
               }
               {this.state.userId !== this.state.userid ?
-                <div className="button-div">
-                    <button  
-                      onClick={this.sendLike}
-                      type="button" 
-                      className="btn btn-outline-info"
-                    >
-                      Like
-                    </button>
-                    <a href="" type="button" className="btn btn-info">Write a Review</a>
+                <div className="button-div text-center">
+                    <i className="fas fa-heart icon" onClick={this.sendLike} type="button">Like</i>
+                    <i className="fas fa-pen icon">Write a Review</i>
+                    {this.state.error ?
+                      <p className="error">{this.state.error}</p>
+                    : null  
+                    }
                 </div>
               : null  
               }
             </div>
+          </div>
+
+          <div className="col-12 text-center">
+            <form>
+              <input type="text" className="form-control"></input>
+              <button type="submit" className="btn btn-info">Submit</button>
+            </form>
           </div>
         </div>
       </div>  

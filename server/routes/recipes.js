@@ -76,7 +76,7 @@ router.put("/update/:id", auth, (req, res, next) => {
     recipe.name = req.body.name,
     recipe.ingredients = req.body.ingredients,
     recipe.steps = req.body.steps
-
+  
     recipe.save()
     .then(recipe => {
       res.status(200).json(recipe);
@@ -92,20 +92,20 @@ router.put("/like/:id", auth, (req, res, next) => {
   Recipe.findOne({ _id: req.params.id })
   .then(recipe => {
     if (recipe.likes.filter(like => like.user.toString() === req.user).length > 0) {
-      return res.json("You already liked the recipe");
+      return res.status(404).json({ error: "You already liked the recipe"});
+    } else {
+      const newLike = {
+        user: req.user
+      }
+      recipe.likes.push(newLike);
+      recipe.save()
+        .then(recipe => {
+          res.status(200).json(recipe);
+        })
+        .catch(err => {
+          res.status(404).json(err);
+        });
     }
-    
-    const newLike = {
-      user: req.user
-    }
-    recipe.likes.push(newLike);
-    recipe.save()
-      .then(recipe => {
-        res.status(200).json(recipe);
-      })
-      .catch(err => {
-        res.status(404).json(err);
-      });
   })
   .catch(err => {
     res.json(err);
