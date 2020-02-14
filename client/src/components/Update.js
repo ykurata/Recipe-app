@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from "./Navbar";
 
@@ -53,7 +55,10 @@ class Update extends Component {
 
     axios.put(`/recipes/update/${this.state.recipe._id}`, updatedRecipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        console.log(res.data);
+        toast.success("Successfully Updated!" , {
+          position: "top-right",
+          autoClose: 10000
+        }); 
       })
       .catch(err => {
         this.setState({

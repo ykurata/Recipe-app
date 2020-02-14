@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from "./Navbar";
 
@@ -52,13 +54,21 @@ class Form extends Component {
 
     axios.post("/recipes", formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        console.log(res.data);
+        toast.success("Created a recipe!" , {
+          position: "top-right",
+          autoClose: 10000
+        }); 
+        this.setState({ 
+          name: "",
+          ingredients: "",
+          steps: "",
+          image: null
+        })
       })
       .catch(err => {
         this.setState({
           validationErrors: err.response.data
         })
-        console.log(err.response.data.errors);
       });
   }
 

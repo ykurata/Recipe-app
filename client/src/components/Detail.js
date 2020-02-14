@@ -66,7 +66,7 @@ class Detail extends Component {
           })
           .catch(err => {
             console.log(err);
-          });
+          }); 
       })
       .catch(err => {
         this.setState({
@@ -112,7 +112,6 @@ class Detail extends Component {
           position: "top-right",
           autoClose: 10000
         }); 
-        this.setState({ review: "" });
         axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
           .then(res => {
             this.setState({
@@ -132,6 +131,7 @@ class Detail extends Component {
           autoClose: 10000
         });
       });
+      this.setState({ review: "" });
   };
 
   render() {
