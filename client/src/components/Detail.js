@@ -54,12 +54,15 @@ class Detail extends Component {
   sendLike()  {
     axios.put(`/recipes/like/${this.props.match.params.id}`, this.state.userId, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        console.log(res.data);
+        toast.success("You sent a Like!" , {
+          position: "top-right",
+          autoClose: 10000
+        }); 
         axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
           .then(res => {
             this.setState({
-              recipe: res.data,
-            });
+              likes: res.data.likes.length
+            })
           })
           .catch(err => {
             console.log(err);
@@ -75,7 +78,10 @@ class Detail extends Component {
   deleteRecipe() {
     axios.delete(`/recipes/delete/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
     .then(res => {
-      alert("Successfully deleted");
+      toast.success("Successfully deleted!" , {
+        position: "top-right",
+        autoClose: 10000
+      }); 
     })
     .catch(err => {
       console.log(err.response.data);
@@ -170,6 +176,7 @@ class Detail extends Component {
                 {/* Display Update & Delete buttons only for a user who created the recipe */}
                 {this.state.userId === this.state.userid ?
                   <div className="button-div">
+                    <ToastContainer />
                     <a href={`/update/${recipe._id}`} type="button" className="btn btn-info">Update</a>
                     <button 
                       type="button" 
@@ -185,6 +192,7 @@ class Detail extends Component {
                 {/* Display Like & Write a Review buttons  */}
                 {this.state.userId !== this.state.userid ?
                   <div className="button-div text-center">
+                      <ToastContainer />
                       <span className="likes-num">{this.state.likes}</span><i className="fas fa-heart icon" onClick={this.sendLike} type="button">Like</i>
                       <i className="fas fa-pen icon reviewIcon" onClick={this.showInput}>Write a Review</i>
                       {this.state.error ?

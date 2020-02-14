@@ -76,7 +76,7 @@ router.put("/update/:id", auth, (req, res, next) => {
     recipe.name = req.body.name,
     recipe.ingredients = req.body.ingredients,
     recipe.steps = req.body.steps
-  
+    
     recipe.save()
     .then(recipe => {
       res.status(200).json(recipe);
