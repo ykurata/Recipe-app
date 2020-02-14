@@ -10,19 +10,25 @@ class Detail extends Component {
       recipe: {},
       userid: "",
       username: "",
+      review: "",
       likes: "",
       reviews: [],
       reviewLength: "",
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
       error: "",
-      show: false
+      show: false,
+      showButton: false
     };
     this.sendLike = this.sendLike.bind(this);
   }
 
   componentDidMount() {
     this.getRecipe();
+  }
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   getRecipe() {
@@ -76,12 +82,41 @@ class Detail extends Component {
   // Display text input field by click
   showInput = e =>  {
     e.preventDefault();
-    this.setState({
-      show: true
-    });
+    this.setState({ show: true });
   };
 
+  // Display review submit button
+  showButton = e => {
+    e.preventDefault();
+    this.setState({ showButton: true });
+  };
 
+  sendReview = e => {
+    e.preventDefault();
+    const newReview = {
+      text: this.state.review
+    }
+
+    axios.put(`/recipes/review/${this.props.match.params.id}`, newReview, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      .then(res => {
+        console.log(res.data);
+        this.setState({ review: "" });
+        axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+          .then(res => {
+            this.setState({
+              recipe: res.data,
+              reviews: res.data.reviews,
+              reviewLength: res.data.reviews.length
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
 
   render() {
     const { recipe } = this.state;
@@ -141,7 +176,7 @@ class Detail extends Component {
               {this.state.userId !== this.state.userid ?
                 <div className="button-div text-center">
                     <span className="likes-num">{this.state.likes}</span><i className="fas fa-heart icon" onClick={this.sendLike} type="button">Like</i>
-                    <i className="fas fa-pen icon" onClick={this.showInput}>Write a Review</i>
+                    <i className="fas fa-pen icon reviewIcon" onClick={this.showInput}>Write a Review</i>
                     {this.state.error ?
                       <p className="error">{this.state.error}</p>
                     : null  
@@ -155,9 +190,13 @@ class Detail extends Component {
           {/* Review input field */}
           {this.state.show === true ?
             <div className="col-12 text-center review">
-              <form>
-                <input type="text" className="form-control"></input>
-                <button type="submit" className="review-button btn btn-info">Submit</button>
+              <form onSubmit={this.sendReview}>
+                <textarea onChange={this.onChange} onClick={this.showButton} type="text" name="review" id="review" className="form-control" rows="2"></textarea>
+                {/* Show submit button by clicking textarea */}
+                {this.state.showButton === true ?
+                  <button type="submit" className="review-button btn btn-info">Submit</button>
+                : null  
+                }
               </form>
             </div>
           : null  
@@ -170,7 +209,7 @@ class Detail extends Component {
               {reviews.map((item, i) => 
                 <div className="card" key={i}>
                   <div className="card-review">
-                    <span className="name">{item.user.name} {item.createdAt}</span><br></br>
+                    <span className="reviewer-name">{item.user.name} {item.createdAt}</span><br></br>
                     {item.text}
                   </div>
                 </div>

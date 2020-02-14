@@ -39,8 +39,7 @@ const RecipeSchema = new Schema(
           ref: "users"
         },
         text:{
-          type: String,
-          required: true
+          type: String
         },
         createdAt: {
           type: Date,

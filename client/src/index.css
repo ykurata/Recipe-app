@@ -143,7 +143,11 @@ h5 {
 }
 
 #detail .icon:hover {
-  color: #000066;
+  color: #ff99cc;
+}
+
+#detail .reviewIcon:hover {
+  color: #4da6ff;
 }
 
 #detail .likes-num {
@@ -156,16 +160,18 @@ h5 {
 
 #detail .review-button {
   margin-top: 1rem;
-  background-color: blanchedalmond;
+}
+
+#detail .card {
+  margin-bottom: 1rem;
 }
 
 #detail .card-review {
   margin: .5rem;
 }
 
-#detail .name {
-  text-decoration: underline;
-  text-decoration-color: grey;
+#detail .reviewer-name {
+  border-bottom: 1px solid #cccccc;
 }
 
 
