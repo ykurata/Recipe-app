@@ -21,9 +21,12 @@ class Detail extends Component {
       userId: localStorage.getItem("userId"),
       error: "",
       show: false,
-      showButton: false
+      showButton: false,
+      itemsToShow: 5,
+      expanded: false
     };
     this.sendLike = this.sendLike.bind(this);
+    this.showMore = this.showMore.bind(this);
   }
 
   componentDidMount() {
@@ -33,7 +36,8 @@ class Detail extends Component {
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   }
-
+  
+  // GET a recipe
   getRecipe() {
     axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
     .then(res => {
@@ -51,6 +55,7 @@ class Detail extends Component {
     });
   };
 
+  // PUT a like 
   sendLike()  {
     axios.put(`/recipes/like/${this.props.match.params.id}`, this.state.userId, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
@@ -74,7 +79,8 @@ class Detail extends Component {
         });
       });
   };
-
+  
+  // DELETE a recipe
   deleteRecipe() {
     axios.delete(`/recipes/delete/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
     .then(res => {
@@ -88,18 +94,19 @@ class Detail extends Component {
     })
   };
   
-  // Display text input field by click
+  // Display text input field by clicking a button
   showInput = e =>  {
     e.preventDefault();
     this.setState({ show: true });
   };
 
-  // Display review submit button
+  // Display review submit button by clicking a textarea
   showButton = e => {
     e.preventDefault();
     this.setState({ showButton: true });
   };
-
+  
+  // PUT a review 
   sendReview = e => {
     e.preventDefault();
     const newReview = {
@@ -133,6 +140,15 @@ class Detail extends Component {
       });
       this.setState({ review: "" });
   };
+
+  // Show more reviews
+  showMore() {
+    this.state.itemsToShow === 5 ? (
+      this.setState({ itemsToShow: this.state.reviewLength, expanded: true })
+    ) : (
+      this.setState({ itemsToShow: 5, expanded: false })
+    )
+  }
 
   render() {
     const { recipe } = this.state;
@@ -222,19 +238,36 @@ class Detail extends Component {
             }
             
             {/* Display reviews */}
-            {this.state.reviewLength !== 0 ? 
+            {this.state.reviewLength !== 0 ? (
               <div className="col-12 review">
                 <h5 className="title-review">Reviews ({this.state.reviewLength}) </h5>
-                {reviews.map((item, i) => 
+
+                {reviews.slice(0, this.state.itemsToShow).map((review, i) => 
                   <div className="card" key={i}>
                     <div className="card-review">
-                      <span className="reviewer-name">{item.user.name} <Moment format="MM/DD/YYYY">{item.createdAt}</Moment></span><br></br>
-                      {item.text}
+                      <span className="reviewer-name">{review.user.name} <Moment format="MM/DD/YYYY">{review.createdAt}</Moment></span><br></br>
+                      {review.text}
                     </div>
                   </div>
                 )}
+                
+                {this.state.reviewLength > 5 ? (
+                  <button onClick={this.showMore} className="review-button btn btn-info">
+                    {this.state.expanded ? (
+                      <span>Show less</span>
+                      ) : (
+                      <span>Show more</span>
+                      )
+                    }
+                  </button>
+                ) : ( 
+                  null 
+                )  
+                }
               </div>
-            : null  
+            ):(
+              null
+            ) 
             }
           </div>
         </div>  
