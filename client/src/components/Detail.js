@@ -141,13 +141,10 @@ class Detail extends Component {
       this.setState({ review: "" });
   };
 
-  // Show more reviews
   showMore() {
-    this.state.itemsToShow === 5 ? (
-      this.setState({ itemsToShow: this.state.reviewLength, expanded: true })
-    ) : (
-      this.setState({ itemsToShow: 5, expanded: false })
-    )
+    this.setState({
+      itemsToShow: this.state.itemsToShow + 5
+    });
   }
 
   render() {
@@ -237,7 +234,7 @@ class Detail extends Component {
             : null  
             }
             
-            {/* Display reviews */}
+            {/* Display 5 reviews each*/}
             {this.state.reviewLength !== 0 ? (
               <div className="col-12 review">
                 <h5 className="title-review">Reviews ({this.state.reviewLength}) </h5>
@@ -253,12 +250,7 @@ class Detail extends Component {
                 
                 {this.state.reviewLength > 5 ? (
                   <button onClick={this.showMore} className="review-button btn btn-info">
-                    {this.state.expanded ? (
-                      <span>Show less</span>
-                      ) : (
-                      <span>Show more</span>
-                      )
-                    }
+                    Show More
                   </button>
                 ) : ( 
                   null 
