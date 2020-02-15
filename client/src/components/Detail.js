@@ -20,6 +20,7 @@ class Detail extends Component {
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
       error: "",
+      reviewError: "",
       show: false,
       showButton: false,
       itemsToShow: 5,
@@ -132,11 +133,9 @@ class Detail extends Component {
           });
       })
       .catch(err => {
-        console.log(err);
-        toast.error("Something went wrong", {
-          position: "top-right",
-          autoClose: 10000
-        });
+        this.setState({
+          reviewError: err.response.data.error
+        })
       });
       this.setState({ review: "" });
   };
@@ -219,19 +218,31 @@ class Detail extends Component {
             </div>
             
             {/* Review input field */}
-            {this.state.show === true ?
+            {this.state.show === true ? (
               <div className="col-12 text-center review">
                 <form onSubmit={this.sendReview}>
                   <ToastContainer />
                   <textarea onChange={this.onChange} onClick={this.showButton} type="text" name="review" id="review" className="form-control" rows="2"></textarea>
+
+                  {/* show error message */}
+                  {this.state.reviewError ? (
+                    <p className="error">{this.state.reviewError}</p>
+                  ) : (
+                    null
+                  )  
+                  }
                   {/* Show submit button by clicking textarea */}
-                  {this.state.showButton === true ?
+                  {this.state.showButton === true ? (
                     <button type="submit" className="review-button btn btn-info">Submit</button>
-                  : null  
+                  ) : (
+                    null  
+                  )
                   }
                 </form>
               </div>
-            : null  
+            ) : ( 
+              null 
+            ) 
             }
             
             {/* Display 5 reviews each*/}
