@@ -90,8 +90,9 @@ class Update extends Component {
                     <p className="error">{this.state.validationErrors.steps}</p>
                   : null}
                   <textarea onChange={this.onChange} value={this.state.steps} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
+                  <ToastContainer />
                   <button className="btn btn-info btn-block my-4" type="submit">Edit</button>
-                <a href={`/${this.state.recipe._id}`}><p>Cancel</p></a>
+                <a href={`/${this.state.recipe._id}`}><p>Back to the detail</p></a>
               </form>
             </div>
           </div>
