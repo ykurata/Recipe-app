@@ -47,6 +47,7 @@ class List extends Component {
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
       search: "",
+      loading: false
     }
   }
 
@@ -62,7 +63,8 @@ class List extends Component {
     axios.get('/recipes/list', { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
         this.setState({
-          recipes: res.data
+          recipes: res.data,
+          loading: true
         });
       })
       .catch(err => {
@@ -84,48 +86,43 @@ class List extends Component {
     });
 
     let recipes;
-    if (this.state.recipes.length > 0) {
-      recipes = filteredRecipes.map((item, i) => (
-        <Grid item key={i} >
-          <Card className={classes.card} >
-            <CardActionArea>
-              {item.recipeImage ?
-                <CardMedia
-                  id={item._id}
-                  title="recipe image"
-                  className={classes.media}
-                  image={item.recipeImage}
-                  component={Link}
-                  to={`/${item._id}`}
-                />
-              : <Avatar 
-                  variant="square" 
-                  className={classes.avatar}
-                  component={Link}
-                  to={`/${item._id}`}
-                >No Image</Avatar>
-              }
-            </CardActionArea>     
-            <CardContent>
-              <Typography  variant="h5" component="h2">
-                {item.name} 
-              </Typography>
-              <Typography gutterBottom className={classes.userName} variant="body1" color="textSecondary">
-                Created by {item.userId.name}
-              </Typography>
-              <Typography noWrap variant="body2" color="textSecondary" >
-                Ingredients: {item.ingredients} 
-              </Typography>         
-            </CardContent>
-          </Card>
-        </Grid>
-      ));
-    } else {
-      recipes = <Grid containeralign="center" style={{ marginTop: 50 }}>
-                  <Typography variant="h4">No Recipes</Typography>
-                </Grid>
-    }
-
+  
+    recipes = filteredRecipes.map((item, i) => (
+      <Grid item key={i} >
+        <Card className={classes.card} >
+          <CardActionArea>
+            {item.recipeImage ?
+              <CardMedia
+                id={item._id}
+                title="recipe image"
+                className={classes.media}
+                image={item.recipeImage}
+                component={Link}
+                to={`/${item._id}`}
+              />
+            : <Avatar 
+                variant="square" 
+                className={classes.avatar}
+                component={Link}
+                to={`/${item._id}`}
+              >No Image</Avatar>
+            }
+          </CardActionArea>     
+          <CardContent>
+            <Typography  variant="h5" component="h2">
+              {item.name} 
+            </Typography>
+            <Typography gutterBottom className={classes.userName} variant="body1" color="textSecondary">
+              Created by {item.userId.name}
+            </Typography>
+            <Typography noWrap variant="body2" color="textSecondary" >
+              Ingredients: {item.ingredients} 
+            </Typography>         
+          </CardContent>
+        </Card>
+      </Grid>
+    ));
+   
     return (
       <div>
         <Navbar></Navbar>
@@ -149,6 +146,19 @@ class List extends Component {
               value={this.state.search}
             />  
           </Grid>
+          {this.state.recipes.length === 0 && this.state.loading === true ?
+            <Grid containeralign="center" style={{ marginTop: 50 }}>
+              <Typography variant="h4">No Recipes</Typography>
+            </Grid>
+          : null  
+          }
+
+          {this.state.loading === false ? 
+            <Grid containeralign="center" style={{ marginTop: 50 }}>
+              <Typography variant="h4">Loading Recipes...</Typography>
+            </Grid>
+          : null
+          }
           {recipes}
         </Grid>
     </div>
