@@ -54,14 +54,11 @@ class MyRecipes extends Component {
   }
 
   getRecipes() {
-    axios.get('/recipes/list', { headers: { Authorization: `Bearer ${this.state.token}` }})
+    axios.get('/recipes/my-recipes', { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        const myRecipes = [];
-       
-        myRecipes.push(res.data.find(recipe => recipe.userId._id === this.state.userId));
-        this.setState({
-          recipes: myRecipes
-        })
+       this.setState({
+         recipes: res.data
+       })
       })
       .catch(err => {
         console.log(err);

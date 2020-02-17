@@ -158,6 +158,18 @@ router.get("/get/:id", (req, res, next) => {
 });
 
 
+// Get logged in user's recipes
+router.get("/my-recipes", auth, (req, res, next) => {
+  Recipe.find({ userId: req.user })
+    .populate("userId", "name")
+    .populate("reviews.user", "name")
+    .exec(function(err, recipe) {
+      if (err) return next(err);
+      res.json(recipe);
+    });
+});    
+
+
 // Delete a recipe
 router.delete("/delete/:id", auth, (req, res, next) => {
   Recipe.remove({ _id: req.params.id}, (err, recipe) => {

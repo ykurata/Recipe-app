@@ -38,9 +38,6 @@ class Navbar extends Component {
       buttons = <div className="collapse navbar-collapse" id="navbarResponsive">
                   <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                      <a className="nav-link" href="/my-recipes">My Recipes</a>
-                    </li>
-                    <li className="nav-item">
                       <a className="nav-link" href="/list">Search</a>
                     </li>
                     <li className="nav-item">
