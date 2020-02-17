@@ -47,10 +47,10 @@ class Form extends Component {
     }
 
     const { name, ingredients, steps, sendImage, formData } = this.state;
+    formData.append("recipeImage", sendImage);
     formData.append("name", name);
     formData.append("ingredients", ingredients);
     formData.append("steps", steps);
-    formData.append("recipeImage", sendImage);
 
     axios.post("/recipes", formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
@@ -58,17 +58,15 @@ class Form extends Component {
           position: "top-right",
           autoClose: 10000
         }); 
-        this.setState({ 
-          name: "",
-          ingredients: "",
-          steps: "",
-          image: null
-        })
       })
       .catch(err => {
         this.setState({
           validationErrors: err.response.data
-        })
+        });
+        toast.error("Something went wrong!" , {
+          position: "top-right",
+          autoClose: 10000
+        }); 
       });
   }
 
@@ -113,6 +111,7 @@ class Form extends Component {
                       <p className="error">{this.state.validationErrors.steps}</p>
                     : null}
                     <textarea onChange={this.onChange} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
+                    <ToastContainer />
                     <button className="btn btn-info btn-block my-4" type="submit">Create</button>
                     <a href="/"><p>Cancel</p></a>
                 </form>

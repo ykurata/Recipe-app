@@ -7,6 +7,7 @@ import Landing from "./components/Landing";
 import Form from "./components/Form";
 import Update from "./components/Update";
 import List from "./components/List";
+import MyRecipes from "./components/MyRecipes";
 import Detail from "./components/Detail";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
         <Route path="/list" component={List} />
+        <Route path="/my-recipes" component={MyRecipes} />
         <Route path="/:id" component={Detail} />
       </Switch>
     </BrowserRouter>
