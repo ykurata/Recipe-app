@@ -46,7 +46,12 @@ class List extends Component {
       recipes : [],
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
+      search: "",
     }
+  }
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   componentDidMount() {
@@ -67,10 +72,20 @@ class List extends Component {
 
   render() {
     const { classes } = this.props;
+    
+    // Filter by search input 
+    const filteredRecipes = this.state.recipes.filter(item => {
+      const query = this.state.search.toLowerCase();
+    
+      return (
+        item.name.toLowerCase().indexOf(query) >= 0 ||
+        item.ingredients.toLowerCase().indexOf(query) >= 0 
+      )
+    });
 
     let recipes;
     if (this.state.recipes.length > 0) {
-      recipes = this.state.recipes.map((item, i) => (
+      recipes = filteredRecipes.map((item, i) => (
         <Grid item key={i} >
           <Card className={classes.card} >
             <CardActionArea>
@@ -126,11 +141,12 @@ class List extends Component {
                 )
               }}
               id="outlined-bare"
-              name="location"
-              placeholder="Search Recipe"
+              name="search"
+              placeholder="Recipe name or Ingredients..."
               margin="normal"
               variant="outlined"
-              value=""
+              onChange={this.onChange}
+              value={this.state.search}
             />  
           </Grid>
           {recipes}
