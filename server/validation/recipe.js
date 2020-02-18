@@ -5,6 +5,7 @@ module.exports = function validateRecipeInput(data) {
   let errors = {};
   // Convert empty fields to an empty string so we can use validator functions
   data.name = !isEmpty(data.name) ? data.name : "";
+  data.estimatedTime = !isEmpty(data.estimatedTime) ? data.estimatedTime : "";
   data.ingredients = !isEmpty(data.ingredients) ? data.ingredients : "";
   data.steps = !isEmpty(data.steps) ? data.steps : "";
 
@@ -17,9 +18,9 @@ module.exports = function validateRecipeInput(data) {
   // Turn estimatedTime to String because Validator only accepts strings
   let timeString = data.estimatedTime.toString();
   if (Validator.isEmpty(data.estimatedTime)) {
-    errors.estimatedTIme = "Estimated TIme is required";
+    errors.estimatedTime = "Estimated Time is required";
   } else if (!Validator.isNumeric(timeString)) {
-    errors.estimatedTime = "Please enter number";
+    errors.rate = "Please enter number";
   }
 
   // Ingredients checks

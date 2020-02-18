@@ -47,10 +47,11 @@ class Form extends Component {
     }
 
     const { name, ingredients, steps, sendImage, formData } = this.state;
-    formData.append("recipeImage", sendImage);
+    
     formData.append("name", name);
     formData.append("ingredients", ingredients);
     formData.append("steps", steps);
+    formData.append("recipeImage", sendImage);
 
     axios.post("/recipes", formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
@@ -63,6 +64,7 @@ class Form extends Component {
         this.setState({
           validationErrors: err.response.data
         });
+        console.log(err.response.data);
         // toast.error("Something went wrong!" , {
         //   position: "top-right",
         //   autoClose: 10000
