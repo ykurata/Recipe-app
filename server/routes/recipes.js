@@ -47,6 +47,7 @@ router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
   const newRecipe = new Recipe({
     userId: req.user,
     name: req.body.name,
+    estimatedTime: req.body.estimatedTime,
     ingredients: req.body.ingredients,
     steps: req.body.steps,
     recipeImage: req.file.path
@@ -74,6 +75,7 @@ router.put("/update/:id", auth, (req, res, next) => {
   Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
     if (err) return next(err);
     recipe.name = req.body.name,
+    recipe.estimatedTime = req.body.estimatedTime,
     recipe.ingredients = req.body.ingredients,
     recipe.steps = req.body.steps
     

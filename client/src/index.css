@@ -80,6 +80,20 @@ h2.heading {
   padding-bottom: 3rem;
 }
 
+#form .time {
+  text-align: left;
+}
+
+#form .time-input {
+  width : 40%;
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+#form .time-label {
+  display: inline-block;
+}
+
 textarea {
   white-space: pre-wrap;
 }

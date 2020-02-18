@@ -63,10 +63,10 @@ class Form extends Component {
         this.setState({
           validationErrors: err.response.data
         });
-        toast.error("Something went wrong!" , {
-          position: "top-right",
-          autoClose: 10000
-        }); 
+        // toast.error("Something went wrong!" , {
+        //   position: "top-right",
+        //   autoClose: 10000
+        // }); 
       });
   }
 
@@ -103,6 +103,17 @@ class Form extends Component {
                       <p className="error">{this.state.validationErrors.name}</p>
                     : null}
                     <input onChange={this.onChange} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
+                    
+                    {this.state.validationErrors ? 
+                      <p className="error">{this.state.validationErrors.estimatedTime}</p>
+                    : null}
+                    <div className="time">
+                      <div className="time-input">
+                        <input onChange={this.onChnage} className="form-control" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
+                      </div>
+                      <div className="time-label">min</div>
+                    </div>
+
                     {this.state.validationErrors ? 
                       <p className="error">{this.state.validationErrors.ingredients}</p>
                     : null}

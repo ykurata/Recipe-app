@@ -13,6 +13,15 @@ module.exports = function validateRecipeInput(data) {
     errors.name = "Recipe Title is required";
   }
 
+  // Estimated Time checks
+  // Turn estimatedTime to String because Validator only accepts strings
+  let timeString = data.estimatedTime.toString();
+  if (Validator.isEmpty(data.estimatedTime)) {
+    errors.estimatedTIme = "Estimated TIme is required";
+  } else if (!Validator.isNumeric(timeString)) {
+    errors.estimatedTime = "Please enter number";
+  }
+
   // Ingredients checks
   if (Validator.isEmpty(data.ingredients)) {
     errors.ingredients = "Ingredients are required";

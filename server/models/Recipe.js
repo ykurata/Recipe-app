@@ -12,6 +12,10 @@ const RecipeSchema = new Schema(
       type: String,
       required: true
     },
+    estimatedTime: {
+      type: Number,
+      required: true
+    },
     ingredients: {
       type: String,
       required: true
