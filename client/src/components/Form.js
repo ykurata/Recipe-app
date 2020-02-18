@@ -11,6 +11,7 @@ class Form extends Component {
     super(props);
     this.state = {
       name: "",
+      estimatedTime: "",
       ingredients: "",
       steps: "",
       image: null,
@@ -46,9 +47,10 @@ class Form extends Component {
       });
     }
 
-    const { name, ingredients, steps, sendImage, formData } = this.state;
+    const { name, estimatedTime, ingredients, steps, sendImage, formData } = this.state;
     
     formData.append("name", name);
+    formData.append("estimatedTime", estimatedTime);
     formData.append("ingredients", ingredients);
     formData.append("steps", steps);
     formData.append("recipeImage", sendImage);
@@ -64,11 +66,10 @@ class Form extends Component {
         this.setState({
           validationErrors: err.response.data
         });
-        console.log(err.response.data);
-        // toast.error("Something went wrong!" , {
-        //   position: "top-right",
-        //   autoClose: 10000
-        // }); 
+        toast.error("Something went wrong!" , {
+          position: "top-right",
+          autoClose: 10000
+        }); 
       });
   }
 
@@ -101,11 +102,12 @@ class Form extends Component {
               </div>
               <div className="col-md-12 col-lg-6">
                 <form className="text-center border border-light" onSubmit={this.onSubmit}>
+                    {/* recipe title */}
                     {this.state.validationErrors ? 
                       <p className="error">{this.state.validationErrors.name}</p>
                     : null}
                     <input onChange={this.onChange} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
-                    
+                    {/* estimated time */}
                     {this.state.validationErrors ? 
                       <p className="error">{this.state.validationErrors.estimatedTime}</p>
                     : null}
@@ -115,11 +117,12 @@ class Form extends Component {
                       </div>
                       <div className="time-label">min</div>
                     </div>
-
+                    {/* ingredients */}
                     {this.state.validationErrors ? 
                       <p className="error">{this.state.validationErrors.ingredients}</p>
                     : null}
                     <textarea onChange={this.onChange} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                    {/* steps */}
                     {this.state.validationErrors ? 
                       <p className="error">{this.state.validationErrors.steps}</p>
                     : null}

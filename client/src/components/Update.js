@@ -12,6 +12,7 @@ class Update extends Component {
     this.state = {
       recipe: {},
       name: "",
+      estimatedTime: "",
       ingredients: "",
       steps: "",
       token: localStorage.getItem("jwtToken"),
@@ -30,6 +31,7 @@ class Update extends Component {
       this.setState({
         recipe: res.data,
         name: res.data.name,
+        estimatedTime: res.data.estimatedTime,
         ingredients: res.data.ingredients,
         steps: res.data.steps,
       });
@@ -46,9 +48,10 @@ class Update extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { name, ingredients, steps } = this.state;
+    const { name, estimatedTime, ingredients, steps } = this.state;
     const updatedRecipe = {
       name: name,
+      estimatedTime: estimatedTime,
       ingredients: ingredients,
       steps: steps
     }
@@ -78,14 +81,27 @@ class Update extends Component {
             </div>
             <div className="col-12 text-center">
               <form className="update text-center border border-light" onSubmit={this.onSubmit}>
+                  {/* recipe title */}
                   {this.state.validationErrors ? 
                     <p className="error">{this.state.validationErrors.name}</p>
                   : null}
                   <input onChange={this.onChange} value={this.state.name} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
+                  {/* estimated time */}
+                  {this.state.validationErrors ? 
+                    <p className="error">{this.state.validationErrors.estimatedTime}</p>
+                  : null}
+                  <div className="time">
+                    <div className="time-input">
+                      <input onChange={this.onChange} className="form-control" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
+                    </div>
+                    <div className="time-label">min</div>
+                  </div>
+                  {/* ingredients */}
                   {this.state.validationErrors ? 
                     <p className="error">{this.state.validationErrors.ingredients}</p>
                   : null}
                   <textarea onChange={this.onChange} value={this.state.ingredients} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                  {/* steps */}
                   {this.state.validationErrors ? 
                     <p className="error">{this.state.validationErrors.steps}</p>
                   : null}

@@ -109,6 +109,20 @@ textarea {
   padding-top: 5rem;
 }
 
+#update .time {
+  text-align: left;
+}
+
+#update .time-input {
+  width : 40%;
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+#update .time-label {
+  display: inline-block;
+}
+
 
 /* Recipe Detail */
 #detail .row {
@@ -126,7 +140,7 @@ textarea {
   object-position: center; /* Center the image within the element */
   width: 100%;
   max-height: 450px;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 p {
@@ -217,6 +231,10 @@ h5 {
     object-position: center; /* Center the image within the element */
     width: 100%;
     max-height: 300px;
+    margin-bottom: 1rem;
+  }
+
+  #detail .time {
     margin-bottom: 3rem;
   }
 

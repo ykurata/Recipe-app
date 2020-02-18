@@ -165,6 +165,7 @@ class Detail extends Component {
               <div className="col-md-12 col-lg-6">
                 <div className="image text-center">
                   <img src={recipe.recipeImage} className="img-thumbnail img-fluid" alt="Recipe" />
+                  <h6 className="time">Estimated Time {recipe.estimatedTime} min</h6>
                 </div>
               </div>
               <div className="col-md-12 col-lg-6 text-center">
