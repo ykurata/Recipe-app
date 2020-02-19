@@ -25,12 +25,6 @@ router.post("/", auth, (req, res, next) => {
   newProfile.save()
     .then(profile => {
       res.status(200).json(profile);
-    })// Delete a recipe
-    router.delete("/delete/:id", auth, (req, res, next) => {
-      Recipe.remove({ _id: req.params.id}, (err, recipe) => {
-        if (err) return next(err);
-        res.json({ message: "Successfully deleted" });
-      })
     })
     .catch(err => {
       res.status(400).json(err);
