@@ -8,6 +8,7 @@ const cors = require("cors");
 const path = require("path");
 
 const users = require("./routes/users");
+const profile = require("./routes/profile");
 const recipes = require("./routes/recipes");
 
 app.use(logger("dev"));
@@ -43,6 +44,7 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/users", users);
+app.use("/profile", profile);
 app.use("/recipes", recipes);
 
 // Set up cors
