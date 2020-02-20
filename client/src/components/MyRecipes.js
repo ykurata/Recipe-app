@@ -74,7 +74,6 @@ class MyRecipes extends Component {
   }
 
   render() {
-    console.log(this.state.loading);
     const { classes } = this.props;
 
     // Filter by search input 

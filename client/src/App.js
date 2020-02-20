@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Landing from "./components/Landing";
 import Form from "./components/Form";
 import Update from "./components/Update";
+import ProfileForm from "./components/ProfileForm";
 import List from "./components/List";
 import MyRecipes from "./components/MyRecipes";
 import Detail from "./components/Detail";
@@ -17,11 +18,12 @@ function App() {
       <Switch>
         <PrivateRoute path="/create" component={Form} />
         <PrivateRoute path="/update/:id" component={Update} />
+        <PrivateRoute path="/my-recipes" component={MyRecipes} />
+        <PrivateRoute path="/profile" component={ProfileForm} />
         <Route exact path="/" component={Landing} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
         <Route path="/list" component={List} />
-        <Route path="/my-recipes" component={MyRecipes} />
         <Route path="/:id" component={Detail} />
       </Switch>
     </BrowserRouter>

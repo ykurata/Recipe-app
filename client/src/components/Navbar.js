@@ -30,6 +30,9 @@ class Navbar extends Component {
                       <a className="nav-link" href="/create">Create</a>
                     </li>
                     <li className="nav-item">
+                      <a className="nav-link" href="/profile">Profile</a>
+                    </li>
+                    <li className="nav-item">
                       <a className="nav-link" href="/logout" onClick={this.handleLogout}>Log Out</a>
                     </li>
                   </ul>
@@ -52,14 +55,14 @@ class Navbar extends Component {
 
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-info fixed-top">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="/">My Recipes<i className="fas fa-utensils"></i></a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        {buttons}
-      </div>
-    </nav>
+        <div className="container-fluid">
+          <a className="navbar-brand" href="/">My Recipes<i className="fas fa-utensils"></i></a>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+            <span className="navbar-toggler-icon"></span>
+          </button>  
+          {buttons}
+        </div>
+      </nav>
     );
   }
 }
