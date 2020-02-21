@@ -169,7 +169,7 @@ class Detail extends Component {
                 </div>
               </div>
               <div className="col-md-12 col-lg-6 text-center">
-                <div className="content">
+                <div className="detail-content">
                   <h5>Ingredients</h5>
                   <div className="card">
                     <div className="card-body text-left">
@@ -177,7 +177,7 @@ class Detail extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="content">
+                <div className="detail-content">
                   <h5>Steps</h5>
                   <div className="card">
                     <div className="card-body text-left">
