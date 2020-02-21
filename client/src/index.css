@@ -215,14 +215,14 @@ h5 {
 
 /* Profile Form */
 .profile-form {
-  width: 80%;
+  width: 60%;
   margin: 4rem auto;
 }
 
 
 /* Profile form  side bar */
 .sidebar {
-  margin: 0;
+  margin-top: 55px;
   padding: 0;
   width: 200px;
   background-color: #f1f1f1;
@@ -239,15 +239,9 @@ h5 {
   text-decoration: none;
 }
 
-/* Active/current link */
-.sidebar a.active {
-  background-color: #4CAF50;
-  color: white;
-}
-
 /* Links on mouse-over */
 .sidebar a:hover:not(.active) {
-  background-color: #4d94ff;
+  background-color: #999999;
   color: white;
 }
 
@@ -255,7 +249,6 @@ h5 {
 div.content {
   margin-left: 200px;
   padding: 1px 16px;
-  height: 1000px;
 }
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
@@ -267,6 +260,10 @@ div.content {
   }
   .sidebar a {float: left;}
   div.content {margin-left: 0;}
+  .profile-form {
+    width: 80%;
+    margin: 1rem auto;
+  }
 }
 
 /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
