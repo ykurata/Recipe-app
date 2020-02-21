@@ -24,14 +24,14 @@ class ProfileForm extends Component {
           <a href="#contact">Contact</a>
           <a href="#about">About</a>
         </div>
-        
+
         <div className="content">
-          <div className="login-form">
+          <div className="profile-form">
             <form className="text-center border border-light pt-5" onSubmit={this.onSubmit}>
                 <p className="h4 mb-4">Profile</p>
                 
-                <textarea type="text" name="description" id="description" className="form-control mb-4" placeholder="About yourself..." rows="3" />
-                <button className="btn btn-info btn-block my-4" type="submit">Log In</button>
+                <textarea type="text" name="description" id="description" className="form-control mb-4" placeholder="Write about yourself..." rows="3" />
+                <button className="btn btn-info btn-block my-4" type="submit">Submit</button>
 
             </form>
           </div>   

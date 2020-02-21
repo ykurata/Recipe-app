@@ -213,7 +213,14 @@ h5 {
 }
 
 
-/* Profile form  */
+/* Profile Form */
+.profile-form {
+  width: 80%;
+  margin: 4rem auto;
+}
+
+
+/* Profile form  side bar */
 .sidebar {
   margin: 0;
   padding: 0;
@@ -240,7 +247,7 @@ h5 {
 
 /* Links on mouse-over */
 .sidebar a:hover:not(.active) {
-  background-color: #555;
+  background-color: #4d94ff;
   color: white;
 }
 
