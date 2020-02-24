@@ -41,7 +41,7 @@ router.put("/update/:id", auth, (req, res, next) => {
     return res.status(400).json(errors);
   }
 
-  Profile.findOne({ _id: req.params.id }, (err, profile) => {
+  Profile.findOne({ userId: req.user }, (err, profile) => {
     if (err) return next(err);
     profile.description = req.body.description;
 
@@ -69,7 +69,7 @@ router.get("/all", auth, (req, res, next) => {
 
 // GET a specific profile
 router.get("/:id", auth, (req, res, next) => {
-  Profile.find({ _id: req.params.id })
+  Profile.find({ userId: req.user })
   .populate("userId", "name")
   .exec((err, recipe) => {
     if (err) return next(err);
@@ -81,7 +81,7 @@ router.get("/:id", auth, (req, res, next) => {
 // DELETE a profile
 // Delete a recipe
 router.delete("/delete/:id", auth, (req, res, next) => {
-  Profile.remove({ _id: req.params.id}, (err, profile) => {
+  Profile.remove({ userId: req.user }, (err, profile) => {
     if (err) return next(err);
     res.status(200).json({ message: "Successfully deleted" });
   });

@@ -22,7 +22,9 @@ class ProfileForm extends Component {
     this.state = {
       image: null,
       sendImage: null,
-      description: ""
+      description: "",
+      token: localStorage.getItem("jwtToken"),
+      validationError: [],
     };
   }
 
@@ -35,6 +37,41 @@ class ProfileForm extends Component {
       image: URL.createObjectURL(e.target.files[0]),
       sendImage: e.target.files[0]
     });
+  }
+
+  getProfile() {
+    axios.get("/profile", description, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      .then(res => {
+        toast.success("Submitted!" , {
+          position: "top-right",
+          autoClose: 10000
+        }); 
+        console.log(res.data);
+      })
+      .catch(err => {
+        this.setState({
+          validationError: err.response.data
+        });
+      });
+  }
+
+  sendDescription = e => {
+    e.preventDefault();
+    const {description} = this.state;
+
+    axios.post("/profile", description, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      .then(res => {
+        toast.success("Submitted!" , {
+          position: "top-right",
+          autoClose: 10000
+        }); 
+        console.log(res.data);
+      })
+      .catch(err => {
+        this.setState({
+          validationError: err.response.data
+        });
+      });
   }
 
   render() {
