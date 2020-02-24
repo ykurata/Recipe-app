@@ -11,9 +11,6 @@ class SideBar extends Component {
           <a href="#contact">Contact</a>
           <a href="#about">About</a>
         </div>
-        <div className="content">
-    
-        </div>
       </div>
     );
   }
