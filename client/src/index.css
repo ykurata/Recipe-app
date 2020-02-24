@@ -70,11 +70,11 @@ h2.heading {
   margin-top: 1rem;
 }
 
-#form .row {
+.row {
   padding-top: 2rem;
 }
 
-#form .col-lg-6 {
+.col-lg-6 {
   padding-top: 1rem;
 }
 
@@ -219,9 +219,9 @@ h5 {
   margin: 4rem auto;
 }
 
-.avatar {
-  font-size: 24px;
-  color: grey
+.select {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 
