@@ -22,8 +22,10 @@ class ProfileForm extends Component {
     this.state = {
       image: null,
       sendImage: null,
+      profile: {},
       description: "",
       token: localStorage.getItem("jwtToken"),
+      userId: localStorage.getItem("userId"),
       validationError: [],
     };
   }
@@ -39,19 +41,21 @@ class ProfileForm extends Component {
     });
   }
 
+  componentDidMount() {
+    this.getProfile();
+  }
+
   getProfile() {
-    axios.get("/profile", description, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    axios.get(`/profile/${this.state.userId}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        toast.success("Submitted!" , {
-          position: "top-right",
-          autoClose: 10000
-        }); 
+        this.setState({ 
+          profile: res.data,
+          description: res.data.description
+        })
         console.log(res.data);
       })
       .catch(err => {
-        this.setState({
-          validationError: err.response.data
-        });
+        console.log(err);
       });
   }
 
@@ -64,8 +68,7 @@ class ProfileForm extends Component {
         toast.success("Submitted!" , {
           position: "top-right",
           autoClose: 10000
-        }); 
-        console.log(res.data);
+        });
       })
       .catch(err => {
         this.setState({
@@ -106,7 +109,7 @@ class ProfileForm extends Component {
               </div>
               <div className="col-md-12 col-lg-6">
                 <form className="text-center border border-light">
-                  <textarea  onChange={this.onChange} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
+                  <textarea  onChange={this.onChange} value={this.state.description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
                   <ToastContainer />
                   <button className="btn btn-info btn-block my-4" type="submit">Submit</button>
                   <a href="/"><p>Cancel</p></a>

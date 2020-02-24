@@ -69,11 +69,11 @@ router.get("/all", auth, (req, res, next) => {
 
 // GET a specific profile
 router.get("/:id", auth, (req, res, next) => {
-  Profile.find({ userId: req.user })
+  Profile.findOne({ userId: req.user })
   .populate("userId", "name")
-  .exec((err, recipe) => {
+  .exec((err, profile) => {
     if (err) return next(err);
-    res.status(200).json(recipe);
+    res.status(200).json(profile);
   });
 });    
 
