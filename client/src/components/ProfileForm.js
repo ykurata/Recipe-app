@@ -79,7 +79,7 @@ class ProfileForm extends Component {
         console.log(err.response);
       });
     } else {
-      axios.post("/profile", data, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      axios.post(`/profile/${this.state.userId}`, data, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
         toast.success("Submitted!" , {
           position: "top-right",

@@ -36,14 +36,72 @@ const upload = multer({
 });
 
 
+// POST profile photo
+router.post("/photo/:id", upload.single('profileImage'), auth, (req, res, next) => {
+  Profile.findOne({ userId: req.params.id }, (profile, err) => {
+    if (err) return next(err);
+    if (profile) {
+      profile.photo = req.file.path;
+      profile.save()
+        .then(profile => {
+          res.status(200).json(profile);
+        })
+        .catch(err => {
+          res.status(400).json(err);
+        })
+    } else {
+      const newProfile = new Profile({
+        photo: req.file.location
+      })
+
+      newProfile.save()
+        .then(profile => {
+          res.status(200).json(profile);
+        })
+        .catch(err => {
+          res.status(400).json(err);
+        });
+    }
+  })
+});
+
+
 // create a profile 
-router.post("/", auth, (req, res, next) => {
+router.post("/:id", auth, (req, res, next) => {
   // Form validation
   const { errors, isValid } = validateProfileInput(req.body);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
+
+  Profile.findOne({ userId: req.user }, (err, profile) => {
+    if (err) return next(err);
+    if (profile) {
+      profile.description = req.body.description
+
+      profile.save()
+        .then(profile => {
+          res.status(200).json(profile);
+        })
+        .catch(err => {
+          res.status(400).json(err);
+        });
+    } else {
+      const newProfile = new Profile({
+        description: req.body.description
+      });
+
+      newProfile.save()
+        .then(profile => {
+          res.status(200).json(profile);
+        })
+        .catch(err => {
+          res.status(400).json(err);
+        });
+    }
+  });
+
 
   const newProfile = new Profile({
     userId: req.user,
@@ -81,35 +139,6 @@ router.put("/update/:id", auth, (req, res, next) => {
         res.status(400).json(err);
       });
   });
-});
-
-
-router.post("/photo/:id", upload.single('profileImage'), auth, (req, res, next) => {
-  Profile.findOne({ userId: req.user }, function(profile, err){
-    if (err) return next(err);
-    if (profile) {
-      profile.photo = req.file.path;
-      profile.save()
-        .then(profile => {
-          res.status(200).json(profile);
-        })
-        .catch(err => {
-          res.status(400).json(err);
-        })
-    } else {
-      const newProfile = new Profile({
-        photo: req.file.path
-      })
-
-      newProfile.save()
-        .then(profile => {
-          res.status(200).json(profile);
-        })
-        .catch(err => {
-          res.status(400).json(err);
-        });
-    }
-  })
 });
 
 
