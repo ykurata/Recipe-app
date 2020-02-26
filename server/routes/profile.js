@@ -81,9 +81,9 @@ router.get("/:id", auth, (req, res, next) => {
 // DELETE a profile
 // Delete a recipe
 router.delete("/delete/:id", auth, (req, res, next) => {
-  Profile.remove({ userId: req.user }, (err, profile) => {
+  Profile.remove({ _id: req.params.id}, function(err, profile) {
     if (err) return next(err);
-    res.status(200).json({ message: "Successfully deleted" });
+    res.send(204);
   });
 });
 
