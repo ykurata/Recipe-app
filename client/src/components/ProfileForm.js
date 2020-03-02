@@ -23,10 +23,13 @@ class ProfileForm extends Component {
       image: null,
       sendImage: null,
       profile: {},
+      empty: false,
       description: "",
+      formData: {},
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId"),
       validationError: [],
+      error: ""
     };
   }
 
@@ -43,15 +46,20 @@ class ProfileForm extends Component {
 
   componentDidMount() {
     this.getProfile();
+    this.setState({ formData: new FormData() });
   }
 
   getProfile() {
     axios.get(`/profile/${this.state.userId}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        this.setState({ 
-          profile: res.data,
-          description: res.data.description
-        });
+        if (res.data) {
+          this.setState({ 
+            profile: res.data,
+            description: res.data.description
+          });
+        } else {
+          this.setState({ empty: true });
+        }
       })
       .catch(err => {
         console.log(err);
@@ -64,7 +72,7 @@ class ProfileForm extends Component {
       description: this.state.description
     }
     
-    if (this.state.profile) {
+    if (this.state.empty === false) {
       axios.put(`/profile/update/${this.state.userId}`, data, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
         toast.success("Submitted!" , {
@@ -76,7 +84,7 @@ class ProfileForm extends Component {
         this.setState({
           validationError: err.response.data
         });
-        console.log(err.response);
+        console.log(err.response.data);
       });
     } else {
       axios.post(`/profile/${this.state.userId}`, data, { headers: { Authorization: `Bearer ${this.state.token}` }})
@@ -95,8 +103,36 @@ class ProfileForm extends Component {
     }
   }
 
+  submitPhoto = e => {
+    e.preventDefault();
+
+    if (this.state.sendImage === null) {
+      this.setState({
+        error: "Please select Image"
+      });
+    }
+    const { sendImage, formData } = this.state;
+    formData.append("photo", sendImage);
+    console.log(formData);
+
+    axios.post("/profile/photo", formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    .then(res => {
+      toast.success("Successfully Set a Photo!" , {
+        position: "top-right",
+        autoClose: 10000
+      }); 
+    })
+    .catch(err => {
+      console.log(err.response.data);
+      toast.error("Something went wrong!" , {
+        position: "top-right",
+        autoClose: 10000
+      }); 
+    });
+  }
+
   render() {
-    
+
     const { classes } = this.props;
     return (
       <div> 
@@ -108,23 +144,29 @@ class ProfileForm extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 col-lg-6">
-                <Grid container justify="center">  
-                  <Avatar className={classes.avatar} src={this.state.image}></Avatar>
-                </Grid>
-                <div className="text-center select">
-                  <label className="btn btn-outline-info select">
-                    Select Image
-                    <input
-                      type="file"
-                      name="image"
-                      hidden
-                      onChange={this.imageChange}
-                    />
-                  </label>
-                </div>
-                <div className="text-center select">
-                  <button className="btn btn-info">Set the Image</button>
-                </div> 
+                <form onSubmit={this.submitPhoto}>
+                  <Grid container justify="center">  
+                    <Avatar className={classes.avatar} src={this.state.image}></Avatar>
+                  </Grid>
+                  <div className="text-center select">
+                    {this.state.error ? 
+                      <div><label className="error">{this.state.error}</label></div>
+                    : null}
+                    <label className="btn btn-outline-info select">
+                      Select Image
+                      <input
+                        type="file"
+                        name="image"
+                        hidden
+                        onChange={this.imageChange}
+                      />
+                    </label>
+                  </div>
+                  <ToastContainer />
+                  <div className="text-center select">
+                    <button className="btn btn-info" type="submit">Set the Image</button>
+                  </div> 
+                </form>
               </div>
               <div className="col-md-12 col-lg-6">
                 <form className="text-center border border-light" onSubmit={this.handleSubmit}>

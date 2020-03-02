@@ -38,7 +38,6 @@ const upload = multer({
 
 // POST profile photo
 router.post("/photo", upload.single("photo"), auth, (req, res, next) => {
-  console.log(req.file);
   Profile.findOne({ userId: req.user }, (profile, err) => {
     if (err) return next(err);
     if (profile) {
@@ -52,8 +51,9 @@ router.post("/photo", upload.single("photo"), auth, (req, res, next) => {
         })
     } else {
       const newProfile = new Profile({
+        userId: req.user,
         photo: req.file.path
-      })
+      });
 
       newProfile.save()
         .then(profile => {
@@ -90,6 +90,7 @@ router.post("/:id", auth, (req, res, next) => {
         });
     } else {
       const newProfile = new Profile({
+        userId: req.user,
         description: req.body.description
       });
 
