@@ -9,7 +9,6 @@ const ProfileSchema = new Schema(
     }, 
     description: {
       type: String,
-      required: true
     },
     photo: {
       type: String,

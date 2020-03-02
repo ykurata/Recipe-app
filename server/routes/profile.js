@@ -12,7 +12,7 @@ const auth = require("./middleware/utils");
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, './uploads/');
+    cb(null, './avatar/');
   },
   filename: function(req, file, cb) {
     cb(null, new Date().toISOString() + file.originalname);
@@ -37,8 +37,9 @@ const upload = multer({
 
 
 // POST profile photo
-router.post("/photo/:id", upload.single('profileImage'), auth, (req, res, next) => {
-  Profile.findOne({ userId: req.params.id }, (profile, err) => {
+router.post("/photo", upload.single("photo"), auth, (req, res, next) => {
+  console.log(req.file);
+  Profile.findOne({ userId: req.user }, (profile, err) => {
     if (err) return next(err);
     if (profile) {
       profile.photo = req.file.path;
@@ -51,7 +52,7 @@ router.post("/photo/:id", upload.single('profileImage'), auth, (req, res, next) 
         })
     } else {
       const newProfile = new Profile({
-        photo: req.file.location
+        photo: req.file.path
       })
 
       newProfile.save()
@@ -101,20 +102,6 @@ router.post("/:id", auth, (req, res, next) => {
         });
     }
   });
-
-
-  const newProfile = new Profile({
-    userId: req.user,
-    description: req.body.description
-  });
-
-  newProfile.save()
-    .then(profile => {
-      res.status(200).json(profile);
-    })
-    .catch(err => {
-      res.status(400).json(err);
-    });
 });
 
 
