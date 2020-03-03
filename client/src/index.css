@@ -236,6 +236,11 @@ h5 {
   margin-top: 1rem;
 }
 
+.title {
+  font-weight: 700;
+  margin-top: 3rem;
+}
+
 #profile-detail .card {
   width: 36rem;
 }

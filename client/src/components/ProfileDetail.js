@@ -55,7 +55,6 @@ class ProfileDetail extends Component {
       recipes: [],
       name: "",
       image: null,
-      empty: false,
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId")
     };
@@ -87,13 +86,9 @@ class ProfileDetail extends Component {
   getRecipes() {
     axios.get(`/recipes/userid/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        if (res.data) {
-          this.setState({ 
-            recipes: res.data
-          });
-        } else {
-          this.setState({ empty: true });
-        }
+        this.setState({ 
+          recipes: res.data
+        });
       })
       .catch(err => {
         console.log(err);
@@ -104,10 +99,10 @@ class ProfileDetail extends Component {
   render() {
     const { classes } = this.props;
     const { recipes } = this.state;
-    console.log(this.state.recipes);
-    let byUserRecipes;
 
-    byUserRecipes = recipes.map((item, i) => (
+    let userRecipes;
+
+    userRecipes = recipes.map((item, i) => (
       <Grid item key={i} >
         <Card className={classes.card} >
           <CardActionArea>
@@ -165,7 +160,10 @@ class ProfileDetail extends Component {
           </div>   
 
           <Grid className={classes.bottom} container justify="center">
-            {byUserRecipes}
+            <div className="col-12 text-center">
+              <h4 className="title">{this.state.name}'s Recipes</h4>
+            </div>  
+            {userRecipes}
           </Grid>
         </div>
       </div>
