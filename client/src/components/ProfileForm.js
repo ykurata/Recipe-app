@@ -72,10 +72,10 @@ class ProfileForm extends Component {
       description: this.state.description
     }
     
-    if (this.state.empty === false) {
-      axios.put(`/profile/update/${this.state.userId}`, data, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    if (this.state.empty === true) {
+      axios.post(`/profile/${this.state.userId}`, data, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        toast.success("Submitted!" , {
+        toast.success("Created!" , {
           position: "top-right",
           autoClose: 10000
         });
@@ -87,9 +87,9 @@ class ProfileForm extends Component {
         console.log(err.response.data);
       });
     } else {
-      axios.post(`/profile/${this.state.userId}`, data, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      axios.put(`/profile/update/${this.state.userId}`, data, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        toast.success("Submitted!" , {
+        toast.success("Updated!" , {
           position: "top-right",
           autoClose: 10000
         });
@@ -113,11 +113,10 @@ class ProfileForm extends Component {
     }
     const { sendImage, formData } = this.state;
     formData.append("photo", sendImage);
-    console.log(formData);
-
+  
     axios.post("/profile/photo", formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
     .then(res => {
-      toast.success("Successfully Set a Photo!" , {
+      toast.success("Successfully Sent a Photo!" , {
         position: "top-right",
         autoClose: 10000
       }); 
@@ -164,7 +163,7 @@ class ProfileForm extends Component {
                   </div>
                   <ToastContainer />
                   <div className="text-center select">
-                    <button className="btn btn-info" type="submit">Set the Image</button>
+                    <button className="btn btn-info" type="submit">Send the Image</button>
                   </div> 
                 </form>
               </div>

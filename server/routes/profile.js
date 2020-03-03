@@ -38,7 +38,7 @@ const upload = multer({
 
 // POST profile photo
 router.post("/photo", upload.single("photo"), auth, (req, res, next) => {
-  Profile.findOne({ userId: req.user }, (profile, err) => {
+  Profile.findOne({ userId: req.user }, (err, profile) => {
     if (err) return next(err);
     if (profile) {
       profile.photo = req.file.path;
