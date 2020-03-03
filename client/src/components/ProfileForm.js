@@ -55,7 +55,8 @@ class ProfileForm extends Component {
         if (res.data) {
           this.setState({ 
             profile: res.data,
-            description: res.data.description
+            description: res.data.description,
+            image: res.data.photo
           });
         } else {
           this.setState({ empty: true });
