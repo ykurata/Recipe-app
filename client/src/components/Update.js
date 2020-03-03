@@ -47,11 +47,11 @@ class Update extends Component {
   
   onSubmit = e => {
     e.preventDefault();
-
+    
     const { name, estimatedTime, ingredients, steps } = this.state;
     const updatedRecipe = {
       name: name,
-      estimatedTime: estimatedTime,
+      estimatedTime: estimatedTime.toString(),
       ingredients: ingredients,
       steps: steps
     }
@@ -92,7 +92,7 @@ class Update extends Component {
                   : null}
                   <div className="time">
                     <div className="time-input">
-                      <input onChange={this.onChange} className="form-control" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
+                      <input onChange={this.onChange} value={this.state.estimatedTime} className="form-control mb-2" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
                     </div>
                     <div className="time-label">min</div>
                   </div>

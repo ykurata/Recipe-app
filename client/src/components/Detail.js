@@ -117,7 +117,7 @@ class Detail extends Component {
 
     axios.put(`/recipes/review/${this.props.match.params.id}`, newReview, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        toast.success("Successfully Submitted!" , {
+        toast.success("Sent a Review!" , {
           position: "top-right",
           autoClose: 3000
         }); 

@@ -113,7 +113,7 @@ class Form extends Component {
                     : null}
                     <div className="time">
                       <div className="time-input">
-                        <input onChange={this.onChnage} className="form-control" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
+                        <input onChange={this.onChange} className="form-control" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
                       </div>
                       <div className="time-label">min</div>
                     </div>

@@ -71,7 +71,6 @@ class ProfileDetail extends Component {
         if (res.data) {
           this.setState({ 
             profile: res.data,
-            name: res.data.userId.name,
             image: res.data.photo
           });
         } else {
@@ -87,7 +86,8 @@ class ProfileDetail extends Component {
     axios.get(`/recipes/userid/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
         this.setState({ 
-          recipes: res.data
+          recipes: res.data,
+          name: res.data[0].userId.name
         });
       })
       .catch(err => {
