@@ -36,6 +36,7 @@ class ProfileDetail extends Component {
           this.setState({ 
             profile: res.data,
           });
+          console.log(this.state.profile);
         } else {
           this.setState({ empty: true });
         }

@@ -20,8 +20,8 @@ function App() {
         <PrivateRoute path="/create" component={Form} />
         <PrivateRoute path="/update/:id" component={Update} />
         <PrivateRoute path="/my-recipes" component={MyRecipes} />
-        <PrivateRoute path="/profile" component={ProfileForm} />
         <PrivateRoute path="/profile/:id" component={ProfileDetail} />
+        <PrivateRoute path="/profile" component={ProfileForm} />
         <Route exact path="/" component={Landing} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />

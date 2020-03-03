@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Link } from "react-router-dom";
 import Moment from 'react-moment';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -149,7 +150,7 @@ class Detail extends Component {
   render() {
     const { recipe } = this.state;
     const { reviews } = this.state;
-
+    console.log(this.state.userid);
     return (
       <div>
         <Navbar></Navbar>
@@ -158,7 +159,7 @@ class Detail extends Component {
           <div className="inner-div">
             <div className="col-12 text-center">
               <h2 className="heading">{recipe.name}</h2>
-              <p>Created by {this.state.username}</p>
+              <p>Created by <Link to={`/profile/${this.state.userid}`} id={this.state.userid}>{this.state.username}</Link></p>
             </div>
           
             <div className="row padding">

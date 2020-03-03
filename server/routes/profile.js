@@ -143,7 +143,7 @@ router.get("/all", auth, (req, res, next) => {
 
 // GET a specific profile
 router.get("/:id", auth, (req, res, next) => {
-  Profile.findOne({ userId: req.user })
+  Profile.findOne({ userId: req.params.id })
   .populate("userId", "name")
   .exec((err, profile) => {
     if (err) return next(err);
