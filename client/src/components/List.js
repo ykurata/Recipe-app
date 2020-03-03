@@ -139,7 +139,7 @@ class List extends Component {
               }}
               id="outlined-bare"
               name="search"
-              placeholder="Recipe name or Ingredients..."
+              placeholder="Ingredients, dish, keywords..."
               margin="normal"
               variant="outlined"
               onChange={this.onChange}
