@@ -60,7 +60,7 @@ class Update extends Component {
       .then(res => {
         toast.success("Successfully Updated!" , {
           position: "top-right",
-          autoClose: 10000
+          autoClose: 3000
         }); 
       })
       .catch(err => {

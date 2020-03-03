@@ -63,7 +63,7 @@ class Detail extends Component {
       .then(res => {
         toast.success("You sent a Like!" , {
           position: "top-right",
-          autoClose: 10000
+          autoClose: 3000
         }); 
         axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
           .then(res => {
@@ -88,7 +88,7 @@ class Detail extends Component {
     .then(res => {
       toast.success("Successfully deleted!" , {
         position: "top-right",
-        autoClose: 10000
+        autoClose: 3000
       }); 
     })
     .catch(err => {
@@ -119,7 +119,7 @@ class Detail extends Component {
       .then(res => {
         toast.success("Successfully Submitted!" , {
           position: "top-right",
-          autoClose: 10000
+          autoClose: 3000
         }); 
         axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
           .then(res => {
@@ -150,7 +150,7 @@ class Detail extends Component {
   render() {
     const { recipe } = this.state;
     const { reviews } = this.state;
-    console.log(this.state.userid);
+
     return (
       <div>
         <Navbar></Navbar>
@@ -223,7 +223,6 @@ class Detail extends Component {
             {this.state.show === true ? (
               <div className="col-12 text-center review">
                 <form onSubmit={this.sendReview}>
-                  <ToastContainer />
                   <textarea onChange={this.onChange} onClick={this.showButton} type="text" name="review" id="review" className="form-control" rows="2"></textarea>
 
                   {/* show error message */}

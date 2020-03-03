@@ -59,7 +59,7 @@ class Form extends Component {
       .then(res => {
         toast.success("Created a recipe!" , {
           position: "top-right",
-          autoClose: 10000
+          autoClose: 3000
         }); 
       })
       .catch(err => {
@@ -68,7 +68,7 @@ class Form extends Component {
         });
         toast.error("Something went wrong!" , {
           position: "top-right",
-          autoClose: 10000
+          autoClose: 3000
         }); 
       });
   }

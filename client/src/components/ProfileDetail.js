@@ -11,6 +11,9 @@ const ProfileDetailStyle = theme => ({
   avatar: {
     width: 250,
     height: 250
+  },
+  container: {
+    marginTop: 50
   }
 });
 
@@ -19,6 +22,7 @@ class ProfileDetail extends Component {
     super(props);
     this.state = {
       profile: {},
+      name: "",
       empty: false,
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId")
@@ -35,6 +39,7 @@ class ProfileDetail extends Component {
         if (res.data) {
           this.setState({ 
             profile: res.data,
+            name: res.data.userId.name,
           });
           console.log(this.state.profile);
         } else {
@@ -48,9 +53,23 @@ class ProfileDetail extends Component {
 
 
   render() {
+    const { profile } = this.state;
+    const { classes } = this.props;
+
     return (
       <div>
         <Navbar></Navbar>
+
+        <div id="profile-detail" className="main container-fluid">
+          <div className="inner-div">
+            <div className="col-12 text-center">
+              <h2 className="heading">{this.state.name}</h2>
+              <Grid container className={classes.container} justify="center">  
+                <Avatar className={classes.avatar} src={this.state.profile.photo}></Avatar>
+              </Grid>
+            </div> 
+          </div>   
+        </div>
       </div>
     );
   }
