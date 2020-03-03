@@ -15,7 +15,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import Navbar from "./Navbar";
 import axios from 'axios';
 
-const ListStyles = theme => ({
+const MyRecipesStyles = theme => ({
   card: {
     maxWidth: 350,
     minWidth: 350,
@@ -39,7 +39,7 @@ const ListStyles = theme => ({
   }
 });
 
-class List extends Component {
+class MyRecipes extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,17 +55,18 @@ class List extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+
   componentDidMount() {
     this.getRecipes();
   }
 
   getRecipes() {
-    axios.get('/recipes/list', { headers: { Authorization: `Bearer ${this.state.token}` }})
+    axios.get('/recipes/my-recipes', { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
-        this.setState({
-          recipes: res.data,
-          loading: true
-        });
+       this.setState({
+         recipes: res.data,
+         loading: true
+       })
       })
       .catch(err => {
         console.log(err);
@@ -74,7 +75,7 @@ class List extends Component {
 
   render() {
     const { classes } = this.props;
-    
+
     // Filter by search input 
     const filteredRecipes = this.state.recipes.filter(item => {
       const query = this.state.search.toLowerCase();
@@ -86,7 +87,6 @@ class List extends Component {
     });
 
     let recipes;
-  
     recipes = filteredRecipes.map((item, i) => (
       <Grid item key={i} >
         <Card className={classes.card} >
@@ -121,8 +121,8 @@ class List extends Component {
           </CardContent>
         </Card>
       </Grid>
-    ));
-   
+    ));  
+  
     return (
       <div>
         <Navbar></Navbar>
@@ -139,11 +139,11 @@ class List extends Component {
               }}
               id="outlined-bare"
               name="search"
-              placeholder="Ingredients, dish, keywords..."
+              placeholder="Name or Ingredients..."
               margin="normal"
               variant="outlined"
-              onChange={this.onChange}
               value={this.state.search}
+              onChange={this.onChange}
             />  
           </Grid>
           {this.state.recipes.length === 0 && this.state.loading === true ?
@@ -166,4 +166,4 @@ class List extends Component {
   }
 }
 
-export default withStyles(ListStyles)(List);
+export default withStyles(MyRecipesStyles)(MyRecipes);

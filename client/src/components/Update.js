@@ -1,0 +1,121 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import Navbar from "./Navbar";
+
+
+class Update extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      recipe: {},
+      name: "",
+      estimatedTime: "",
+      ingredients: "",
+      steps: "",
+      token: localStorage.getItem("jwtToken"),
+      validationErrors: [],
+      error: ""
+    };
+  }
+
+  componentDidMount() {
+    this.getRecipe();
+  }
+   
+  getRecipe() {
+    axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    .then(res => {
+      this.setState({
+        recipe: res.data,
+        name: res.data.name,
+        estimatedTime: res.data.estimatedTime,
+        ingredients: res.data.ingredients,
+        steps: res.data.steps,
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  
+  onSubmit = e => {
+    e.preventDefault();
+    
+    const { name, estimatedTime, ingredients, steps } = this.state;
+    const updatedRecipe = {
+      name: name,
+      estimatedTime: estimatedTime.toString(),
+      ingredients: ingredients,
+      steps: steps
+    }
+
+    axios.put(`/recipes/update/${this.state.recipe._id}`, updatedRecipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      .then(res => {
+        toast.success("Successfully Updated!" , {
+          position: "top-right",
+          autoClose: 3000
+        }); 
+      })
+      .catch(err => {
+        this.setState({
+          validationErrors: err.response.data
+        })
+      });
+  }
+
+  render() {
+    return (
+      <div>
+        <Navbar></Navbar>
+        <div id="update">
+          <div className="updateMain container-fluid">
+            <div className="col-12 text-center">
+              <h2 className="heading">Edit Recipe</h2>
+            </div>
+            <div className="col-12 text-center">
+              <form className="update text-center border border-light" onSubmit={this.onSubmit}>
+                  {/* recipe title */}
+                  {this.state.validationErrors ? 
+                    <p className="error">{this.state.validationErrors.name}</p>
+                  : null}
+                  <input onChange={this.onChange} value={this.state.name} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
+                  {/* estimated time */}
+                  {this.state.validationErrors ? 
+                    <p className="error">{this.state.validationErrors.estimatedTime}</p>
+                  : null}
+                  <div className="time">
+                    <div className="time-input">
+                      <input onChange={this.onChange} value={this.state.estimatedTime} className="form-control mb-2" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
+                    </div>
+                    <div className="time-label">min</div>
+                  </div>
+                  {/* ingredients */}
+                  {this.state.validationErrors ? 
+                    <p className="error">{this.state.validationErrors.ingredients}</p>
+                  : null}
+                  <textarea onChange={this.onChange} value={this.state.ingredients} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                  {/* steps */}
+                  {this.state.validationErrors ? 
+                    <p className="error">{this.state.validationErrors.steps}</p>
+                  : null}
+                  <textarea onChange={this.onChange} value={this.state.steps} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
+                  <ToastContainer />
+                  <button className="btn btn-info btn-block my-4" type="submit">Edit</button>
+                <a href={`/${this.state.recipe._id}`}><p>Back to the detail</p></a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>    
+    );
+  }
+}
+
+export default Update;

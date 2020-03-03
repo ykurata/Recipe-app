@@ -5,8 +5,10 @@ const app = express();
 const logger = require("morgan");
 const passport = require("passport");
 const cors = require("cors");
+const path = require("path");
 
 const users = require("./routes/users");
+const profile = require("./routes/profile");
 const recipes = require("./routes/recipes");
 
 app.use(logger("dev"));
@@ -20,6 +22,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.use('/uploads', express.static('uploads'));
+app.use('/avatar', express.static('avatar'));
 
 // Set up mondoDB connection
 mongoose.connect("mongodb://localhost:27017/recipe-api", { useNewUrlParser: true, useUnifiedTopology: true });
@@ -42,6 +45,7 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/users", users);
+app.use("/profile", profile);
 app.use("/recipes", recipes);
 
 // Set up cors

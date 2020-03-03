@@ -1,46 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import ColorNavbar from "./ColorNavbar";
-
-
-const FormStyles = theme => ({
-  label: {
-    margin: theme.spacing(1, 1, 0, 0),
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(10),
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  square: {
-    marginTop: "50px",
-    width: 400,
-    height: 300,
-    marginBottom: "30px",
-    marginLeft: "50px"
-  },
-  formGrid: {
-    marginLeft: 100
-  },
-  imageGrid: {
-    marginLeft: 50
-  }
-});
+import Navbar from "./Navbar";
 
 
 class Form extends Component {
@@ -48,12 +11,20 @@ class Form extends Component {
     super(props);
     this.state = {
       name: "",
+      estimatedTime: "",
       ingredients: "",
       steps: "",
       image: null,
       sendImage: null,
-      token: localStorage.getItem("jwtToken")
+      formData: {},
+      token: localStorage.getItem("jwtToken"),
+      validationErrors: [],
+      error: ""
     };
+  }
+
+  componentDidMount() {
+    this.setState({ formData: new FormData() });
   }
 
   onChange = e => {
@@ -70,117 +41,103 @@ class Form extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { name, ingredients, steps, sendImage } = this.state;
-    const image = this.state.sendImage;
-    let formData = new FormData();
-    formData.append("image", image);
-    console.log(formData);
-    // formData.append("file", this.state.sendImage);
-    // console.log(formData);
+    if (this.state.sendImage === null) {
+      this.setState({
+        error: "Please select Image"
+      });
+    }
 
-    // const recipe = {
-    //   name: name,
-    //   ingredients: ingredients,
-    //   steps: steps,
-    //   recipeImage: formData
-    // };
+    const { name, estimatedTime, ingredients, steps, sendImage, formData } = this.state;
+    
+    formData.append("name", name);
+    formData.append("estimatedTime", estimatedTime);
+    formData.append("ingredients", ingredients);
+    formData.append("steps", steps);
+    formData.append("recipeImage", sendImage);
 
-    // axios.post("/recipes", formData, recipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
-    //   .then(res => {
-    //     console.log(res.data);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axios.post("/recipes", formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      .then(res => {
+        toast.success("Created a recipe!" , {
+          position: "top-right",
+          autoClose: 3000
+        }); 
+      })
+      .catch(err => {
+        this.setState({
+          validationErrors: err.response.data
+        });
+        toast.error("Something went wrong!" , {
+          position: "top-right",
+          autoClose: 3000
+        }); 
+      });
   }
 
   render() {
-    const { classes } = this.props;
-    console.log(this.state.sendImage);
     return (
-        <div>
-          <ColorNavbar></ColorNavbar>
-          <Grid container>
-            <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-              <Grid container justify="center">
-                <Grid item xs={5} >
-                  <Typography className={classes.label}>Recipe Title</Typography>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    name="name"
-                    placeholder="Title"
-                    onChange={this.onChange}
-                    value={this.state.name}
-                  />
-                  <Typography className={classes.label}>Ingredients</Typography>
-                  <TextField
-                    id="ingredients"
-                    margin="normal"
-                    multiline
-                    rows="5"
-                    fullWidth
-                    name="ingredients"
-                    placeholder="Ingredients"
-                    variant="outlined"
-                    onChange={this.onChange}
-                    value={this.state.ingredients}
-                  />
-                  <Typography className={classes.label}>Steps</Typography>
-                  <TextField
-                    id="steps"
-                    margin="normal"
-                    multiline
-                    rows="8"
-                    fullWidth
-                    name="steps"
-                    placeholder="Steps"
-                    variant="outlined"
-                    onChange={this.onChange}
-                    value={this.state.steps}
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  > 
-                    Create
-                  </Button>
-                </Grid>
-
-                {/* Image upload */}
-                <Grid item xs={4} >
-                  <Avatar variant="square" 
-                    className={classes.square}
-                    src={this.state.image}
-                  >
-                    No Image
-                  </Avatar> 
-                  <Button
-                    variant="contained"
-                    component="label"
-                    style={{ marginLeft: 180 }}
-                  >
-                    Upload Image
+      <div>
+        <Navbar></Navbar>
+        <div id="form">
+          <div className="main container-fluid">
+            <div className="col-12 text-center">
+              <h2 className="heading">Create Recipe</h2>
+            </div>
+            <div className="row">
+              <div className="col-md-12 col-lg-6">
+                <div className="image text-center">
+                  {this.state.error ? 
+                    <label className="error">{this.state.error}</label>
+                  : null}
+                  <img src={this.state.image} className="img-fluid" alt="" />
+                  <label className="btn btn-info">
+                    Select Image
                     <input
                       type="file"
                       name="image"
                       onChange={this.imageChange}
-                      style={{ display: "none" }}
+                      hidden
                     />
-                  </Button>  
-                </Grid>
-              </Grid>
-            </form>
-          </Grid>
-      </div>
+                  </label>
+                </div>
+              </div>
+              <div className="col-md-12 col-lg-6">
+                <form className="text-center border border-light" onSubmit={this.onSubmit}>
+                    {/* recipe title */}
+                    {this.state.validationErrors ? 
+                      <p className="error">{this.state.validationErrors.name}</p>
+                    : null}
+                    <input onChange={this.onChange} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
+                    {/* estimated time */}
+                    {this.state.validationErrors ? 
+                      <p className="error">{this.state.validationErrors.estimatedTime}</p>
+                    : null}
+                    <div className="time">
+                      <div className="time-input">
+                        <input onChange={this.onChange} className="form-control" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
+                      </div>
+                      <div className="time-label">min</div>
+                    </div>
+                    {/* ingredients */}
+                    {this.state.validationErrors ? 
+                      <p className="error">{this.state.validationErrors.ingredients}</p>
+                    : null}
+                    <textarea onChange={this.onChange} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                    {/* steps */}
+                    {this.state.validationErrors ? 
+                      <p className="error">{this.state.validationErrors.steps}</p>
+                    : null}
+                    <textarea onChange={this.onChange} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
+                    <ToastContainer />
+                    <button className="btn btn-info btn-block my-4" type="submit">Create</button>
+                    <a href="/"><p>Cancel</p></a>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>    
     );
   }
 }
 
-export default withStyles(FormStyles)(Form);
+export default Form;

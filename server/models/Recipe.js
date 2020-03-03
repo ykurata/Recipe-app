@@ -3,13 +3,17 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const RecipeSchema = new Schema(
-  {
+  { 
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "users"
     }, 
     name: {
       type: String,
+      required: true
+    },
+    estimatedTime: {
+      type: Number,
       required: true
     },
     ingredients: {
@@ -21,8 +25,32 @@ const RecipeSchema = new Schema(
       required: true
     },
     recipeImage: {
-      type: String
-    }
+      type: String,
+      required: true
+    },
+    likes: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "users"
+        }
+      }
+    ],
+    reviews: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "users"
+        },
+        text:{
+          type: String
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now
+        }
+      }
+    ]
   },
   {
     timestamps: { createdAt: true }

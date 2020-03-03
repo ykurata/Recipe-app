@@ -1,38 +1,8 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 
-
-const SignUpStyles = theme => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-});
-
+import Navbar from "./Navbar";
 
 class SignUp extends Component {
   constructor(props) {
@@ -47,7 +17,6 @@ class SignUp extends Component {
     };
   }
 
-  // Update user input
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -69,125 +38,54 @@ class SignUp extends Component {
         const decoded = jwt_decode(token);
         localStorage.setItem("jwtToken", token);
         localStorage.setItem("name", decoded.name);
-        this.props.history.push("/");
+        localStorage.setItem("userId", decoded.id);
+        this.props.history.push("/list");
       })
       .catch(err => {
         this.setState({
           validationErrors: err.response.data,
-          error: err.response.data
+          error: err.response.data.error
         });
-       
       });
   }
 
   render() {
-    const { classes } = this.props;
+   
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                {this.state.error ? 
-                  <Typography color="secondary">{this.state.error.error}</Typography>
-                  : null
-                } 
-                <TextField
-                  autoComplete="name"
-                  name="name"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  autoFocus
-                  onChange={this.onChange}
-                />
-                {this.state.validationErrors ? 
-                  <Typography color="secondary">{this.state.validationErrors.name}</Typography>
-                  : null
-                } 
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={this.onChange}
-                />
-                {this.state.validationErrors ? 
-                  <Typography color="secondary">{this.state.validationErrors.email}</Typography>
-                  : null
-                } 
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={this.onChange}
-                />
-                {this.state.validationErrors ? 
-                  <Typography color="secondary">{this.state.validationErrors.password}</Typography>
-                  : null
-                } 
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password2"
-                  label="Confirm Password"
-                  type="password"
-                  id="password2"
-                  autoComplete="current-password"
-                  onChange={this.onChange}
-                />
-                {this.state.validationErrors ? 
-                  <Typography color="secondary">{this.state.validationErrors.password2}</Typography>
-                  : null
-                } 
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign Up
-            </Button>
-            <Grid container justify="center"> 
-              <Grid item>
-                <Link href="/login" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+      <div>
+        <Navbar></Navbar>
+        <div className="login-form">
+          <form className="text-center border border-light pt-5" onSubmit={this.onSubmit}>
+            <p className="h4 mb-4">Sign Up</p>
+            {this.state.error ? 
+              <p className="error">{this.state.error}</p>
+            : null}
+            {this.state.validationErrors ? 
+              <p className="error">{this.state.validationErrors.name}</p>
+            : null}
+            <input onChange={this.onChange} type="text" name="name" id="defaultRegisterFormName" className="form-control mb-4" placeholder="Name"></input>
+            {this.state.validationErrors ? 
+              <p className="error">{this.state.validationErrors.email}</p>
+            : null}
+            <input onChange={this.onChange} type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
+            {this.state.validationErrors ? 
+              <p className="error">{this.state.validationErrors.password}</p>
+            : null}
+            <input onChange={this.onChange} type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
+            {this.state.validationErrors ? 
+              <p className="error">{this.state.validationErrors.password2}</p>
+            : null}
+            <input onChange={this.onChange} type="password" name="password2" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Confirm Password" />
+            <button className="btn btn-info btn-block my-4" type="submit">Sign Up</button>
+            <p>Already a member?
+                <a href="/login">Log In</a>
+            </p>
           </form>
         </div>
-      </Container>
+      </div>
     );
   }
 }
 
-export default withStyles(SignUpStyles)(SignUp);
+export default SignUp;
 
