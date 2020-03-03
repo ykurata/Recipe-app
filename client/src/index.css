@@ -225,6 +225,21 @@ h5 {
 }
 
 
+/* Profile Detail */
+.top {
+  padding-top: 5rem;
+}
+
+.name {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+#profile-detail .card {
+  width: 36rem;
+}
+
 @media (max-width: 576px) {
   .login-form {
     width: 80%;
