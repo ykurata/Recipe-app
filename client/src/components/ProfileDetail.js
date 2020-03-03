@@ -23,6 +23,7 @@ class ProfileDetail extends Component {
     this.state = {
       profile: {},
       name: "",
+      image: null,
       empty: false,
       token: localStorage.getItem("jwtToken"),
       userId: localStorage.getItem("userId")
@@ -40,8 +41,8 @@ class ProfileDetail extends Component {
           this.setState({ 
             profile: res.data,
             name: res.data.userId.name,
+            image: res.data.photo
           });
-          console.log(this.state.profile);
         } else {
           this.setState({ empty: true });
         }
@@ -53,9 +54,8 @@ class ProfileDetail extends Component {
 
 
   render() {
-    const { profile } = this.state;
     const { classes } = this.props;
-
+  
     return (
       <div>
         <Navbar></Navbar>
@@ -65,7 +65,7 @@ class ProfileDetail extends Component {
             <div className="col-12 text-center">
               <h2 className="heading">{this.state.name}</h2>
               <Grid container className={classes.container} justify="center">  
-                <Avatar className={classes.avatar} src={this.state.profile.photo}></Avatar>
+                <Avatar className={classes.avatar} src={`http://localhost:5000/${this.state.image}`}></Avatar>
               </Grid>
             </div> 
           </div>   

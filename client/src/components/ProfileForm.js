@@ -132,7 +132,6 @@ class ProfileForm extends Component {
   }
 
   render() {
-
     const { classes } = this.props;
     return (
       <div> 
