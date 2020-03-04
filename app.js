@@ -7,9 +7,9 @@ const passport = require("passport");
 const cors = require("cors");
 const path = require("path");
 
-const users = require("./routes/users");
-const profile = require("./routes/profile");
-const recipes = require("./routes/recipes");
+const users = require("./server/routes/users");
+const profile = require("./server/routes/profile");
+const recipes = require("./server/routes/recipes");
 
 app.use(logger("dev"));
 
@@ -41,7 +41,7 @@ db.once("open", function(){
 app.use(passport.initialize());
 
 // Passport config
-require("./config/passport")(passport);
+require("./server/config/passport")(passport);
 
 // Routes
 app.use("/users", users);
@@ -50,6 +50,17 @@ app.use("/recipes", recipes);
 
 // Set up cors
 app.use(cors());
+
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFild(path.resolve(__dirname, 'client/build', 'index.html'));
+  });
+}
 
 
 const port = process.env.PORT || 5000;
