@@ -36,6 +36,9 @@ const ListStyles = theme => ({
   },
   userName: {
     fontSize: 12
+  },
+  container: {
+    marginBottom: 50
   }
 });
 
@@ -127,7 +130,7 @@ class List extends Component {
       <div>
         <Navbar></Navbar>
 
-        <Grid container justify="center">
+        <Grid container className={classes.container} justify="center">
           <Grid item xs={12} style={{ marginTop: 100 }} align="center">
             <TextField
               InputProps={{
