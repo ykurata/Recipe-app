@@ -147,7 +147,7 @@ class ProfileDetail extends Component {
           <div className="inner-div">
             <div className="col-12 text-center">
               <h2 className="name">{this.state.name}</h2>
-              <p>Joined since <Moment format="MMMM YYYY">{this.state.profile.createdAt}</Moment></p>
+              <p>Joined <Moment format="MMMM YYYY">{this.state.profile.createdAt}</Moment></p>
               <Grid container className={classes.container} justify="center">  
                 <Avatar className={classes.bigAvatar} src={`http://localhost:5000/${this.state.image}`}></Avatar>
               </Grid>
