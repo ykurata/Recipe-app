@@ -63,7 +63,7 @@ class Detail extends Component {
       .then(res => {
         toast.success("You sent a Like!" , {
           position: "top-right",
-          autoClose: 3000
+          autoClose: 2000
         }); 
         axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
           .then(res => {
@@ -88,7 +88,7 @@ class Detail extends Component {
     .then(res => {
       toast.success("Successfully deleted!" , {
         position: "top-right",
-        autoClose: 3000
+        autoClose: 2000
       }); 
     })
     .catch(err => {
@@ -119,7 +119,7 @@ class Detail extends Component {
       .then(res => {
         toast.success("Sent a Review!" , {
           position: "top-right",
-          autoClose: 3000
+          autoClose: 2000
         }); 
         axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
           .then(res => {

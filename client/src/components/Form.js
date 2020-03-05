@@ -59,17 +59,13 @@ class Form extends Component {
       .then(res => {
         toast.success("Created a recipe!" , {
           position: "top-right",
-          autoClose: 3000
+          autoClose: 2000
         }); 
       })
       .catch(err => {
         this.setState({
           validationErrors: err.response.data
         });
-        toast.error("Something went wrong!" , {
-          position: "top-right",
-          autoClose: 3000
-        }); 
       });
   }
 

@@ -78,7 +78,7 @@ class ProfileForm extends Component {
       .then(res => {
         toast.success("Created!" , {
           position: "top-right",
-          autoClose: 3000
+          autoClose: 2000
         });
       })
       .catch(err => {
@@ -92,7 +92,7 @@ class ProfileForm extends Component {
       .then(res => {
         toast.success("Updated!" , {
           position: "top-right",
-          autoClose: 3000
+          autoClose: 2000
         });
       })
       .catch(err => {
@@ -119,14 +119,14 @@ class ProfileForm extends Component {
     .then(res => {
       toast.success("Successfully Sent a Photo!" , {
         position: "top-right",
-        autoClose: 3000
+        autoClose: 2000
       }); 
     })
     .catch(err => {
       console.log(err.response.data);
       toast.error("Something went wrong!" , {
         position: "top-right",
-        autoClose: 3000
+        autoClose: 2000
       }); 
     });
   }

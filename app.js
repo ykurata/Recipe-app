@@ -7,9 +7,9 @@ const passport = require("passport");
 const cors = require("cors");
 const path = require("path");
 
-const users = require("./server/routes/users");
-const profile = require("./server/routes/profile");
-const recipes = require("./server/routes/recipes");
+const users = require("./routes/users");
+const profile = require("./routes/profile");
+const recipes = require("./routes/recipes");
 
 app.use(logger("dev"));
 
@@ -21,8 +21,8 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.use('/uploads', express.static('./server/uploads'));
-app.use('/avatar', express.static('./server/avatar'));
+app.use('/uploads', express.static('uploads'));
+app.use('/avatar', express.static('avatar'));
 
 // Set up mondoDB connection
 mongoose.connect(process.env.MONGODB_URI ||"mongodb://localhost:27017/recipe-api", { useNewUrlParser: true, useUnifiedTopology: true });
@@ -41,7 +41,7 @@ db.once("open", function(){
 app.use(passport.initialize());
 
 // Passport config
-require("./server/config/passport")(passport);
+require("./config/passport")(passport);
 
 // Routes
 app.use("/users", users);
