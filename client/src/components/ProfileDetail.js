@@ -112,7 +112,7 @@ class ProfileDetail extends Component {
                 id={item._id}
                 title="recipe image"
                 className={classes.media}
-                image={`http://localhost:5000/${item.recipeImage}`}
+                image={item.recipeImage}
                 component={Link}
                 to={`/${item._id}`}
               />
@@ -149,7 +149,7 @@ class ProfileDetail extends Component {
               <h2 className="name">{this.state.name}</h2>
               <p>Joined <Moment format="MMMM YYYY">{this.state.profile.createdAt}</Moment></p>
               <Grid container className={classes.container} justify="center">  
-                <Avatar className={classes.bigAvatar} src={`http://localhost:5000/${this.state.image}`}></Avatar>
+                <Avatar className={classes.bigAvatar} src={this.state.image}></Avatar>
               </Grid>
               
               {/* display description only if it's saved */}
