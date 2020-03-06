@@ -9,9 +9,31 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app');
 const should = chai.should();
+const expect = require('chai').expect;
+const request = require('supertest');
 
 
 chai.use(chaiHttp);
+
+//Set up the data to login
+const userCredentials = {
+  email: 'yasuko@gmail.com', 
+  password: 'testpassword'
+}
+
+//Login the user before running any tests
+const authenticatedUser = request.agent(server);
+
+before((done) => {
+  authenticatedUser
+    .post('/users/login')
+    .send(userCredentials)
+    .end((err, response) => {
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+});
+
 
 // Parent Block
 describe("Recipe", () => {
@@ -33,4 +55,5 @@ describe("Recipe", () => {
         });
     });
   });
+
 });
