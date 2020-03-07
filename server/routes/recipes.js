@@ -1,8 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const aws = require("aws-sdk");
-const multer = require("multer");
-const multerS3 = require("multer-s3");
 
 // Load input validation
 const validateRecipeInput = require("../validation/recipe");
@@ -10,32 +7,8 @@ const validateRecipeInput = require("../validation/recipe");
 // import model and auth middleware
 const Recipe = require("../models/Recipe");
 const auth = require("./middleware/utils");
+const upload = require("./service/upload");
 
-
-const s3 = new aws.S3();
-
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-    cb(null, true);
-  } else {
-    cb(new Error("Invalid Mime Type, only JPEG and PNG"), false);
-  }
-};
-
-const upload = multer({
-  fileFilter,
-  storage: multerS3({
-    s3,
-    bucket: "yk-web-assets",
-    acl: "public-read",
-    metadata: function(req, file, cb) {
-      cb(null, { fieldName: "TESTING_META_DATA!" });
-    },
-    key: function(req, file, cb) {
-      cb(null, file.originalname);
-    }
-  })
-});
 
 // Create a recipe 
 router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {

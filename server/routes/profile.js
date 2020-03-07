@@ -8,33 +8,7 @@ const validateProfileInput = require("../validation/profile");
 // import model and auth middleware
 const Profile = require("../models/Profile");
 const auth = require("./middleware/utils");
-
-
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './avatar/');
-  },
-  filename: function(req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-const upload = multer({
-  storage: storage, 
-  limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  fileFilter: fileFilter
-});
-
+const upload = require("./service/upload");
 
 // POST profile photo
 router.post("/photo", upload.single("photo"), auth, (req, res, next) => {
@@ -153,7 +127,6 @@ router.get("/:id", auth, (req, res, next) => {
 
 
 // DELETE a profile
-// Delete a recipe
 router.delete("/delete/:id", auth, (req, res, next) => {
   Profile.remove({ _id: req.params.id}, function(err, profile) {
     if (err) return next(err);

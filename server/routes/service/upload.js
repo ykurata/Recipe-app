@@ -2,6 +2,13 @@ const aws = require("aws-sdk");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 
+const config = require("../../config");
+
+aws.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY
+});
+
 const s3 = new aws.S3();
 
 const fileFilter = (req, file, cb) => {
@@ -16,7 +23,7 @@ const upload = multer({
   fileFilter,
   storage: multerS3({
     s3,
-    bucket: "profile-pictures-ls",
+    bucket: "",  // Update bucket name
     acl: "public-read",
     metadata: function(req, file, cb) {
       cb(null, { fieldName: "TESTING_META_DATA!" });

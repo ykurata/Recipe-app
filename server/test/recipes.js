@@ -28,8 +28,9 @@ before((done) => {
   authenticatedUser
     .post('/users/login')
     .send(userCredentials)
-    .end((err, response) => {
-      expect(response.statusCode).to.equal(200);
+    .end((err, res) => {
+      expect(res.statusCode).to.equal(200);
+      token = { access_token: res.body.token }
       done();
     });
 });
