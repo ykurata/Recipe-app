@@ -25,7 +25,7 @@ router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
     estimatedTime: req.body.estimatedTime,
     ingredients: req.body.ingredients,
     steps: req.body.steps,
-    recipeImage: req.file.path
+    recipeImage: req.file.location
   });
 
   newRecipe.save()

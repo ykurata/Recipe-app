@@ -15,7 +15,7 @@ router.post("/photo", upload.single("photo"), auth, (req, res, next) => {
   Profile.findOne({ userId: req.user }, (err, profile) => {
     if (err) return next(err);
     if (profile) {
-      profile.photo = req.file.path;
+      profile.photo = req.file.location;
       profile.save()
         .then(profile => {
           res.status(200).json(profile);
@@ -26,7 +26,7 @@ router.post("/photo", upload.single("photo"), auth, (req, res, next) => {
     } else {
       const newProfile = new Profile({
         userId: req.user,
-        photo: req.file.path
+        photo: req.file.location
       });
 
       newProfile.save()

@@ -1,60 +1,19 @@
-//During the test the env variable is set to test
-process.env.NODE_ENV = 'test';
+const mongoose = require('mongoose');
 
-const mongoose = require("mongoose");
-const Recipe = require("../models/Recipe");
+//tell mongoose to use es6 implementation of promises
+mongoose.Promise = global.Promise;
 
-//Require the dev-dependencies
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const server = require('../app');
-const should = chai.should();
-const expect = require('chai').expect;
-const request = require('supertest');
-
-
-chai.use(chaiHttp);
-
-//Set up the data to login
-const userCredentials = {
-  email: 'yasuko@gmail.com', 
-  password: 'testpassword'
-}
-
-//Login the user before running any tests
-const authenticatedUser = request.agent(server);
-
-before((done) => {
-  authenticatedUser
-    .post('/users/login')
-    .send(userCredentials)
-    .end((err, res) => {
-      expect(res.statusCode).to.equal(200);
-      token = { access_token: res.body.token }
-      done();
-    });
+mongoose.connect("mongodb://localhost:27017/recipe-api"); 
+mongoose.connection
+  .once('open', () => console.log('Connected!'))
+  .on('error', (error) => {
+      console.warn('Error : ',error);
 });
 
-
-// Parent Block
-describe("Recipe", () => {
-  beforeEach((done) => {
-    Recipe.remove({}, (err) => {
-      done();
-    });
-  });  
-
-  describe("/GET recipes", () => {
-    it("should GET all the recipes", (done) => {
-      chai.request(server)
-        .get("/recipes/list")
-        .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('array');
-            res.body.length.should.be.eql(0);
-          done();  
-        });
-    });
-  });
-
+//Called hooks which runs before something.
+beforeEach((done) => {
+    mongoose.connection.collections.recipes.drop(() => {
+         //this function runs after the drop is completed
+        done(); //go ahead everything is done now.
+    }); 
 });

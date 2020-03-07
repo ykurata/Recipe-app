@@ -23,7 +23,7 @@ const upload = multer({
   fileFilter,
   storage: multerS3({
     s3,
-    bucket: "",  // Update bucket name
+    bucket: "yasuko-my-recipes",  
     acl: "public-read",
     metadata: function(req, file, cb) {
       cb(null, { fieldName: "TESTING_META_DATA!" });
