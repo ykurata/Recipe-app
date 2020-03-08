@@ -51,7 +51,6 @@ app.use("/recipes", recipes);
 // Set up cors
 app.use(cors());
 
-
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
@@ -65,3 +64,5 @@ if (process.env.NODE_ENV === 'production') {
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+
+module.exports = app;
