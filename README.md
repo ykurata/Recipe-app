@@ -1,4 +1,6 @@
 # My Recipes
 
-This application is for searching and saving recipes! 
-You can create and save your favorit recipes, and search recipes. Also, you can send like and write a review to recipes you like. 
+This is an application for saving and searching your favourite recipes.<br></br>
+The app allows users to create and search for recipes by either ingredients or dish names.<br></br> 
+They can also view recipes from user profiles and like and write reviews on thier recipes.<br></br>
+Responsive for both web and mobile.
