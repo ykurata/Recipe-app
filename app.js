@@ -21,9 +21,6 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.use('/uploads', express.static('uploads'));
-app.use('/avatar', express.static('avatar'));
-
 // Set up mondoDB connection
 mongoose.connect(process.env.MONGODB_URI ||"mongodb://localhost:27017/recipe-api", { useNewUrlParser: true, useUnifiedTopology: true });
 
