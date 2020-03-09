@@ -36,7 +36,7 @@ The following software is required to be installed on your system:
 
     **Backend (Server)**
         
-    * Go to root directory, and run `npm install`.
+    * Go to recipe-app directory, and run `npm install`.
 
     * To start server, run `npm start`.
 
