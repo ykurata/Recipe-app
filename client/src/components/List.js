@@ -69,7 +69,6 @@ class List extends Component {
           recipes: res.data,
           loading: true
         });
-        console.log(res.data);
       })
       .catch(err => {
         console.log(err);
