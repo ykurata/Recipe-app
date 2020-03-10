@@ -109,4 +109,15 @@ router.post("/login", (req, res) => {
   });
 });
 
+// Get all users 
+router.get("/list", (req, res, next) => {
+  User.find({})
+    .populate("userId", "name")
+    .exec(function(err, recipes){
+      if (err) return next(err);
+      res.json(recipes);
+    })
+});
+
+
 module.exports = router;

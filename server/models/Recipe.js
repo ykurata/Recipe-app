@@ -26,7 +26,6 @@ const RecipeSchema = new Schema(
     },
     recipeImage: {
       type: String,
-      required: true
     },
     likes: [
       {

@@ -50,7 +50,7 @@ router.post("/:id", auth, (req, res, next) => {
     return res.status(400).json(errors);
   }
 
-  Profile.findOne({ userId: req.user }, (err, profile) => {
+  Profile.findOne({ userId: req.params.id }, (err, profile) => {
     if (err) return next(err);
     if (profile) {
       profile.description = req.body.description
@@ -89,7 +89,7 @@ router.put("/update/:id", auth, (req, res, next) => {
     return res.status(400).json(errors);
   }
 
-  Profile.findOne({ userId: req.user }, (err, profile) => {
+  Profile.findOne({ userId: req.params.id }, (err, profile) => {
     if (err) return next(err);
     profile.description = req.body.description;
 
