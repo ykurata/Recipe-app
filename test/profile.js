@@ -68,3 +68,37 @@ describe('Profiles', () => {
       });
   });
 });
+
+describe('/POST a profile', () => {
+  let newToken;
+  let newUserId;
+  before((done) => {
+    chai.request(server)
+    .post("/users/register")
+    .send({ 
+      email: faker.internet.email(), 
+      name: faker.name.findName(), 
+      password: faker.internet.password() 
+    })
+    .end((err, res) => {
+      newToken = res.body.token;
+      const decode = jwt_decode(newToken);
+      newUserId = decode.id;
+      done();
+  });
+
+  it("should POST a profile", (done) => {
+    chai.request(server)
+        .post(`/profile/${newUserId}`)
+        .set({ Authorization: `Bearer ${newToken}` })
+        .send({
+          description: "test"
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          done();
+        });
+    });
+  });  
+});
