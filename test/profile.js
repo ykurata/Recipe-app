@@ -2,11 +2,9 @@ const mongoose = require('mongoose');
 
 const chai = require('chai');
 const should = chai.should();
-const faker = require('faker');
 const jwt_decode = require("jwt-decode");
 const chaiHttp = require('chai-http');
 const server = require('../app');
-
 
 chai.use(chaiHttp);
 
