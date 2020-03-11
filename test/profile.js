@@ -54,6 +54,18 @@ describe('Profiles', () => {
         });
   });
 
+  it("should GET a profile", (done) => {
+    chai.request(server)
+        .get(`/profile/${userId}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('description');
+          done();
+        });
+  });  
+
   it("should update a profile" ,(done) => {
     chai.request(server)
       .put(`/profile/update/${userId}`)
