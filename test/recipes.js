@@ -7,10 +7,6 @@ const server = require('../app');
 
 chai.use(chaiHttp);
 
-
-//tell mongoose to use es6 implementation of promises
-mongoose.Promise = global.Promise;
-
 mongoose.connect("mongodb://localhost:27017/recipe-api"); 
 mongoose.connection
   .once('open', () => console.log('Connected!'))
