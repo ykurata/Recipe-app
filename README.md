@@ -4,7 +4,15 @@ This is an application for saving and searching your favourite recipes.
 The app allows users to create and search for recipes by either ingredients or dish names.
 They can also view recipes from user profiles and like and write reviews on thier recipes.<br></br>
 Responsive for both web and mobile.<br></br>
-https://yasuko-my-recipes.herokuapp.com/
+[**Live Demo**](https://yasuko-my-recipes.herokuapp.com/)
+
+## Built With 
+
+* [NodeJS](https://nodejs.org/en/download/)
+* [MongoDB](https://www.mongodb.com/)
+* [Express](https://expressjs.com/)
+* [React](https://reactjs.org/)
+
 
 ## Requirements
 
@@ -47,14 +55,15 @@ The following software is required to be installed on your system:
         the MongoDB daemon.
 
 
-## Test User
-Email: yasuko@gmail.com </br>
-Password: testpassword
+## Feature 
+* Register/ Log in / Log out
+
+* Create recipes 
+
+* Search for recipes by either ingredients or dish names.
+
+* Add profile
+
+* Send Likes and Messages 
         
 
-## Built With 
-
-* [NodeJS](https://nodejs.org/en/download/)
-* [MongoDB](https://www.mongodb.com/)
-* [Express](https://expressjs.com/)
-* [React](https://reactjs.org/)
