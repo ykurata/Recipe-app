@@ -4,15 +4,14 @@ This is an application for saving and searching your favourite recipes.
 The app allows users to create and search for recipes by either ingredients or dish names.
 They can also view recipes from user profiles and like and write reviews on thier recipes.<br></br>
 Responsive for both web and mobile.<br></br>
-[**Live Demo**](https://yasuko-my-recipes.herokuapp.com/)
+[**Live Demo**](https://yasuko-my-recipes.herokuapp.com/){:target="_blank"}
 
 ## Built With 
 
-* [NodeJS](https://nodejs.org/en/download/)
-* [MongoDB](https://www.mongodb.com/)
-* [Express](https://expressjs.com/)
-* [React](https://reactjs.org/)
-
+* [NodeJS](https://nodejs.org/en/download/){:target="_blank"}
+* [MongoDB](https://www.mongodb.com/){:target="_blank"}
+* [Express](https://expressjs.com/){:target="_blank"}
+* [React](https://reactjs.org/){:target="_blank"}
 
 ## Requirements
 
@@ -21,12 +20,12 @@ The following software is required to be installed on your system:
 * NodeJS
     * The project uses NodeJs as a backend language. Make sure you have [NodeJS] installed.
 
-[NodeJS]: https://nodejs.org/en/download/    
+[NodeJS]: https://nodejs.org/en/download/{:target="_blank"}    
     
 * MongoDB 
     * The project uses MongoDB as a database. Installation tutorial is [here].
 
-[here]: https://docs.mongodb.com/manual/installation/
+[here]: https://docs.mongodb.com/manual/installation/{:target="_blank"}
 
 
 ## Getting Started 
@@ -55,15 +54,13 @@ The following software is required to be installed on your system:
         the MongoDB daemon.
 
 
-## Feature 
+## Features
 * Register/ Log in / Log out
 
 * Create recipes 
 
-* Search for recipes by either ingredients or dish names.
+* Search for recipes by either ingredients or dish names
 
 * Add profile
 
-* Send Likes and Messages 
-        
-
+* Send Likes and Messages to your favorite recipes
