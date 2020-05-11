@@ -8,10 +8,10 @@ Responsive for both web and mobile.<br></br>
 
 ## Built With 
 
-* [NodeJS](https://nodejs.org/en/download/){
-* [MongoDB](https://www.mongodb.com/){
-* [Express](https://expressjs.com/){
-* [React](https://reactjs.org/){
+* [NodeJS](https://nodejs.org/en/download/)
+* [MongoDB](https://www.mongodb.com/)
+* [Express](https://expressjs.com/)
+* [React](https://reactjs.org/)
 
 ## Requirements
 
