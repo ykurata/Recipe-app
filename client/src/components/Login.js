@@ -46,6 +46,29 @@ class Login extends Component {
       });
   }
 
+  demoLogin = e => {
+    e.preventDefault();
+    const demoUser = {
+      email: "yasuko@gmail.com",
+      password: "testpassword"
+    };
+    axios.post("/users/login", demoUser)
+      .then(res => {
+        const { token } = res.data;
+        const decoded = jwt_decode(token);
+        localStorage.setItem("jwtToken", token);
+        localStorage.setItem("name", decoded.name);
+        localStorage.setItem("userId", decoded.id);
+        this.props.history.push("/list");
+      })
+      .catch(err => {
+        this.setState({
+          validationErrors: err.response.data,
+          error: err.response.data.error
+        });
+      });
+  }
+
   render() {
     return (
       <div>
@@ -68,6 +91,7 @@ class Login extends Component {
               <p>Not a member?
                   <a href="/signup">Register</a>
               </p>
+              <button className="btn btn-info" onClick={this.demoLogin}>Demo User</button>
           </form>
         </div>   
       </div>
