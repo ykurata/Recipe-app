@@ -155,7 +155,13 @@ class MyRecipes extends Component {
 
           {this.state.loading === false ? 
             <Grid containeralign="center" style={{ marginTop: 50 }}>
-              <Typography variant="h4">Loading Recipes...</Typography>
+              <div className="text-center mt-5">
+                <div className="d-flex justify-content-center">
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </div>  
             </Grid>
           : null
           }
