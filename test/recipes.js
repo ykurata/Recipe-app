@@ -9,7 +9,7 @@ const server = require('../app');
 
 chai.use(chaiHttp);
 
-mongoose.connect("mongodb://localhost:27017/recipe-api"); 
+// mongoose.connect(process.env.MONGODB_URI ||"mongodb://localhost:27017/recipe-api"); 
 mongoose.connection
   .once('open', () => console.log('Connected!'))
   .on('error', (error) => {
