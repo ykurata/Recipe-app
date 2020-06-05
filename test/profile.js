@@ -33,7 +33,7 @@ describe('Profiles', () => {
         if (err) throw err;
         token = res.body.token;
         const decode = jwt_decode(token);
-        userId = decode.id; 
+        userId = decode.id;
         done();
       });
   });
