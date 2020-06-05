@@ -10,15 +10,15 @@ const server = require('../app');
 chai.use(chaiHttp);
 
 // mongoose.connect(process.env.MONGODB_URI ||"mongodb://localhost:27017/recipe-api"); 
-mongoose.connection
-  .once('open', () => console.log('Connected!'))
-  .on('error', (error) => {
-      console.warn('Error : ',error);
-});
+// mongoose.connection
+//   .once('open', () => console.log('Connected!'))
+//   .on('error', (error) => {
+//       console.warn('Error : ',error);
+// });
 
-after("Disconnect database", (done) => {
-    mongoose.connection.close().then(() => done()).catch(done);
-});
+// after("Disconnect database", (done) => {
+//     mongoose.connection.close().then(() => done()).catch(done);
+// });
 
 describe('Recipes', () => {
   let token;
