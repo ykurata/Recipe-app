@@ -105,7 +105,7 @@ router.put("/update/:id", auth, (req, res, next) => {
 
 
 // GET all profiles 
-router.get("/all", auth, (req, res, next) => {
+router.get("/all", (req, res, next) => {
   Profile.find({})
   .populate("userId", "name")
   .exec(function(err, profile){
