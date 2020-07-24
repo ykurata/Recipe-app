@@ -61,6 +61,7 @@ class Form extends Component {
           position: "top-right",
           autoClose: 2000
         }); 
+        window.location = `/image/${res.data.id}`;
       })
       .catch(err => {
         this.setState({
@@ -72,63 +73,43 @@ class Form extends Component {
   render() {
     return (
       <div>
-        <Navbar></Navbar>
+        <Navbar/>
         <div id="form">
-          <div className="main container-fluid">
+          <div className="main container">
             <div className="col-12 text-center">
               <h2 className="heading">Create Recipe</h2>
             </div>
-            <div className="row">
-              <div className="col-md-12 col-lg-6">
-                <div className="image text-center">
-                  {this.state.error ? 
-                    <label className="error">{this.state.error}</label>
-                  : null}
-                  <img src={this.state.image} className="img-fluid" alt="" />
-                  <label className="btn btn-info">
-                    Select Image
-                    <input
-                      type="file"
-                      name="image"
-                      onChange={this.imageChange}
-                      hidden
-                    />
-                  </label>
+            
+              <form className="text-center" onSubmit={this.onSubmit}>
+                {/* recipe title */}
+                {this.state.validationErrors ? 
+                  <p className="error">{this.state.validationErrors.name}</p>
+                : null}
+                <input onChange={this.onChange} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
+                {/* estimated time */}
+                {this.state.validationErrors ? 
+                  <p className="error">{this.state.validationErrors.estimatedTime}</p>
+                : null}
+                <div className="time">
+                  <div className="time-input">
+                    <input onChange={this.onChange} className="form-control" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
+                  </div>
+                  <div className="time-label">min</div>
                 </div>
-              </div>
-              <div className="col-md-12 col-lg-6">
-                <form className="text-center border border-light" onSubmit={this.onSubmit}>
-                    {/* recipe title */}
-                    {this.state.validationErrors ? 
-                      <p className="error">{this.state.validationErrors.name}</p>
-                    : null}
-                    <input onChange={this.onChange} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
-                    {/* estimated time */}
-                    {this.state.validationErrors ? 
-                      <p className="error">{this.state.validationErrors.estimatedTime}</p>
-                    : null}
-                    <div className="time">
-                      <div className="time-input">
-                        <input onChange={this.onChange} className="form-control" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
-                      </div>
-                      <div className="time-label">min</div>
-                    </div>
-                    {/* ingredients */}
-                    {this.state.validationErrors ? 
-                      <p className="error">{this.state.validationErrors.ingredients}</p>
-                    : null}
-                    <textarea onChange={this.onChange} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
-                    {/* steps */}
-                    {this.state.validationErrors ? 
-                      <p className="error">{this.state.validationErrors.steps}</p>
-                    : null}
-                    <textarea onChange={this.onChange} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
-                    <ToastContainer />
-                    <button className="btn btn-info btn-block my-4" type="submit">Create</button>
-                    <a href="/"><p>Cancel</p></a>
-                </form>
-              </div>
-            </div>
+                {/* ingredients */}
+                {this.state.validationErrors ? 
+                  <p className="error">{this.state.validationErrors.ingredients}</p>
+                : null}
+                <textarea onChange={this.onChange} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
+                {/* steps */}
+                {this.state.validationErrors ? 
+                  <p className="error">{this.state.validationErrors.steps}</p>
+                : null}
+                <textarea onChange={this.onChange} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
+                <ToastContainer />
+                <button className="btn btn-info btn-block my-4" type="submit">Create</button>
+                <a href="/"><p>Cancel</p></a>
+              </form>
           </div>
         </div>  
       </div>    

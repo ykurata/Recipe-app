@@ -48,7 +48,7 @@ router.post("/image/:id", upload.single('recipeImage'), auth, async(req, res) =>
 });
 
 // Update a recipe
-router.put("/update/:id", auth, (req, res, next) => {
+router.put("/update/:id", auth, (req, res) => {
   // Form validation
   const { errors, isValid } = validateRecipeInput(req.body);
   // Check validation
@@ -74,7 +74,7 @@ router.put("/update/:id", auth, (req, res, next) => {
 });
 
 // Post like to a recipe
-router.put("/like/:id", auth, (req, res, next) => {
+router.put("/like/:id", auth, (req, res) => {
   Recipe.findOne({ _id: req.params.id })
   .then(recipe => {
     if (recipe.likes.filter(like => like.user.toString() === req.user).length > 0) {

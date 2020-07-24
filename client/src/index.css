@@ -5,6 +5,8 @@ html, body {
   width: 100%;
   overflow-x: hidden;
   font-family: 'Lato', sans-serif;
+  color: #555555;
+  background-color: #ebeff5;
 }
 
 
@@ -70,7 +72,7 @@ html, body {
 /* Recipe form */
 .main {
   padding-top: 5rem;
-  width: 85%;
+  width: 50%;
 }
 
 h2.heading {
@@ -118,6 +120,38 @@ textarea {
   white-space: pre-wrap;
 }
 
+
+/* Recipe Image  */
+#image .card {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+#image img {
+  width: 400px;
+  height: 400px;
+  margin: auto;
+}
+.no-image {
+  width: 400px;
+  height: 400px;
+  background-color: #dadee6;
+  margin: auto;
+}
+#image .no-image i {
+  font-size: 7rem;
+  color: #c2c6cf;
+  margin-top: 8rem;
+}
+#image label {
+  margin-top: 1rem;
+}
+#image button {
+  margin-top: 1rem;
+}
+#image .image-error {
+  color: red;
+  text-align: center;
+}
 
 /* Update Form */
 #update {
@@ -255,6 +289,12 @@ h5 {
   width: 36rem;
 }
 
+@media (max-width: 768px) {
+  .main {
+    width: 80%;
+  }
+}
+
 @media (max-width: 576px) {
   .landing-text h1 {
     font-size: 3rem;
@@ -273,7 +313,7 @@ h5 {
   }
 
   #update {
-    width: 100%;
+    width: 90%;
   }
   
 
