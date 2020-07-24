@@ -11,32 +11,41 @@ const upload = require("./service/upload");
 
 
 // Create a recipe 
-router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
-  // Form validation
-  const { errors, isValid } = validateRecipeInput(req.body);
-  // Check validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
+router.post("/", auth, async(req, res, next) => {
+  try {
+    // Form validation
+    const { errors, isValid } = validateRecipeInput(req.body);
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
 
-  const newRecipe = new Recipe({
-    userId: req.user,
-    name: req.body.name,
-    estimatedTime: req.body.estimatedTime,
-    ingredients: req.body.ingredients,
-    steps: req.body.steps,
-    recipeImage: req.file.location
-  });
-
-  newRecipe.save()
-    .then(recipe => {
-      res.status(200).json(recipe);
-    })
-    .catch(err => {
-      res.json(err);
+    const newRecipe = new Recipe({
+      userId: req.user,
+      name: req.body.name,
+      estimatedTime: req.body.estimatedTime,
+      ingredients: req.body.ingredients,
+      steps: req.body.steps
     });
+    const recipe = newRecipe.save();
+    res.status(200).json(recipe);
+  } catch(err) {
+    console.log(err);
+  }
 });
 
+
+router.post("/image/:id", upload.single('recipeImage'), auth, async(req, res) => {
+  try {
+    const image = new Recipe({
+      recipeImage: req.file.location
+    });
+    const recipe = await image.save();
+    res.status(200).json(recipe);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 // Update a recipe
 router.put("/update/:id", auth, (req, res, next) => {
