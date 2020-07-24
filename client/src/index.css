@@ -301,22 +301,17 @@ h5 {
     letter-spacing: .15rem;
     padding-bottom: .5rem;
   }
-  
   .landing-text h3 {
     font-size: 1.2rem;
     padding-bottom: 1.2rem;
   }
-
   .login-form {
     width: 80%;
     margin: 4rem auto;
   }
-
   #update {
     width: 90%;
   }
-  
-
   #form img {
     object-fit: cover; 
     object-position: center; /* Center the image within the element */
@@ -324,33 +319,45 @@ h5 {
     max-height: 300px;
     margin-bottom: 3rem;
   }
-
   .main {
     width: 100%;
   }
-
-  #detail img {
-    object-fit: cover; 
-    object-position: center; /* Center the image within the element */
-    width: 100%;
-    max-height: 300px;
-    margin-bottom: 1rem;
+  /* Upload Image page */
+  #image img {
+    width: 300px;
+    height: 300px;
+    margin: auto;
   }
-
-  #detail .time {
-    margin-bottom: 3rem;
+  .no-image {
+    width: 300px;
+    height: 300px;
+    background-color: #dadee6;
+    margin: auto;
   }
-
-  #detail .inner-div {
-    width: 100%;
+  #image .no-image i {
+    font-size: 5rem;
+    color: #c2c6cf;
+    margin-top: 6rem;
   }
-
-  #detail .title-review {
-    text-align: center;
-  }
-  
-  input textarea {
-    width: 100%;
-  }
-  
 }
+
+@media (max-width: 360px) {
+  /* Upload Image page */
+  #image img {
+    width: 250px;
+    height: 250px;
+    margin: auto;
+  }
+  .no-image {
+    width: 250px;
+    height: 250px;
+    background-color: #dadee6;
+    margin: auto;
+  }
+  #image .no-image i {
+    font-size: 5rem;
+    color: #c2c6cf;
+    margin-top: 5rem;
+  }
+}
+
