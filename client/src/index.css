@@ -12,28 +12,7 @@ html, body {
 
 /*--- Navigation ---*/
 .navbar {
-  font-weight: 700;
-}
-
-.navbar-nav li {
-  text-transform: uppercase;
-  font-size: .8rem;
-  letter-spacing: .1rem;
-  padding-right: .7rem;
-}
-
-.navbar i {
-  padding-left: .8rem;
-}
-
-.nav .navbar-nav {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-}
-
-.user {
-  color: white;
+  min-height: 4rem;
 }
 
 

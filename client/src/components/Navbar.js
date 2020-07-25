@@ -1,70 +1,87 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
+MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon } from "mdbreact";
 
-class Navbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      token: localStorage.getItem("jwtToken")
-    };
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState({});
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+
+  const toggleCollapse = () => {
+    setIsOpen(!isOpen);
   }
-
-  handleLogout = e => {
-    e.preventDefault();
-    localStorage.clear();
-    window.location.href = "/";
-  };
   
-  render() {
-    let buttons;
+  useEffect(() => {
+    axios.get(`/users/get/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
+      .then(res => {
+        setUser(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
-    if (this.state.token) {
-      buttons = <div className="collapse navbar-collapse" id="navbarResponsive">
-                  <ul className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                      <a className="nav-link" href="/my-recipes">My Recipes</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/list">Search</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/create">Create</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/profile">Profile</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/logout" onClick={this.handleLogout}>Log Out</a>
-                    </li>
-                  </ul>
-                </div>
-    } else {
-      buttons = <div className="collapse navbar-collapse" id="navbarResponsive">
-                  <ul className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                      <a className="nav-link" href="/list">Search</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/login">Login</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/signup">Sign Up</a>
-                    </li>
-                  </ul>
-                </div>
-    }
-
-    return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-info fixed-top">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">My Recipes<i className="fas fa-utensils"></i></a>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-            <span className="navbar-toggler-icon"></span>
-          </button>  
-          {buttons}
-        </div>
-      </nav>
-    );
-  }
+  return (
+    <MDBNavbar className="navbar" color="default-color" dark expand="md">
+      <MDBNavbarBrand>
+        <strong className="white-text">My Recipes</strong>
+      </MDBNavbarBrand>
+      <MDBNavbarToggler onClick={toggleCollapse} />
+      <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
+        <MDBNavbarNav left>
+          <MDBNavItem>
+            <MDBNavLink to="/">Home</MDBNavLink>
+          </MDBNavItem>
+          <MDBNavItem>
+            <MDBNavLink to="/search">Search</MDBNavLink>
+          </MDBNavItem>
+          <MDBNavItem>
+            <MDBNavLink to="/create">Create</MDBNavLink>
+          </MDBNavItem>
+          <MDBNavItem>
+            <MDBDropdown>
+              <MDBDropdownToggle nav caret>
+                <div className="d-none d-md-inline">Dropdown</div>
+              </MDBDropdownToggle>
+              <MDBDropdownMenu className="dropdown-default">
+                <MDBDropdownItem href="#!">Action</MDBDropdownItem>
+                <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
+                <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+                <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+              </MDBDropdownMenu>
+            </MDBDropdown>
+          </MDBNavItem>
+        </MDBNavbarNav>
+        <MDBNavbarNav right>
+          <MDBNavItem>
+            <MDBNavLink className="waves-effect waves-light" to="#!">
+              <MDBIcon fab icon="twitter" />
+            </MDBNavLink>
+          </MDBNavItem>
+          <MDBNavItem>
+            <MDBNavLink className="waves-effect waves-light" to="#!">
+              <MDBIcon fab icon="google-plus-g" />
+            </MDBNavLink>
+          </MDBNavItem>
+          <MDBNavItem>
+            <MDBDropdown>
+              <MDBDropdownToggle nav caret>
+                <MDBIcon icon="user" />
+              </MDBDropdownToggle>
+              <MDBDropdownMenu className="dropdown-default">
+                <MDBDropdownItem href="#!">Action</MDBDropdownItem>
+                <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
+                <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+                <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+              </MDBDropdownMenu>
+            </MDBDropdown>
+          </MDBNavItem>
+        </MDBNavbarNav>
+      </MDBCollapse>
+    </MDBNavbar>
+  );
 }
 
 export default Navbar;
