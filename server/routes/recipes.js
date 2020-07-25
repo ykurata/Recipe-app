@@ -11,40 +11,46 @@ const upload = require("./service/upload");
 
 
 // Create a recipe 
-router.post("/", auth, async(req, res, next) => {
-  try {
-    // Form validation
-    const { errors, isValid } = validateRecipeInput(req.body);
-    // Check validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
-    const newRecipe = new Recipe({
-      userId: req.user,
-      name: req.body.name,
-      estimatedTime: req.body.estimatedTime,
-      ingredients: req.body.ingredients,
-      steps: req.body.steps
-    });
-    const recipe = newRecipe.save();
-    res.status(200).json(recipe);
-  } catch(err) {
-    console.log(err);
+router.post("/", auth, (req, res) => {
+  // Form validation
+  const { errors, isValid } = validateRecipeInput(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
   }
+
+  const newRecipe = new Recipe({
+    userId: req.user,
+    name: req.body.name,
+    estimatedTime: req.body.estimatedTime,
+    ingredients: req.body.ingredients,
+    steps: req.body.steps
+  });
+ 
+  newRecipe.save()
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 
-router.post("/image/:id", upload.single('recipeImage'), auth, async(req, res) => {
-  try {
-    const image = new Recipe({
-      recipeImage: req.file.location
-    });
-    const recipe = await image.save();
-    res.status(200).json(recipe);
-  } catch (err) {
-    console.log(err);
-  }
+// Post a recipe image
+router.post("/image/:id", upload.single('recipeImage'), auth, (req, res) => {
+  Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
+    if (err) return next(err);
+    recipe.recipeImage = req.file.location
+
+    recipe.save()
+      .then(recipe => {
+        res.status(200).json(recipe);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  });
 });
 
 // Update a recipe
@@ -64,8 +70,8 @@ router.put("/update/:id", auth, (req, res) => {
     recipe.steps = req.body.steps
     
     recipe.save()
-    .then(recipe => {
-      res.status(200).json(recipe);
+    .then(res => {
+      res.status(200).json(res);
     })
     .catch(err => {
       res.json(err);

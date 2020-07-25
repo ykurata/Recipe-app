@@ -19,7 +19,6 @@ class Form extends Component {
       formData: {},
       token: localStorage.getItem("jwtToken"),
       validationErrors: [],
-      error: ""
     };
   }
 
@@ -40,28 +39,21 @@ class Form extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-
-    if (this.state.sendImage === null) {
-      this.setState({
-        error: "Please select Image"
-      });
+    const newRecipe = {
+      name: this.state.name,
+      estimatedTime: this.state.estimatedTime,
+      ingredients: this.state.ingredients,
+      steps: this.state.steps
     }
 
-    const { name, estimatedTime, ingredients, steps, sendImage, formData } = this.state;
-    
-    formData.append("name", name);
-    formData.append("estimatedTime", estimatedTime);
-    formData.append("ingredients", ingredients);
-    formData.append("steps", steps);
-    formData.append("recipeImage", sendImage);
-
-    axios.post("/recipes", formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    axios.post("/recipes", newRecipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
       .then(res => {
+        console.log(res.data)
         toast.success("Created a recipe!" , {
           position: "top-right",
           autoClose: 2000
         }); 
-        window.location = `/image/${res.data.id}`;
+        window.location = `/image/${res.data._id}`;
       })
       .catch(err => {
         this.setState({

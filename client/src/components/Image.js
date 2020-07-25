@@ -9,6 +9,7 @@ const Image = (props) => {
 	const [image, setImage] = useState(null);
 	const [sendImage, setSendImage] = useState(null);
 	const [error, setError] = useState("");
+	const token = localStorage.getItem("jwtToken");
 
 	const imageChange = e => {
     setSendImage(e.target.files[0]);
@@ -24,12 +25,14 @@ const Image = (props) => {
 			const formData = new FormData();
 			formData.append("recipeImage", sendImage);
 
-			axios.post(`/recieps/image/${props.params.match.id}`, formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
+			axios.post(`/recipes/image/${props.match.params.id}`, formData, { headers: { Authorization: `Bearer ${token}` }})
 				.then(res => {
+					console.log(res.data);
 					toast.success("Posted an image!" , {
 						position: "top-right",
 						autoClose: 2000
 					}); 
+					window.location = "/my-recipes";
 				})
 				.catch(err => {
 					console.log(err);
@@ -52,7 +55,7 @@ const Image = (props) => {
                 : null
 							}
 							{sendImage ? 
-								<img src={image} alt="..." class="img-thumbnail" />
+								<img src={image} alt="..." className="img-thumbnail" />
 							: 
 								<div className="no-image text-center">
 									<i className="far fa-image fa-5x"></i>
@@ -72,6 +75,7 @@ const Image = (props) => {
 							<div className="container text-center">
 								<button type="submit" className="btn btn-info">Submit</button>
 							</div>
+							<ToastContainer/>
 						</div>
 					</div>
 				</form>

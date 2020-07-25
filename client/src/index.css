@@ -130,6 +130,7 @@ textarea {
   width: 400px;
   height: 400px;
   margin: auto;
+  object-fit: cover;
 }
 .no-image {
   width: 400px;
@@ -155,7 +156,7 @@ textarea {
 
 /* Update Form */
 #update {
-  width: 50%;
+  width: 50%;object-fit: cover;
   margin: auto;
 }
 
