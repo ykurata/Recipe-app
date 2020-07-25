@@ -90,6 +90,7 @@ class Detail extends Component {
         position: "top-right",
         autoClose: 2000
       }); 
+      window.location = "/my-recipes";
     })
     .catch(err => {
       console.log(err.response.data);

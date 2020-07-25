@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,7 +27,6 @@ const Image = (props) => {
 
 			axios.post(`/recipes/image/${props.match.params.id}`, formData, { headers: { Authorization: `Bearer ${token}` }})
 				.then(res => {
-					console.log(res.data);
 					toast.success("Posted an image!" , {
 						position: "top-right",
 						autoClose: 2000

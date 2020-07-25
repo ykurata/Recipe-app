@@ -70,23 +70,23 @@ html, body {
 
 
 /* Recipe form */
-.main {
+#form .main {
   padding-top: 5rem;
   width: 50%;
 }
 
-h2.heading {
+#form h2.heading {
   font-size: 1.9rem;
   font-weight: 700;
   text-transform: uppercase;
   margin-top: 1rem;
 }
 
-.row {
+#form .row {
   padding-top: 2rem;
 }
 
-.col-lg-6 {
+#form .col-lg-6 {
   padding-top: 1rem;
 }
 
