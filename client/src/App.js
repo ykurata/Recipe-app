@@ -11,6 +11,7 @@ import ProfileDetail from "./components/ProfileDetail";
 import List from "./components/List";
 import MyRecipes from "./components/MyRecipes";
 import Detail from "./components/Detail";
+import Image from "./components/Image";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <PrivateRoute path="/create" component={Form} />
+        <PrivateRoute path="/image/:id" component={Image} />
         <PrivateRoute path="/update/:id" component={Update} />
         <PrivateRoute path="/my-recipes" component={MyRecipes} />
         <PrivateRoute path="/profile/:id" component={ProfileDetail} />

@@ -5,6 +5,8 @@ html, body {
   width: 100%;
   overflow-x: hidden;
   font-family: 'Lato', sans-serif;
+  color: #555555;
+  background-color: #ebeff5;
 }
 
 
@@ -68,23 +70,23 @@ html, body {
 
 
 /* Recipe form */
-.main {
+#form .main {
   padding-top: 5rem;
-  width: 85%;
+  width: 50%;
 }
 
-h2.heading {
+#form h2.heading {
   font-size: 1.9rem;
   font-weight: 700;
   text-transform: uppercase;
   margin-top: 1rem;
 }
 
-.row {
+#form .row {
   padding-top: 2rem;
 }
 
-.col-lg-6 {
+#form .col-lg-6 {
   padding-top: 1rem;
 }
 
@@ -119,9 +121,42 @@ textarea {
 }
 
 
+/* Recipe Image  */
+#image .card {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+#image img {
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  object-fit: cover;
+}
+.no-image {
+  width: 400px;
+  height: 400px;
+  background-color: #dadee6;
+  margin: auto;
+}
+#image .no-image i {
+  font-size: 7rem;
+  color: #c2c6cf;
+  margin-top: 8rem;
+}
+#image label {
+  margin-top: 1rem;
+}
+#image button {
+  margin-top: 1rem;
+}
+#image .image-error {
+  color: red;
+  text-align: center;
+}
+
 /* Update Form */
 #update {
-  width: 50%;
+  width: 50%;object-fit: cover;
   margin: auto;
 }
 
@@ -255,28 +290,29 @@ h5 {
   width: 36rem;
 }
 
+@media (max-width: 768px) {
+  .main {
+    width: 80%;
+  }
+}
+
 @media (max-width: 576px) {
   .landing-text h1 {
     font-size: 3rem;
     letter-spacing: .15rem;
     padding-bottom: .5rem;
   }
-  
   .landing-text h3 {
     font-size: 1.2rem;
     padding-bottom: 1.2rem;
   }
-
   .login-form {
     width: 80%;
     margin: 4rem auto;
   }
-
   #update {
-    width: 100%;
+    width: 90%;
   }
-  
-
   #form img {
     object-fit: cover; 
     object-position: center; /* Center the image within the element */
@@ -284,33 +320,45 @@ h5 {
     max-height: 300px;
     margin-bottom: 3rem;
   }
-
   .main {
     width: 100%;
   }
-
-  #detail img {
-    object-fit: cover; 
-    object-position: center; /* Center the image within the element */
-    width: 100%;
-    max-height: 300px;
-    margin-bottom: 1rem;
+  /* Upload Image page */
+  #image img {
+    width: 300px;
+    height: 300px;
+    margin: auto;
   }
-
-  #detail .time {
-    margin-bottom: 3rem;
+  .no-image {
+    width: 300px;
+    height: 300px;
+    background-color: #dadee6;
+    margin: auto;
   }
-
-  #detail .inner-div {
-    width: 100%;
+  #image .no-image i {
+    font-size: 5rem;
+    color: #c2c6cf;
+    margin-top: 6rem;
   }
-
-  #detail .title-review {
-    text-align: center;
-  }
-  
-  input textarea {
-    width: 100%;
-  }
-  
 }
+
+@media (max-width: 360px) {
+  /* Upload Image page */
+  #image img {
+    width: 250px;
+    height: 250px;
+    margin: auto;
+  }
+  .no-image {
+    width: 250px;
+    height: 250px;
+    background-color: #dadee6;
+    margin: auto;
+  }
+  #image .no-image i {
+    font-size: 5rem;
+    color: #c2c6cf;
+    margin-top: 5rem;
+  }
+}
+

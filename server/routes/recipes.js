@@ -11,7 +11,7 @@ const upload = require("./service/upload");
 
 
 // Create a recipe 
-router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
+router.post("/", auth, (req, res) => {
   // Form validation
   const { errors, isValid } = validateRecipeInput(req.body);
   // Check validation
@@ -24,22 +24,37 @@ router.post("/", upload.single('recipeImage'), auth, (req, res, next) => {
     name: req.body.name,
     estimatedTime: req.body.estimatedTime,
     ingredients: req.body.ingredients,
-    steps: req.body.steps,
-    recipeImage: req.file.location
+    steps: req.body.steps
   });
-
+ 
   newRecipe.save()
     .then(recipe => {
       res.status(200).json(recipe);
     })
     .catch(err => {
-      res.json(err);
+      console.log(err);
     });
 });
 
 
+// Post a recipe image
+router.post("/image/:id", upload.single('recipeImage'), auth, (req, res) => {
+  Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
+    if (err) return next(err);
+    recipe.recipeImage = req.file.location
+
+    recipe.save()
+      .then(recipe => {
+        res.status(200).json(recipe);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  });
+});
+
 // Update a recipe
-router.put("/update/:id", auth, (req, res, next) => {
+router.put("/update/:id", auth, (req, res) => {
   // Form validation
   const { errors, isValid } = validateRecipeInput(req.body);
   // Check validation
@@ -55,8 +70,8 @@ router.put("/update/:id", auth, (req, res, next) => {
     recipe.steps = req.body.steps
     
     recipe.save()
-    .then(recipe => {
-      res.status(200).json(recipe);
+    .then(res => {
+      res.status(200).json(res);
     })
     .catch(err => {
       res.json(err);
@@ -65,7 +80,7 @@ router.put("/update/:id", auth, (req, res, next) => {
 });
 
 // Post like to a recipe
-router.put("/like/:id", auth, (req, res, next) => {
+router.put("/like/:id", auth, (req, res) => {
   Recipe.findOne({ _id: req.params.id })
   .then(recipe => {
     if (recipe.likes.filter(like => like.user.toString() === req.user).length > 0) {
