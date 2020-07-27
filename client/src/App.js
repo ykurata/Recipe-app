@@ -13,6 +13,8 @@ import MyRecipes from "./components/MyRecipes";
 import Detail from "./components/Detail";
 import Image from "./components/Image";
 import PrivateRoute from "./components/PrivateRoute";
+import FullPageIntroWithFixedNavbar from './components/Navbar';
+
 
 function App() {
   return (
