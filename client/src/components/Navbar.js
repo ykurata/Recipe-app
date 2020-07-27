@@ -44,7 +44,7 @@ const Navbar = () => {
           </MDBNavItem>
         </MDBNavbarNav>
         <MDBNavbarNav right>
-          <MDBNavItem>
+          <MDBNavItem className="avatar">
             <MDBDropdown>
               <MDBDropdownToggle nav caret>
                 {user.photo ? 
@@ -53,10 +53,7 @@ const Navbar = () => {
                 } 
               </MDBDropdownToggle>
               <MDBDropdownMenu className="dropdown-default">
-                <MDBDropdownItem href="#!">Action</MDBDropdownItem>
-                <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
-                <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-                <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+                <MDBDropdownItem href="#!">Log Out</MDBDropdownItem>
               </MDBDropdownMenu>
             </MDBDropdown>
           </MDBNavItem>

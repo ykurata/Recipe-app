@@ -9,15 +9,18 @@ const myStyle = {
   height: '100vh',
   position: 'relative',
   width: '100%',
-  display: 'table'
+  display: 'table',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center right',
+  backgroundAttachment: 'fixed'
 }
 
 class Landing extends Component {
 
   render() {
     return (
-      <div>
-        <Navbar></Navbar>
+      <div style={{ height: '100%'}}>
+        <Navbar />
         <div id="landing" style={myStyle}>
           <div className="landing-text">
             <h1>My Recipes</h1>
