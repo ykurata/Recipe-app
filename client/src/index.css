@@ -19,29 +19,11 @@ html, body {
   width: 50px;
   height: 50px;
 }
-.avatar {
-  margin-right: 1.5rem;
-}
 
 /* Landing page */
 .landing-text {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-  color: #23262b;
+  font-size: 5rem;
 }
-
-.landing-text h1 {
-  font-size: 500%;
-  font-weight: 700;
-  letter-spacing: .2rem;
-  padding-bottom: .1rem;
-}
-
-.landing-text h3 {
-  font-size: 2rem;
-}
-
 
 /* Log In & Sign Up form  */
 .login-form {

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { 
   MDBDropdown,
   MDBDropdownToggle,
@@ -12,23 +13,41 @@ import {
   MDBCollapse, 
   MDBNavItem, 
   MDBNavLink, 
-  MDBContainer, 
-  MDBMask, 
-  MDBView } from 'mdbreact';
+} from 'mdbreact';
+
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const Navbar = () => {
   const [collapse, setCollapse] = useState(false);
   const [isWideEnough, setIsWideEnough] = useState(false);
+  const [user, setUser] = useState({});
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("jwtToken");
   
   const onClick = () => {
     setCollapse(!collapse);
-  }
+  };
+
+  useEffect(() => {
+    axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
+      .then(res => {
+        setUser(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleLogout = e => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "/";
+  };
 
   return (
     <div>
       <Router>
-        <MDBNavbar color="default-color" dark expand="md" fixed="top">
+        <MDBNavbar className="navbar" color="default-color" dark expand="md" fixed="top">
           <MDBNavbarBrand href="/">
             <strong>Navbar</strong>
           </MDBNavbarBrand>
@@ -49,17 +68,24 @@ const Navbar = () => {
               <MDBNavItem>
                 <MDBDropdown>
                   <MDBDropdownToggle nav caret>
-                    <img
-                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg"
-                      alt=""
-                      className="rounded-circle img-fluid md-avatar"
-                    />
-                    {/* <MDBIcon icon="user" /> */}
-                    {/* <div className="d-none d-md-inline">Dropdown</div> */}
+                    {user.photo ?
+                      <img
+                        src={user.photo}
+                        alt=""
+                        className="rounded-circle img-fluid md-avatar"
+                      />
+                      : <MDBIcon icon="user" /> 
+                    }
                   </MDBDropdownToggle>
                   <MDBDropdownMenu className="dropdown-default">
-                    <MDBDropdownItem href="/Profile">Profile</MDBDropdownItem>
-                    <MDBDropdownItem href="/logout">Log Out</MDBDropdownItem>
+                    {token ? 
+                      <div>
+                        <MDBDropdownItem href="/Profile">Profile</MDBDropdownItem>
+                        <MDBDropdownItem href="/logout" onClick={handleLogout}>Log Out</MDBDropdownItem>
+                      </div>
+                      : 
+                      <MDBDropdownItem href="/login">Log in</MDBDropdownItem>
+                    }
                   </MDBDropdownMenu>
                 </MDBDropdown>
               </MDBNavItem>
