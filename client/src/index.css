@@ -26,10 +26,13 @@ html, body {
 }
 
 /* Log In & Sign Up form  */
-.login-form {
-  width: 40%;
-  margin: 4rem auto;
+.login-card {
+  width: 50%;
+  margin: auto;
+  margin-top: 4rem;
 }
+
+
 
 .error {
   color: red;
