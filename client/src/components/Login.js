@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
 import { 
   MDBContainer, 
   MDBRow, 
@@ -9,16 +11,55 @@ import {
   MDBCardBody 
 } from 'mdbreact';
 
-const Login = () => {
+const Login = (props) => {
+  const [userInput, setUserInput] = useState({
+    email: "",
+    password: ""
+  });
+  const [validationError, setValidationError] = useState([]);
+  const [error, setError] = useState("");
+  
+  const onChange = e => {
+    setUserInput({ 
+      ...userInput,
+      [e.target.name]: e.target.value 
+    });
+  }
+  
+  const onSubmit = e => {
+    e.preventDefault();
+
+    axios.post("/users/login", userInput)
+      .then(res => {
+        localStorage.setItem("jwtToken", res.data.token);
+        const decoded = jwt_decode(res.data.token);
+        localStorage.setItem("userId", decoded.id);
+        props.history.push("/list");
+      })
+      .catch(err => {
+        setValidationError(err.response.data);
+        setError(err.response.data.error);
+      });
+  };
+
+
   return (
     <MDBContainer className="login-form">
       <MDBRow>
         <MDBCol>
           <MDBCard className="login-card">
             <MDBCardBody>
-              <form>
+              <form onSubmit={onSubmit}>
                 <p className="h4 text-center py-4">Log In</p>
                 <div className="grey-text">
+                  {validationError ?
+                    <p className="error">{validationError.email}</p>
+                  : null  
+                  }
+                  {error ?
+                    <p className="error">{error}</p>
+                  : null  
+                  }
                   <MDBInput
                     label="Your email"
                     icon="envelope"
@@ -27,13 +68,23 @@ const Login = () => {
                     validate
                     error="wrong"
                     success="right"
+                    name="email"
+                    value={userInput.email}
+                    onChange={onChange}
                   />
+                  {validationError ?
+                    <p className="error">{validationError.password}</p>
+                  : null  
+                  }
                   <MDBInput
                     label="Your password"
                     icon="lock"
                     group
                     type="password"
                     validate
+                    name="password"
+                    value={userInput.password}
+                    onChange={onChange}
                   />
                 </div>
                 <div className="text-center py-4 mt-3">
@@ -41,6 +92,10 @@ const Login = () => {
                     Log In
                   </MDBBtn>
                 </div>
+                <p className="text-center">
+                  Don't have an account?
+                  <a href="/signup">Register</a>
+                </p>
               </form>
             </MDBCardBody>
           </MDBCard>
