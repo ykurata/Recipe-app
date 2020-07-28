@@ -4,6 +4,7 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
+  MDBIcon, 
   MDBNavbar, 
   MDBNavbarBrand, 
   MDBNavbarNav, 
@@ -48,13 +49,17 @@ const Navbar = () => {
               <MDBNavItem>
                 <MDBDropdown>
                   <MDBDropdownToggle nav caret>
-                    <div className="d-none d-md-inline">Dropdown</div>
+                    <img
+                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg"
+                      alt=""
+                      className="rounded-circle img-fluid md-avatar"
+                    />
+                    {/* <MDBIcon icon="user" /> */}
+                    {/* <div className="d-none d-md-inline">Dropdown</div> */}
                   </MDBDropdownToggle>
                   <MDBDropdownMenu className="dropdown-default">
-                    <MDBDropdownItem href="#!">Action</MDBDropdownItem>
-                    <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
-                    <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-                    <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+                    <MDBDropdownItem href="/Profile">Profile</MDBDropdownItem>
+                    <MDBDropdownItem href="/logout">Log Out</MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>
               </MDBNavItem>
