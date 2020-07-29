@@ -119,7 +119,7 @@ const SignUp = (props) => {
                   />
                 </div>
                 <div className="text-center py-4 mt-3">
-                  <MDBBtn color="cyan" type="submit">
+                  <MDBBtn type="submit">
                     Sign Up
                   </MDBBtn>
                 </div>

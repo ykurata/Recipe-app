@@ -42,6 +42,26 @@ const Login = (props) => {
       });
   };
 
+  const demoLogin = e => {
+    e.preventDefault();
+    const demoUser = {
+      email: "yasuko@gmail.com",
+      password: "testpassword"
+    };
+    axios.post("/users/login", demoUser)
+      .then(res => {
+        localStorage.setItem("jwtToken", res.data.token);
+        const decoded = jwt_decode(res.data.token);
+        localStorage.setItem("userId", decoded.id);
+        props.history.push("/list");
+      })
+      .catch(err => {
+        setValidationError(err.response.data);
+        setError(err.response.data.error);
+      });
+
+  }
+
 
   return (
     <MDBContainer className="login-form">
@@ -88,8 +108,11 @@ const Login = (props) => {
                   />
                 </div>
                 <div className="text-center py-4 mt-3">
-                  <MDBBtn color="cyan" type="submit">
+                  <MDBBtn  type="submit">
                     Log In
+                  </MDBBtn>
+                  <MDBBtn outline onClick={demoLogin}>
+                    Demo User
                   </MDBBtn>
                 </div>
                 <p className="text-center">

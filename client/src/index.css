@@ -14,7 +14,7 @@ html, body {
   margin-bottom: 0;
 }
 
-/*--- Navigation ---*/
+/* Navigation */
 .navbar {
   min-height: 4rem;
 }
@@ -34,6 +34,23 @@ html, body {
   width: 50%;
   margin: auto;
   margin-top: 4rem;
+}
+
+/* List item page */
+.list-container {
+  margin-top: 10rem;
+}
+.recipe-card {
+  min-width: 20rem;
+  max-height: 30rem;
+  margin: 1rem 0;
+}
+.list-image {
+  max-height: 18rem;
+  min-height: 18rem;
+  min-width: 22rem;
+  max-width: 20rem;
+  object-fit: cover;
 }
 
 /* Recipe form */

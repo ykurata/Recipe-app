@@ -84,7 +84,10 @@ const Navbar = () => {
                         <MDBDropdownItem href="/logout" onClick={handleLogout}>Log Out</MDBDropdownItem>
                       </div>
                       : 
-                      <MDBDropdownItem href="/login">Log in</MDBDropdownItem>
+                      <div>
+                        <MDBDropdownItem href="/login">Log in</MDBDropdownItem>
+                        <MDBDropdownItem href="/login">Sign Up</MDBDropdownItem>
+                      </div>
                     }
                   </MDBDropdownMenu>
                 </MDBDropdown>
