@@ -38,7 +38,7 @@ const List = () => {
           <MDBCardText>
             {item.ingredients}
           </MDBCardText>
-          <MDBBtn href="#">Detail</MDBBtn>
+          <MDBBtn href={`/${item._id}`}>Detail</MDBBtn>
         </MDBCardBody>
       </MDBCard>
     </MDBCol>

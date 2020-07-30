@@ -70,7 +70,7 @@ const Image = (props) => {
                       <i className="far fa-image fa-5x"></i>
                     </div>
                   }
-                  <div className="container text-center">
+                  <MDBContainer className="text-center">
                     <label className="btn btn-outline-info">
                       Select Image
                       <input
@@ -80,13 +80,13 @@ const Image = (props) => {
                         hidden
                       />
                     </label>
-                  </div>
-                  <div className="container text-center">
+                  </MDBContainer>
+                  <MDBContainer className="container text-center">
                     <MDBBtn type="submit">
                       Submit
                       <MDBIcon far icon="paper-plane" className="ml-2" />
                     </MDBBtn>
-                  </div>
+                  </MDBContainer>
                   <ToastContainer/>
                 </MDBCardBody>
               </MDBCard>

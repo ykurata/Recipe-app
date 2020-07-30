@@ -25,14 +25,14 @@ const Form  = (props) => {
     
   const onChange = e => {
     setUserInput({
-      ...setUserInput,
+      ...userInput,
       [e.target.name]: e.target.value 
     });
   }
-  
+
   const onSubmit = e => {
     e.preventDefault();
-
+  
     axios.post("/recipes", userInput, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
         console.log(res.data)
@@ -63,10 +63,9 @@ const Form  = (props) => {
               : null}
               <input 
                 name="name"
-                value={userInput.name} 
                 onChange={onChange} 
                 type="text" 
-                id="defaultFormContactNameEx" 
+                id="name" 
                 className="form-control" 
               />
               <br />
@@ -77,11 +76,10 @@ const Form  = (props) => {
                 <p className="error">{validationErrors.estimatedTime}</p>
               : null}
               <input 
-                name="time"
-                value={userInput.time}
-                onChange={onChange}
+                name="estimatedTime"
+                onChange={onChange} 
                 type="number" 
-                id="defaultFormContactEmailEx" 
+                id="estimatedTime" 
                 className="form-control" 
                 placeholder="min"
               />
@@ -94,7 +92,6 @@ const Form  = (props) => {
               : null}
               <textarea 
                 name="ingredients" 
-                value={userInput.ingredients} 
                 onChange={onChange} 
                 type="text" 
                 id="ingredients" 
@@ -109,8 +106,7 @@ const Form  = (props) => {
                 <p className="error">{validationErrors.steps}</p>
               : null}
               <textarea 
-                name="steps" 
-                value={userInput.steps} 
+                name="steps"  
                 onChange={onChange} 
                 type="text" 
                 id="steps" 
