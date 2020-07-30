@@ -13,14 +13,12 @@ import MyRecipes from "./components/MyRecipes";
 import Detail from "./components/Detail";
 import Image from "./components/Image";
 import PrivateRoute from "./components/PrivateRoute";
-import FullPageIntroWithFixedNavbar from './components/Navbar';
-
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoute path="/create" component={Form} />
+        <PrivateRoute exact path="/create" component={Form} />
         <PrivateRoute path="/image/:id" component={Image} />
         <PrivateRoute path="/update/:id" component={Update} />
         <PrivateRoute path="/my-recipes" component={MyRecipes} />
