@@ -27,8 +27,6 @@ const List = () => {
       });
   }, []);
 
-  console.log(recipes)
-
   let recipe;
   recipe = recipes.map((item, index) => (
     <MDBCol lg="4" md="4" sm="6" key={index}>

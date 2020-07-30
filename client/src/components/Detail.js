@@ -12,7 +12,6 @@ import {
   MDBCol,
   MDBCard, 
   MDBCardBody, 
-  MDBCardText,
 } from 'mdbreact';
 
 import Navbar from "./Navbar";

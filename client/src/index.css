@@ -67,78 +67,64 @@ html, body {
 p {
   color: grey;
 }
-
 h5 {
   font-weight: bold;
   padding-bottom: 1rem;
 }
-
 .detail-content {
   padding-bottom: 3rem;
 }
-
 .card-body {
   white-space: pre-wrap;
 }
-
 #detail .delete {
   margin-left: 2rem;
 }
-
 #detail .icon {
   margin-right: 2rem;
   font-size: 1.3rem;
   color: grey;
 }
-
 #detail .icon:hover {
   color: #ff99cc;
 }
-
 #detail .reviewIcon:hover {
   color: #4da6ff;
 }
-
 #detail .likes-num {
   margin-right: .5rem;
 }
-
 #detail .review {
   margin-top: 2rem;
 }
-
 #detail .review-button {
   margin-top: 1rem;
 }
-
 #detail .card {
   margin-bottom: 1rem;
 }
-
 #detail .card-review {
   margin: .5rem;
 }
-
 #detail .reviewer-name {
   border-bottom: 1px solid #cccccc;
 }
 
-
 /* Recipe form */
-#form .main {
-  padding-top: 5rem;
+#form {
+  padding-top: 6rem;
   width: 50%;
 }
-
 #form h2.heading {
   font-size: 1.9rem;
   font-weight: 700;
   text-transform: uppercase;
   margin-top: 1rem;
+  color: #555555;
 }
-
-#form .row {
-  padding-top: 2rem;
+#form .title-col {
+  text-align: center;
+  padding-bottom: 1rem;
 }
 
 #form .col-lg-6 {
