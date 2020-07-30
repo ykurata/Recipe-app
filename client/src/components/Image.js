@@ -3,6 +3,16 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { 
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBContainer,
+  MDBRow, 
+  MDBCol,
+  MDBIcon,
+} from 'mdbreact';
+
 import Navbar from "./Navbar";
 
 const Image = (props) => {
@@ -40,45 +50,50 @@ const Image = (props) => {
 	}
 
 	return (
-		<div id="image">
+		<div>
 			<Navbar/>
-			<div className="main container">
-				<div className="col-12 text-center">
-					<h2 className="heading">Recipe Image</h2>
-				</div>
-				<form onSubmit={onSubmit}>
-					<div className="card">
-						<div className="card-body text-center">
-							{error ? 
-                  <p className="image-error">{error}</p>
-                : null
-							}
-							{sendImage ? 
-								<img src={image} alt="..." className="img-thumbnail" />
-							: 
-								<div className="no-image text-center">
-									<i className="far fa-image fa-5x"></i>
-								</div>
-							}
-              <div className="container text-center">
-								<label className="btn btn-outline-info">
-									Select Image
-									<input
-										type="file"
-										name="file1"
-										onChange={imageChange}
-										hidden
-									/>
-								</label>
-							</div>
-							<div className="container text-center">
-								<button type="submit" className="btn btn-info">Submit</button>
-							</div>
-							<ToastContainer/>
-						</div>
-					</div>
-				</form>
-			</div>
+			<MDBContainer id="image">
+        <MDBRow>
+          <MDBCol>
+            <form onSubmit={onSubmit}>
+              <p className="h4 text-center mb-4">Recipe Image</p>
+              <MDBCard className="card">
+                <MDBCardBody className="card-body text-center">
+                  {error ? 
+                      <p className="image-error">{error}</p>
+                    : null
+                  }
+                  {sendImage ? 
+                    <img src={image} alt="..." className="img-thumbnail" />
+                  : 
+                    <div className="no-image text-center">
+                      <i className="far fa-image fa-5x"></i>
+                    </div>
+                  }
+                  <div className="container text-center">
+                    <label className="btn btn-outline-info">
+                      Select Image
+                      <input
+                        type="file"
+                        name="file1"
+                        onChange={imageChange}
+                        hidden
+                      />
+                    </label>
+                  </div>
+                  <div className="container text-center">
+                    <MDBBtn type="submit">
+                      Submit
+                      <MDBIcon far icon="paper-plane" className="ml-2" />
+                    </MDBBtn>
+                  </div>
+                  <ToastContainer/>
+                </MDBCardBody>
+              </MDBCard>
+            </form>
+          </MDBCol>
+        </MDBRow>
+		  </MDBContainer>
 		</div> 	
 	);
 }

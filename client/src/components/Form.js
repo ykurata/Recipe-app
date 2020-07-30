@@ -8,7 +8,6 @@ import {
   MDBContainer,
   MDBRow, 
   MDBCol,
-
   MDBIcon,
 } from 'mdbreact';
 
