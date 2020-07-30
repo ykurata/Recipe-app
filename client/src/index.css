@@ -53,6 +53,77 @@ html, body {
   object-fit: cover;
 }
 
+/* Recipe Detail */
+#detail {
+  margin-top: 6rem;
+}
+#detail img {
+  object-fit: cover; 
+  object-position: center; /* Center the image within the element */
+  width: 100%;
+  max-height: 450px;
+  margin-bottom: 1rem;
+}
+p {
+  color: grey;
+}
+
+h5 {
+  font-weight: bold;
+  padding-bottom: 1rem;
+}
+
+.detail-content {
+  padding-bottom: 3rem;
+}
+
+.card-body {
+  white-space: pre-wrap;
+}
+
+#detail .delete {
+  margin-left: 2rem;
+}
+
+#detail .icon {
+  margin-right: 2rem;
+  font-size: 1.3rem;
+  color: grey;
+}
+
+#detail .icon:hover {
+  color: #ff99cc;
+}
+
+#detail .reviewIcon:hover {
+  color: #4da6ff;
+}
+
+#detail .likes-num {
+  margin-right: .5rem;
+}
+
+#detail .review {
+  margin-top: 2rem;
+}
+
+#detail .review-button {
+  margin-top: 1rem;
+}
+
+#detail .card {
+  margin-bottom: 1rem;
+}
+
+#detail .card-review {
+  margin: .5rem;
+}
+
+#detail .reviewer-name {
+  border-bottom: 1px solid #cccccc;
+}
+
+
 /* Recipe form */
 #form .main {
   padding-top: 5rem;
@@ -161,86 +232,6 @@ textarea {
 #update .time-label {
   display: inline-block;
 }
-
-
-/* Recipe Detail */
-#detail .row {
-  padding-top: 3rem;
-}
-
-#detail .inner-div {
-  width: 85%;
-  margin: 1.5rem auto;
-  padding-bottom: 3rem;
-}
-
-#detail img {
-  object-fit: cover; 
-  object-position: center; /* Center the image within the element */
-  width: 100%;
-  max-height: 450px;
-  margin-bottom: 1rem;
-}
-
-p {
-  color: grey;
-}
-
-h5 {
-  font-weight: bold;
-  padding-bottom: 1rem;
-}
-
-.detail-content {
-  padding-bottom: 3rem;
-}
-
-.card-body {
-  white-space: pre-wrap;
-}
-
-#detail .delete {
-  margin-left: 2rem;
-}
-
-#detail .icon {
-  margin-right: 2rem;
-  font-size: 1.3rem;
-  color: grey;
-}
-
-#detail .icon:hover {
-  color: #ff99cc;
-}
-
-#detail .reviewIcon:hover {
-  color: #4da6ff;
-}
-
-#detail .likes-num {
-  margin-right: .5rem;
-}
-
-#detail .review {
-  margin-top: 2rem;
-}
-
-#detail .review-button {
-  margin-top: 1rem;
-}
-
-#detail .card {
-  margin-bottom: 1rem;
-}
-
-#detail .card-review {
-  margin: .5rem;
-}
-
-#detail .reviewer-name {
-  border-bottom: 1px solid #cccccc;
-}
-
 
 /* Profile Form */
 .profile-form {
