@@ -52,6 +52,12 @@ html, body {
   max-width: 20rem;
   object-fit: cover;
 }
+.ingredients {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 /* Recipe Detail */
 #detail {

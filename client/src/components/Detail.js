@@ -18,7 +18,7 @@ import Navbar from "./Navbar";
 
 const Detail = (props) => {
   const [recipe, setRecipe] = useState({});
-  const [userid, setUserid] = useState("");
+  const [recipeUserId, setRecipeUserId] = useState("");
   const [username, setUsername] = useState("");
   const [review, setReview] = useState("");
   const [likes, setLikes] = useState("");
@@ -43,6 +43,8 @@ const Detail = (props) => {
     axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
       setRecipe(res.data);
+      setRecipeUserId(res.data.userId._id);
+      setUsername(res.data.userId.name);
     })
     .catch(err => {
       console.log(err);
@@ -129,8 +131,7 @@ const Detail = (props) => {
   const showMore = () => {
     setItemsToShow(itemsToShow + 5);
   }
-
- 
+  
   return (
     <div> 
       <Navbar></Navbar>
@@ -139,7 +140,7 @@ const Detail = (props) => {
         <MDBRow>
           <MDBCol md="12" className="text-center">
             <h2>{recipe.name}</h2>
-            <p>Created By <Link to={`/profile/${userid}`} id={userid}>{username}</Link></p>
+            <p>Created By <Link to={`/profile/${recipeUserId}`} id={recipeUserId}>{username}</Link></p>
           </MDBCol>
           <MDBRow>
             <MDBCol md="12" lg="6">
@@ -165,10 +166,14 @@ const Detail = (props) => {
               </MDBContainer>
 
               {/* Display Update & Delete buttons only for a user who created the recipe */}
-              {userId === userid ?
+              {userId === recipeUserId ?
                 <MDBContainer className="button-div">
                   <ToastContainer />
-                  <a href={`/update/${recipe._id}`} type="button" className="btn btn-info">Update</a>
+                  <MDBBtn
+                    href={`/update/${recipe._id}`}
+                  >
+                    Update
+                  </MDBBtn>
                   <MDBBtn 
                     outline
                     type="button" 
@@ -182,7 +187,7 @@ const Detail = (props) => {
               }
               
               {/* Display Like & Write a Review buttons  */}
-              {userId !== userid ?
+              {userId !== recipeUserId ?
                 <MDBContainer className="button-div text-center">
                     <ToastContainer />
                     <span className="likes-num">{likes}</span><i className="fas fa-heart icon" onClick={sendLike} type="button">Like</i>

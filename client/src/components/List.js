@@ -35,8 +35,8 @@ const List = () => {
         <MDBCardBody>
           <MDBCardTitle>{item.name}</MDBCardTitle>
           <p>By {item.userId.name}</p>
-          <MDBCardText>
-            {item.ingredients}
+          <MDBCardText className="ingredients">
+            Ingredients: {item.ingredients.replace(/\s/g,' ')}
           </MDBCardText>
           <MDBBtn href={`/${item._id}`}>Detail</MDBBtn>
         </MDBCardBody>

@@ -118,6 +118,7 @@ const Form  = (props) => {
                   Submit
                   <MDBIcon far icon="paper-plane" className="ml-2" />
                 </MDBBtn>
+                <ToastContainer/>
               </div>
             </form>
           </MDBCol>
