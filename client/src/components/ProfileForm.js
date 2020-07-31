@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,75 +6,60 @@ import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 
+import { 
+  MDBBtn,
+  MDBContainer,
+  MDBRow, 
+  MDBCol,
+  MDBCard, 
+  MDBCardBody, 
+  MDBIcon,
+} from 'mdbreact';
+
 import Navbar from "./Navbar";
 
+const ProfileForm = (props) => {
+  const [image, setImage] = useState(null);
+  const [sendImage, setSendImage] = useState(null);
+  const [profil, setProfile] = useState({});
+  const [empty, setEmpty] = useState(false);
+  const [description, setDescription] = useState("");
+  const [validationError, setValidationError] = useState([]);
+  const [error, setError] = useState("");
+  const token = localStorage.getItem("jwtToken");
+  const userId = localStorage.getItem("userId");
 
-const ProfileFormStyle = theme => ({
-  avatar: {
-    width: 250,
-    height: 250
-  }
-});
-
-class ProfileForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: null,
-      sendImage: null,
-      profile: {},
-      empty: false,
-      description: "",
-      formData: {},
-      token: localStorage.getItem("jwtToken"),
-      userId: localStorage.getItem("userId"),
-      validationError: [],
-      error: ""
-    };
-  }
-
-  onChange = e => {
+  const onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   }
   
-  imageChange = e => {
-    this.setState({
-      image: URL.createObjectURL(e.target.files[0]),
-      sendImage: e.target.files[0]
-    });
-  }
+  const imageChange = e => {
+    setImage(URL.createObjectURL(e.target.files[0]));
+    setSendImage(e.target.files[0]);
+  };
 
-  componentDidMount() {
-    this.getProfile();
-    this.setState({ formData: new FormData() });
-  }
-
-  getProfile() {
-    axios.get(`/profile/${this.state.userId}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+  useEffect(() => {
+    axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
         if (res.data) {
-          this.setState({ 
-            profile: res.data,
-            description: res.data.description,
-            image: res.data.photo
-          });
+          setProfile(res.data);
+          setDescription(res.data.description);
+          setImage(res.data.photo);
         } else {
-          this.setState({ empty: true });
+          setEmpty(true)
         }
       })
       .catch(err => {
         console.log(err);
       });
-  }
+  }, [])
 
-  handleSubmit = e => {
+
+  const handleSubmit = e => {
     e.preventDefault();
-    const data = {
-      description: this.state.description
-    }
-    
-    if (this.state.empty === true) {
-      axios.post(`/profile/${this.state.userId}`, data, { headers: { Authorization: `Bearer ${this.state.token}` }})
+   
+    if (empty === true) {
+      axios.post(`/profile/${userId}`, description, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
         toast.success("Created!" , {
           position: "top-right",
@@ -82,13 +67,11 @@ class ProfileForm extends Component {
         });
       })
       .catch(err => {
-        this.setState({
-          validationError: err.response.data
-        });
+        setValidationError(err.response.data);
         console.log(err.response.data);
       });
     } else {
-      axios.put(`/profile/update/${this.state.userId}`, data, { headers: { Authorization: `Bearer ${this.state.token}` }})
+      axios.put(`/profile/update/${userId}`, description, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
         toast.success("Updated!" , {
           position: "top-right",
@@ -96,26 +79,22 @@ class ProfileForm extends Component {
         });
       })
       .catch(err => {
-        this.setState({
-          validationError: err.response.data
-        });
+        setValidationError(err.response.data);
         console.log(err.response);
       });
     }
   }
 
-  submitPhoto = e => {
+  const submitPhoto = e => {
     e.preventDefault();
 
-    if (this.state.sendImage === null) {
-      this.setState({
-        error: "Please select Image"
-      });
+    if (sendImage === null) {
+      setError("Please select an image");
     }
-    const { sendImage, formData } = this.state;
+    const formData = new FormData();
     formData.append("photo", sendImage);
   
-    axios.post("/profile/photo", formData, { headers: { Authorization: `Bearer ${this.state.token}` }})
+    axios.post("/profile/photo", formData, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
       toast.success("Successfully Sent a Photo!" , {
         position: "top-right",
@@ -124,66 +103,65 @@ class ProfileForm extends Component {
     })
     .catch(err => {
       console.log(err.response.data);
-      toast.error("Something went wrong!" , {
-        position: "top-right",
-        autoClose: 2000
-      }); 
     });
   }
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <div> 
-        <Navbar></Navbar>
-        <div id="profile-form">
-          <div className="main container-fluid">
-            <div className="col-12 text-center">
-              <h2 className="heading">Edit Profile</h2>
-            </div>
-            <div className="row">
-              <div className="col-md-12 col-lg-6">
-                <form onSubmit={this.submitPhoto}>
-                  <Grid container justify="center">  
-                    <Avatar className={classes.avatar} src={this.state.image}></Avatar>
-                  </Grid>
-                  <div className="text-center select">
-                    {this.state.error ? 
-                      <div><label className="error">{this.state.error}</label></div>
-                    : null}
-                    <label className="btn btn-outline-info select">
-                      Select Image
-                      <input
-                        type="file"
-                        name="image"
-                        hidden
-                        onChange={this.imageChange}
-                      />
-                    </label>
-                  </div>
-                  <ToastContainer />
-                  <div className="text-center select">
-                    <button className="btn btn-info" type="submit">Send the Image</button>
-                  </div> 
-                </form>
-              </div>
-              <div className="col-md-12 col-lg-6">
-                <form className="text-center border border-light" onSubmit={this.handleSubmit}>
-                  {this.state.validationError ? 
-                    <p className="error">{this.state.validationError.description}</p>
-                  : null}
-                  <textarea onChange={this.onChange}  value={this.state.description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
-                  <ToastContainer />
-                  <button className="btn btn-info btn-block my-4" type="submit">Submit</button>
-                  <a href="/"><p>Cancel</p></a>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div> 
+      <Navbar/>
+      <MDBContainer id="profile-form">
+        <MDBRow>
+          <MDBCol md="12">
+            <h2 className="heading">Edit Profile</h2>
+          </MDBCol>
+          <MDBCol md="12" lg="6">
+            <form onSubmit={submitPhoto}>
+              {image ? 
+                <div className="image-div">
+                  <img 
+                    src={image} 
+                    alt=""
+                    className="rounded-circle img-fluid image"
+                  />
+                </div>
+              : <div className="avatar-div">
+                  <MDBIcon icon="user-alt" size="5x" className="default-avatar" />
+                </div>
+              }  
+                {error ? 
+                  <div><label className="error">{error}</label></div>
+                : null}
+                <label className="btn btn-outline-info select">
+                  Select Image
+                  <input
+                    type="file"
+                    name="image"
+                    hidden
+                    onChange={imageChange}
+                  />
+                </label>
+            
+              <ToastContainer />
+              <div className="text-center select">
+                <MDBBtn type="submit">Send the Image</MDBBtn>
+              </div> 
+            </form>
+          </MDBCol>
+          <MDBCol md="12" lg="6">
+            <form className="text-center" onSubmit={handleSubmit}>
+              {validationError ? 
+                <p className="error">{validationError.description}</p>
+              : null}
+              <textarea onChange={onChange}  value={description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
+              <ToastContainer />
+              <MDBBtn type="submit">Submit</MDBBtn>
+              <MDBBtn outline href="/" >Cancel</MDBBtn>
+            </form>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </div>
+  );
 }
 
-export default withStyles(ProfileFormStyle)(ProfileForm);
+export default ProfileForm;

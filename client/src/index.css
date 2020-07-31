@@ -13,6 +13,9 @@ html, body {
   color: red;
   margin-bottom: 0;
 }
+img {
+  object-fit: cover;
+}
 
 /* Navigation */
 .navbar {
@@ -121,7 +124,7 @@ h5 {
   padding-top: 6rem;
   width: 50%;
 }
-#form h2.heading {
+h2.heading {
   font-size: 1.9rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -189,11 +192,33 @@ textarea {
 }
 
 /* Profile Form */
-.profile-form {
-  width: 60%;
-  margin: 4rem auto;
+#profile-form {
+  margin-top: 6rem;
 }
-
+#profile-form .col-md-12 {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+.image-div {
+  margin: auto;
+  padding-bottom: 2rem;
+}
+.image {
+  min-width: 200px;
+  max-height: 200px;
+}
+.avatar-div{
+  background-color: #b8bbbf;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+.default-avatar {
+  color: grey;
+  margin-top: 3rem;
+}
 .select {
   margin-top: 1rem;
   margin-bottom: 1rem;
