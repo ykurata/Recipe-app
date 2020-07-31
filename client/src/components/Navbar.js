@@ -18,14 +18,14 @@ import {
 const Navbar = () => {
   const [collapse, setCollapse] = useState(false);
   const [isWideEnough, setIsWideEnough] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState("");
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("jwtToken");
   
   const onClick = () => {
     setCollapse(!collapse);
   };
-
+  
   useEffect(() => {
     axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
@@ -65,13 +65,14 @@ const Navbar = () => {
             <MDBNavItem>
               <MDBDropdown>
                 <MDBDropdownToggle nav caret>
-                  {user.photo ?
+                  {token && user ?
                     <img
                       src={user.photo}
                       alt=""
                       className="rounded-circle img-fluid md-avatar"
                     />
-                    : <MDBIcon icon="user" /> 
+                  :  
+                    <MDBIcon icon="user" />
                   }
                 </MDBDropdownToggle>
                 <MDBDropdownMenu className="dropdown-default">
