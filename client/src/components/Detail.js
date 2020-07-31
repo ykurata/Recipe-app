@@ -23,7 +23,6 @@ const Detail = (props) => {
   const [review, setReview] = useState("");
   const [likes, setLikes] = useState("");
   const [reviews, setReviews] = useState([]);
-  const [reviewLength, setReviewLength] = useState("");
   const token =  localStorage.getItem("jwtToken");
   const userId = localStorage.getItem("userId");
   const [error, setError] = useState("");
@@ -42,9 +41,11 @@ const Detail = (props) => {
   useEffect(() => {
     axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
+      console.log(res.data)
       setRecipe(res.data);
       setRecipeUserId(res.data.userId._id);
       setUsername(res.data.userId.name);
+      reviews(res.data.reviews);
     })
     .catch(err => {
       console.log(err);
@@ -116,7 +117,6 @@ const Detail = (props) => {
           .then(res => {
             setRecipe(res.data);
             setReviews(res.data.reviews);
-            setReviewLength(res.data.reviews.length);
           })
           .catch(err => {
             console.log(err);
@@ -231,9 +231,9 @@ const Detail = (props) => {
           }
           
           {/* Display 5 reviews each*/}
-          {reviewLength !== 0 ? (
+          {reviews !== 0 ? (
             <MDBCol md="12" className="review">
-              <h5 className="title-review">Reviews ({reviewLength}) </h5>
+              <h5 className="title-review">Reviews ({reviews.length}) </h5>
 
               {reviews.slice(0, itemsToShow).map((review, i) => 
                 <MDBCard className="card" key={i}>
@@ -244,7 +244,7 @@ const Detail = (props) => {
                 </MDBCard>
               )}
               
-              {reviewLength > 5 ? (
+              {reviews.length > 5 ? (
                 <MDBBtn onClick={showMore} className="review-button">
                   Show More
                 </MDBBtn>
