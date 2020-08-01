@@ -11,7 +11,9 @@ import {
   MDBCol,
   MDBRow
 } from 'mdbreact';
+
 import Navbar from "../components/Navbar"
+import ListItems from "../components/ListItems";
 
 const List = () => {
   const [recipes, setRecipes] = useState([]);
@@ -27,30 +29,11 @@ const List = () => {
       });
   }, []);
 
-  let recipe;
-  recipe = recipes.map((item, index) => (
-    <MDBCol lg="4" md="4" sm="6" key={index}>
-      <MDBCard className="recipe-card">
-        <MDBCardImage className="img-fluid list-image" src={item.recipeImage}/>
-        <MDBCardBody>
-          <MDBCardTitle>{item.name}</MDBCardTitle>
-          <p>By {item.userId.name}</p>
-          <MDBCardText className="ingredients">
-            Ingredients: {item.ingredients.replace(/\s/g,' ')}
-          </MDBCardText>
-          <MDBBtn href={`/${item._id}`}>Detail</MDBBtn>
-        </MDBCardBody>
-      </MDBCard>
-    </MDBCol>
-  ));
-
   return (
     <div>
       <Navbar/>
       <MDBContainer className="list-container">
-        <MDBRow>
-          {recipe}
-        </MDBRow>
+        <ListItems data={recipes} />
       </MDBContainer>
     </div>
   );
