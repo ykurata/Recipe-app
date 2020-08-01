@@ -1,70 +1,100 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { 
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
+  MDBIcon, 
+  MDBNavbar, 
+  MDBNavbarBrand, 
+  MDBNavbarNav, 
+  MDBNavbarToggler, 
+  MDBCollapse, 
+  MDBNavItem, 
+  MDBNavLink, 
+} from 'mdbreact';
 
-class Navbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      token: localStorage.getItem("jwtToken")
-    };
-  }
+const Navbar = () => {
+  const [collapse, setCollapse] = useState(false);
+  const [isWideEnough, setIsWideEnough] = useState(false);
+  const [user, setUser] = useState("");
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("jwtToken");
+  
+  const onClick = () => {
+    setCollapse(!collapse);
+  };
+  
+  useEffect(() => {
+    axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
+      .then(res => {
+        setUser(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
-  handleLogout = e => {
+  const handleLogout = e => {
     e.preventDefault();
     localStorage.clear();
     window.location.href = "/";
   };
-  
-  render() {
-    let buttons;
 
-    if (this.state.token) {
-      buttons = <div className="collapse navbar-collapse" id="navbarResponsive">
-                  <ul className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                      <a className="nav-link" href="/my-recipes">My Recipes</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/list">Search</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/create">Create</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/profile">Profile</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/logout" onClick={this.handleLogout}>Log Out</a>
-                    </li>
-                  </ul>
-                </div>
-    } else {
-      buttons = <div className="collapse navbar-collapse" id="navbarResponsive">
-                  <ul className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                      <a className="nav-link" href="/list">Search</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/login">Login</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/signup">Sign Up</a>
-                    </li>
-                  </ul>
-                </div>
-    }
-
-    return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-info fixed-top">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">My Recipes<i className="fas fa-utensils"></i></a>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-            <span className="navbar-toggler-icon"></span>
-          </button>  
-          {buttons}
-        </div>
-      </nav>
-    );
-  }
+  return (
+    <div>
+      <MDBNavbar className="navbar" color="default-color" dark expand="md" fixed="top">
+        <MDBNavbarBrand href="/">
+          <strong>My Recipes</strong>
+        </MDBNavbarBrand>
+        {!isWideEnough && <MDBNavbarToggler onClick={onClick} />}
+        <MDBCollapse isOpen={collapse} navbar>
+          <MDBNavbarNav left>
+            <MDBNavItem>
+              <MDBNavLink to="/list">Search</MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+              <MDBNavLink to="/create">Create</MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+              <MDBNavLink to="/my-recipes">My Recipes</MDBNavLink>
+            </MDBNavItem>
+          </MDBNavbarNav>
+          <MDBNavbarNav right>
+            <MDBNavItem>
+              <MDBDropdown>
+                <MDBDropdownToggle nav caret>
+                  {token && user ?
+                    <img
+                      src={user.photo}
+                      alt=""
+                      className="rounded-circle img-fluid md-avatar"
+                    />
+                  :  
+                    <MDBIcon icon="user" />
+                  }
+                </MDBDropdownToggle>
+                <MDBDropdownMenu className="dropdown-default">
+                  {token ? 
+                    <div>
+                      <MDBDropdownItem href="/Profile">Profile</MDBDropdownItem>
+                      <MDBDropdownItem href="/logout" onClick={handleLogout}>Log Out</MDBDropdownItem>
+                    </div>
+                    : 
+                    <div>
+                      <MDBDropdownItem href="/login">Log in</MDBDropdownItem>
+                      <MDBDropdownItem href="/login">Sign Up</MDBDropdownItem>
+                    </div>
+                  }
+                </MDBDropdownMenu>
+              </MDBDropdown>
+            </MDBNavItem>
+          </MDBNavbarNav>
+        </MDBCollapse>
+      </MDBNavbar>
+    </div>
+  );
 }
 
 export default Navbar;

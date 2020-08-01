@@ -1,62 +1,55 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { 
+  MDBBtn,
+  MDBContainer,
+  MDBRow, 
+  MDBCol,
+  MDBIcon,
+} from 'mdbreact';
+
 import Navbar from "./Navbar";
 
-
-class Update extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      recipe: {},
-      name: "",
-      estimatedTime: "",
-      ingredients: "",
-      steps: "",
-      token: localStorage.getItem("jwtToken"),
-      validationErrors: [],
-      error: ""
-    };
+const Update  = (props) => {
+  const [userInput, setUserInput] = useState({
+    name: "",
+    estimatedTime: "",
+    ingredients: "",
+    steps: "",
+  });
+  const [validationErrors, setValidationErrors] = useState([]);
+  const token = localStorage.getItem("jwtToken");
+    
+  const onChange = e => {
+    setUserInput({
+      ...userInput,
+      [e.target.name]: e.target.value 
+    });
   }
 
-  componentDidMount() {
-    this.getRecipe();
-  }
-   
-  getRecipe() {
-    axios.get(`/recipes/get/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+  useEffect(() => {
+    axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
-      this.setState({
-        recipe: res.data,
+      setUserInput({
         name: res.data.name,
-        estimatedTime: res.data.estimatedTime,
+        estimatedTime: res.data.estimatedTime.toString(),
         ingredients: res.data.ingredients,
-        steps: res.data.steps,
-      });
+        steps: res.data.steps
+      })
     })
     .catch(err => {
       console.log(err);
     });
-  };
+  }, []);
 
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-  
-  onSubmit = e => {
+
+  const onSubmit = e => {
     e.preventDefault();
-    
-    const { name, estimatedTime, ingredients, steps } = this.state;
-    const updatedRecipe = {
-      name: name,
-      estimatedTime: estimatedTime.toString(),
-      ingredients: ingredients,
-      steps: steps
-    }
-
-    axios.put(`/recipes/update/${this.state.recipe._id}`, updatedRecipe, { headers: { Authorization: `Bearer ${this.state.token}` }})
+  
+    axios.put(`/recipes/update/${props.match.params.id}`, userInput, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
         toast.success("Successfully Updated!" , {
           position: "top-right",
@@ -64,58 +57,93 @@ class Update extends Component {
         }); 
       })
       .catch(err => {
-        this.setState({
-          validationErrors: err.response.data
-        })
+        setValidationErrors(err.response.data);
       });
   }
 
-  render() {
-    return (
-      <div>
-        <Navbar></Navbar>
-        <div id="update">
-          <div className="updateMain container-fluid">
-            <div className="col-12 text-center">
-              <h2 className="heading">Edit Recipe</h2>
-            </div>
-            <div className="col-12 text-center">
-              <form className="update text-center border border-light" onSubmit={this.onSubmit}>
-                  {/* recipe title */}
-                  {this.state.validationErrors ? 
-                    <p className="error">{this.state.validationErrors.name}</p>
-                  : null}
-                  <input onChange={this.onChange} value={this.state.name} type="text" name="name" id="name" className="form-control mb-4" placeholder="Recipe Title" />
-                  {/* estimated time */}
-                  {this.state.validationErrors ? 
-                    <p className="error">{this.state.validationErrors.estimatedTime}</p>
-                  : null}
-                  <div className="time">
-                    <div className="time-input">
-                      <input onChange={this.onChange} value={this.state.estimatedTime} className="form-control mb-2" name="estimatedTime" id="estimatedTime" type="number" placeholder="Estimated Time" /> 
-                    </div>
-                    <div className="time-label">min</div>
-                  </div>
-                  {/* ingredients */}
-                  {this.state.validationErrors ? 
-                    <p className="error">{this.state.validationErrors.ingredients}</p>
-                  : null}
-                  <textarea onChange={this.onChange} value={this.state.ingredients} className="form-control mb-4" name="ingredients" id="ingredients" rows="5" placeholder="Ingredients..."></textarea>
-                  {/* steps */}
-                  {this.state.validationErrors ? 
-                    <p className="error">{this.state.validationErrors.steps}</p>
-                  : null}
-                  <textarea onChange={this.onChange} value={this.state.steps} className="form-control mb-4" name="steps" id="steps" rows="7" placeholder="Steps..."></textarea>
-                  <ToastContainer />
-                  <button className="btn btn-info btn-block my-4" type="submit">Submit</button>
-                <a href={`/${this.state.recipe._id}`}><p>Back to the detail</p></a>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>    
-    );
-  }
+  return (
+    <div>
+      <Navbar/>
+      <MDBContainer id="form">
+        <MDBRow>
+          <MDBCol md="12">
+            <form onSubmit={onSubmit}>
+              <p className="h4 text-center mb-4">Update Recipe</p>
+              <label htmlFor="defaultFormContactNameEx" className="grey-text">
+                Recipe name
+              </label>
+              {validationErrors ? 
+                <p className="error">{validationErrors.name}</p>
+              : null}
+              <input 
+                name="name"
+                onChange={onChange} 
+                type="text" 
+                id="name" 
+                className="form-control" 
+                value={userInput.name}
+              />
+              <br />
+              <label htmlFor="defaultFormContactEmailEx" className="grey-text">
+                Estimated Time
+              </label>
+              {validationErrors ? 
+                <p className="error">{validationErrors.estimatedTime}</p>
+              : null}
+              <input 
+                name="estimatedTime"
+                onChange={onChange} 
+                type="number" 
+                id="estimatedTime" 
+                className="form-control" 
+                placeholder="min"
+                value={userInput.estimatedTime}
+              />
+              <br />
+              <label htmlFor="defaultFormContactSubjectEx" className="grey-text">
+                Ingredients
+              </label>
+              {validationErrors ? 
+                <p className="error">{validationErrors.ingredients}</p>
+              : null}
+              <textarea 
+                name="ingredients" 
+                onChange={onChange} 
+                type="text" 
+                id="ingredients" 
+                className="form-control" 
+                rows="3"
+                value={userInput.ingredients}
+              />
+              <br />
+              <label htmlFor="defaultFormContactMessageEx" className="grey-text">
+                Steps
+              </label>
+              {validationErrors ? 
+                <p className="error">{validationErrors.steps}</p>
+              : null}
+              <textarea 
+                name="steps"  
+                onChange={onChange} 
+                type="text" 
+                id="steps" 
+                className="form-control" 
+                rows="5" 
+                value={userInput.steps}
+              />
+              <div className="text-center mt-4">
+                <MDBBtn type="submit">
+                  Submit
+                  <MDBIcon far icon="paper-plane" className="ml-2" />
+                </MDBBtn>
+                <ToastContainer/>
+              </div>
+            </form>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </div>    
+  );
 }
 
 export default Update;

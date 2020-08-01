@@ -1,52 +1,48 @@
-import React, { Component } from 'react';
+import React, { useState } from "react";
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
+import { 
+  MDBContainer, 
+  MDBRow, 
+  MDBCol, 
+  MDBInput, 
+  MDBBtn, 
+  MDBCard, 
+  MDBCardBody 
+} from 'mdbreact';
 
-import Navbar from "./Navbar";
-
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      validationErrors: [],
-      error: "",
-    };
+const Login = (props) => {
+  const [userInput, setUserInput] = useState({
+    email: "",
+    password: ""
+  });
+  const [validationError, setValidationError] = useState([]);
+  const [error, setError] = useState("");
+  
+  const onChange = e => {
+    setUserInput({ 
+      ...userInput,
+      [e.target.name]: e.target.value 
+    });
   }
-
-  // Update user input
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  onSubmit = e => {
+  
+  const onSubmit = e => {
     e.preventDefault();
 
-    const { email, password } = this.state;
-    const user = {
-      email: email,
-      password: password
-    };
-
-    axios.post("/users/login", user)
+    axios.post("/users/login", userInput)
       .then(res => {
-        const { token } = res.data;
-        const decoded = jwt_decode(token);
-        localStorage.setItem("jwtToken", token);
-        localStorage.setItem("name", decoded.name);
+        localStorage.setItem("jwtToken", res.data.token);
+        const decoded = jwt_decode(res.data.token);
         localStorage.setItem("userId", decoded.id);
-        this.props.history.push("/list");
+        props.history.push("/list");
       })
       .catch(err => {
-        this.setState({
-          validationErrors: err.response.data,
-          error: err.response.data.error
-        });
+        setValidationError(err.response.data);
+        setError(err.response.data.error);
       });
-  }
+  };
 
-  demoLogin = e => {
+  const demoLogin = e => {
     e.preventDefault();
     const demoUser = {
       email: "yasuko@gmail.com",
@@ -54,49 +50,82 @@ class Login extends Component {
     };
     axios.post("/users/login", demoUser)
       .then(res => {
-        const { token } = res.data;
-        const decoded = jwt_decode(token);
-        localStorage.setItem("jwtToken", token);
-        localStorage.setItem("name", decoded.name);
+        localStorage.setItem("jwtToken", res.data.token);
+        const decoded = jwt_decode(res.data.token);
         localStorage.setItem("userId", decoded.id);
-        this.props.history.push("/list");
+        props.history.push("/list");
       })
       .catch(err => {
-        this.setState({
-          validationErrors: err.response.data,
-          error: err.response.data.error
-        });
+        setValidationError(err.response.data);
+        setError(err.response.data.error);
       });
+
   }
 
-  render() {
-    return (
-      <div>
-        <Navbar></Navbar>
-        <div className="login-form">
-          <form className="text-center border border-light pt-5" onSubmit={this.onSubmit}>
-              <p className="h4 mb-4">Log in</p>
-              {this.state.error ? 
-                <p className="error">{this.state.error}</p>
-              : null}
-              {this.state.validationErrors ? 
-                <p className="error">{this.state.validationErrors.email}</p>
-              : null}
-              <input onChange={this.onChange} type="email" name="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
-              {this.state.validationErrors ? 
-                <p className="error">{this.state.validationErrors.password}</p>
-              : null}
-              <input onChange={this.onChange} type="password" name="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
-              <button className="btn btn-info btn-block my-4" type="submit">Log In</button>
-              <p>Not a member?
+
+  return (
+    <MDBContainer className="login-form">
+      <MDBRow>
+        <MDBCol>
+          <MDBCard className="login-card">
+            <MDBCardBody>
+              <form onSubmit={onSubmit}>
+                <p className="h4 text-center py-4">Log In</p>
+                <div className="grey-text">
+                  {validationError ?
+                    <p className="error">{validationError.email}</p>
+                  : null  
+                  }
+                  {error ?
+                    <p className="error">{error}</p>
+                  : null  
+                  }
+                  <MDBInput
+                    label="Your email"
+                    icon="envelope"
+                    group
+                    type="email"
+                    validate
+                    error="wrong"
+                    success="right"
+                    name="email"
+                    value={userInput.email}
+                    onChange={onChange}
+                  />
+                  {validationError ?
+                    <p className="error">{validationError.password}</p>
+                  : null  
+                  }
+                  <MDBInput
+                    label="Your password"
+                    icon="lock"
+                    group
+                    type="password"
+                    validate
+                    name="password"
+                    value={userInput.password}
+                    onChange={onChange}
+                  />
+                </div>
+                <div className="text-center py-4 mt-3">
+                  <MDBBtn  type="submit">
+                    Log In
+                  </MDBBtn>
+                  <MDBBtn outline onClick={demoLogin}>
+                    Demo User
+                  </MDBBtn>
+                </div>
+                <p className="text-center">
+                  Don't have an account?
                   <a href="/signup">Register</a>
-              </p>
-              <button className="btn btn-info" onClick={this.demoLogin}>Demo User</button>
-          </form>
-        </div>   
-      </div>
-    );
-  }
-}
+                </p>
+              </form>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
+  );
+};
 
 export default Login;

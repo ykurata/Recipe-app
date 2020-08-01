@@ -18,7 +18,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoute path="/create" component={Form} />
+        <PrivateRoute exact path="/create" component={Form} />
         <PrivateRoute path="/image/:id" component={Image} />
         <PrivateRoute path="/update/:id" component={Update} />
         <PrivateRoute path="/my-recipes" component={MyRecipes} />

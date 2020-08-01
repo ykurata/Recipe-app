@@ -9,119 +9,156 @@ html, body {
   background-color: #ebeff5;
 }
 
+.error {
+  color: red;
+  margin-bottom: 0;
+}
+img {
+  object-fit: cover;
+}
 
-/*--- Navigation ---*/
+/* Navigation */
 .navbar {
-  font-weight: 700;
+  min-height: 4rem;
 }
-
-.navbar-nav li {
-  text-transform: uppercase;
-  font-size: .8rem;
-  letter-spacing: .1rem;
-  padding-right: .7rem;
+.md-avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
 }
-
-.navbar i {
-  padding-left: .8rem;
-}
-
-.nav .navbar-nav {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-}
-
-.user {
-  color: white;
-}
-
 
 /* Landing page */
 .landing-text {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-  color: #23262b;
+  font-size: 5rem;
 }
-
-.landing-text h1 {
-  font-size: 500%;
-  font-weight: 700;
-  letter-spacing: .2rem;
-  padding-bottom: .1rem;
-}
-
-.landing-text h3 {
-  font-size: 2rem;
-}
-
 
 /* Log In & Sign Up form  */
-.login-form {
-  width: 40%;
-  margin: 4rem auto;
-}
-
-.error {
-  color: red;
-  text-align: left;
-}
-
-
-/* Recipe form */
-#form .main {
-  padding-top: 5rem;
+.login-card {
   width: 50%;
+  margin: auto;
+  margin-top: 4rem;
 }
 
-#form h2.heading {
-  font-size: 1.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-top: 1rem;
+/* List item page */
+.list-container {
+  margin-top: 10rem;
+}
+.recipe-card {
+  min-width: 20rem;
+  max-height: 30rem;
+  margin: 1rem 0;
+}
+.list-image {
+  max-height: 18rem;
+  min-height: 18rem;
+  min-width: 22rem;
+  max-width: 20rem;
+  object-fit: cover;
+}
+.ingredients {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-#form .row {
-  padding-top: 2rem;
+/* Recipe Detail */
+#detail {
+  margin-top: 6rem;
 }
-
-#form .col-lg-6 {
-  padding-top: 1rem;
-}
-
-#form img {
+#detail img {
   object-fit: cover; 
   object-position: center; /* Center the image within the element */
   width: 100%;
   max-height: 450px;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
-
-#form .image {
+p {
+  color: grey;
+}
+h5 {
+  font-weight: bold;
+  padding-bottom: 1rem;
+}
+.detail-content {
   padding-bottom: 3rem;
 }
-
-#form .time {
-  text-align: left;
+.card-body {
+  white-space: pre-wrap;
+}
+#detail .delete {
+  margin-left: 2rem;
+}
+#detail .icon {
+  margin-right: 2rem;
+  font-size: 1.3rem;
+  color: grey;
+}
+#detail .icon:hover {
+  color: #ff99cc;
+}
+#detail .reviewIcon:hover {
+  color: #4da6ff;
+}
+#detail .likes-num {
+  margin-right: .5rem;
+}
+#detail .review {
+  margin-top: 2rem;
+}
+#detail .review-button {
+  margin-top: 1rem;
+}
+#detail .card {
+  margin-bottom: 1rem;
+}
+#detail .card-review {
+  margin: .5rem;
+}
+#detail .reviewer-name {
+  border-bottom: 1px solid #cccccc;
 }
 
-#form .time-input {
-  width : 40%;
-  display: inline-block;
-  margin-right: 1rem;
+/* Recipe form */
+#form {
+  padding-top: 6rem;
+  width: 50%;
 }
-
-#form .time-label {
-  display: inline-block;
+h2.heading {
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 1rem;
+  color: #555555;
 }
-
 textarea {
   white-space: pre-wrap;
 }
 
+/* Update Form */
+#update {
+  width: 50%;object-fit: cover;
+  margin: auto;
+}
+#update .updateMain {
+  padding-top: 5rem;
+}
+#update .time {
+  text-align: left;
+}
+#update .time-input {
+  width : 40%;
+  display: inline-block;
+  margin-right: 1rem;
+}
+#update .time-label {
+  display: inline-block;
+}
 
 /* Recipe Image  */
+#image {
+  margin-top: 6rem;
+}
 #image .card {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -154,140 +191,55 @@ textarea {
   text-align: center;
 }
 
-/* Update Form */
-#update {
-  width: 50%;object-fit: cover;
-  margin: auto;
-}
-
-#update .updateMain {
-  padding-top: 5rem;
-}
-
-#update .time {
-  text-align: left;
-}
-
-#update .time-input {
-  width : 40%;
-  display: inline-block;
-  margin-right: 1rem;
-}
-
-#update .time-label {
-  display: inline-block;
-}
-
-
-/* Recipe Detail */
-#detail .row {
-  padding-top: 3rem;
-}
-
-#detail .inner-div {
-  width: 85%;
-  margin: 1.5rem auto;
-  padding-bottom: 3rem;
-}
-
-#detail img {
-  object-fit: cover; 
-  object-position: center; /* Center the image within the element */
-  width: 100%;
-  max-height: 450px;
-  margin-bottom: 1rem;
-}
-
-p {
-  color: grey;
-}
-
-h5 {
-  font-weight: bold;
-  padding-bottom: 1rem;
-}
-
-.detail-content {
-  padding-bottom: 3rem;
-}
-
-.card-body {
-  white-space: pre-wrap;
-}
-
-#detail .delete {
-  margin-left: 2rem;
-}
-
-#detail .icon {
-  margin-right: 2rem;
-  font-size: 1.3rem;
-  color: grey;
-}
-
-#detail .icon:hover {
-  color: #ff99cc;
-}
-
-#detail .reviewIcon:hover {
-  color: #4da6ff;
-}
-
-#detail .likes-num {
-  margin-right: .5rem;
-}
-
-#detail .review {
-  margin-top: 2rem;
-}
-
-#detail .review-button {
-  margin-top: 1rem;
-}
-
-#detail .card {
-  margin-bottom: 1rem;
-}
-
-#detail .card-review {
-  margin: .5rem;
-}
-
-#detail .reviewer-name {
-  border-bottom: 1px solid #cccccc;
-}
-
-
 /* Profile Form */
-.profile-form {
-  width: 60%;
-  margin: 4rem auto;
+#profile-form {
+  margin-top: 6rem;
 }
-
+#profile-form .col-md-12 {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+.image-div {
+  margin: auto;
+  padding-bottom: 2rem;
+}
+.image {
+  min-width: 200px;
+  max-height: 200px;
+}
+.avatar-div{
+  background-color: #b8bbbf;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+.default-avatar {
+  color: grey;
+  margin-top: 3rem;
+}
 .select {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-
 /* Profile Detail */
-.top {
-  padding-top: 5rem;
+#profile-detail .col-md-12 {
+  text-align: center;
+  margin-top: 8rem;
+  align-items: center;
 }
-
-.name {
-  font-size: 1.9rem;
-  font-weight: 700;
+#profile-detail .profile-card {
+  width: 50%;
+  margin: auto;
+}
+#profile-detail .card-title {
   margin-top: 1rem;
 }
-
-.title {
-  font-weight: 700;
-  margin-top: 3rem;
-}
-
-#profile-detail .card {
-  width: 36rem;
+#profile-detail .user-recipe {
+  margin-top: 2rem;
+  align-items: center;
 }
 
 @media (max-width: 768px) {

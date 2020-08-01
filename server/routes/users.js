@@ -109,8 +109,20 @@ router.post("/login", (req, res) => {
   });
 });
 
+// Get a user by id 
+router.get("/get/:id", (req, res) => {
+  User.findOne({_id: req.params.id})
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+
 // Get all users 
-router.get("/list", (req, res, next) => {
+router.get("/list", (req, res) => {
   User.find({})
     .populate("userId", "name")
     .exec(function(err, recipes){

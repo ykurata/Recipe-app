@@ -1,183 +1,105 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import Moment from 'react-moment';
-import Avatar from "@material-ui/core/Avatar";
-import Grid from "@material-ui/core/Grid";
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from "@material-ui/core/styles";
+
+import { 
+  MDBBtn, 
+  MDBCard,
+  MDBCardBody, 
+  MDBCardImage, 
+  MDBCardTitle, 
+  MDBCardText, 
+  MDBContainer,
+  MDBCol,
+  MDBRow
+} from 'mdbreact';
 
 import Navbar from "./Navbar";
 
-
-const ProfileDetailStyle = theme => ({
-  bigAvatar: {
-    width: 250,
-    height: 250
-  },
-  container: {
-    marginTop: 50
-  },
-  card: {
-    maxWidth: 350,
-    minWidth: 350,
-    marginTop: 50,
-    marginRight: 15,
-    marginLeft: 15
-  },
-  media: {
-    height: 300,
-  },
-  avatar: {
-    height: 300,
-    width: 350,
-    textDecoration: "none",
-  },
-  content: {
-    textDecoration: "none"
-  },
-  userName: {
-    fontSize: 12
-  },
-  bottom: {
-    marginBottom: 50
-  }
-});
-
-class ProfileDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      profile: {},
-      recipes: [],
-      name: "",
-      image: null,
-      token: localStorage.getItem("jwtToken"),
-      userId: localStorage.getItem("userId")
-    };
-  }
-
-  componentDidMount() {
-    this.getProfile();
-    this.getRecipes();
-  }
-
-  getProfile() {
-    axios.get(`/profile/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+const ProfileDetail = (props) => {
+  const [profile, setProfile] = useState({});
+  const [recipes, setRecipes] = useState([]);
+  const [name, setName] = useState("");
+  const [image, setImage] = useState(null);
+  const [empty, setEmpty] = useState(false);
+  const token = localStorage.getItem("jwtToken");
+  const userId = localStorage.getItem("userId");
+  
+  useEffect(() => {
+    axios.get(`/profile/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
         if (res.data) {
-          this.setState({ 
-            profile: res.data,
-            image: res.data.photo
-          });
-          console.log(this.state.image);
+          setProfile(res.data);
+          setImage(res.data.photo);
         } else {
-          this.setState({ empty: true });
+          setEmpty(true);
         }
       })
       .catch(err => {
         console.log(err);
       });
-  }
-
-  getRecipes() {
-    axios.get(`/recipes/userid/${this.props.match.params.id}`, { headers: { Authorization: `Bearer ${this.state.token}` }})
+  }, [])
+  
+  useEffect(() => {
+    axios.get(`/recipes/userid/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
-        this.setState({ 
-          recipes: res.data,
-          name: res.data[0].userId.name
-        });
+        setRecipes(res.data);
+        setName(res.data[0].userId.name);
       })
       .catch(err => {
         console.log(err);
       });
-  }
+  }, []);
+ 
 
+  let userRecipe;
+  userRecipe = recipes.map((item, index) => (
+    <MDBCol lg="4" md="4" sm="6" key={index}>
+      <MDBCard className="recipe-card">
+        <MDBCardImage className="img-fluid list-image" src={item.recipeImage}/>
+        <MDBCardBody>
+          <MDBCardTitle>{item.name}</MDBCardTitle>
+          <p>By {item.userId.name}</p>
+          <MDBCardText className="ingredients">
+            Ingredients: {item.ingredients.replace(/\s/g,' ')}
+          </MDBCardText>
+          <MDBBtn href={`/${item._id}`}>Detail</MDBBtn>
+        </MDBCardBody>
+      </MDBCard>
+    </MDBCol>
+  ));
 
-  render() {
-    const { classes } = this.props;
-    const { recipes } = this.state;
+  return (
+    <div>
+      <Navbar/>
 
-    let userRecipes;
-
-    userRecipes = recipes.map((item, i) => (
-      <Grid item key={i} >
-        <Card className={classes.card} >
-          <CardActionArea>
-            {item.recipeImage ?
-              <CardMedia
-                id={item._id}
-                title="recipe image"
-                className={classes.media}
-                image={item.recipeImage}
-                component={Link}
-                to={`/${item._id}`}
-              />
-            : <Avatar 
-                variant="square" 
-                className={classes.avatar}
-                component={Link}
-                to={`/${item._id}`}
-              >No Image</Avatar>
-            }
-          </CardActionArea>     
-          <CardContent>
-            <Typography  variant="h5" component="h2">
-              {item.name} 
-            </Typography>
-            <Typography gutterBottom className={classes.userName} variant="body1" color="textSecondary">
-              Created by {item.userId.name}
-            </Typography>
-            <Typography noWrap variant="body2" color="textSecondary" >
-              Ingredients: {item.ingredients} 
-            </Typography>         
-          </CardContent>
-        </Card>
-      </Grid>
-    ));
-  
-    return (
-      <div>
-        <Navbar></Navbar>
-
-        <div id="profile-detail" className="top container-fluid">
-          <div className="inner-div">
-            <div className="col-12 text-center">
-              <h2 className="name">{this.state.name}</h2>
-              <p>Joined <Moment format="MMMM YYYY">{this.state.profile.createdAt}</Moment></p>
-              <Grid container className={classes.container} justify="center">  
-                <Avatar className={classes.bigAvatar} src={this.state.image}></Avatar>
-              </Grid>
-              
-              {/* display description only if it's saved */}
-              {this.state.profile.description ?
-                <Grid container className={classes.container} justify="center"> 
-                  <div className="card">
-                    <div className="card-body text-left">
-                      {this.state.profile.description}
-                    </div>
-                  </div>
-                </Grid> 
-              : null   
-              }
-      
-            </div> 
-          </div>   
-
-          <Grid className={classes.bottom} container justify="center">
-            <div className="col-12 text-center">
-              <h4 className="title">{this.state.name}'s Recipes</h4>
-            </div>  
-            {userRecipes}
-          </Grid>
-        </div>
-      </div>
-    );
-  }
+      <MDBContainer id="profile-detail">
+        <MDBRow>
+          <MDBCol md="12">
+            <MDBCard className="profile-card">
+              <MDBCardBody>
+                <img 
+                  src={image} 
+                  alt=""
+                  className="rounded-circle img-fluid image"
+                />
+                <MDBCardTitle>
+                  {name}
+                </MDBCardTitle>
+                <p>Joined <Moment format="MMMM YYYY">{profile.createdAt}</Moment></p> 
+                <MDBCardText>{profile.description}</MDBCardText>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+          <MDBCol md="12" className="user-recipe">
+            <h4>{name}' s Recipes</h4>
+          </MDBCol>
+          {userRecipe}
+        </MDBRow>
+      </MDBContainer>
+    </div>
+  );
 }
 
-export default withStyles(ProfileDetailStyle)(ProfileDetail);
+export default ProfileDetail;
