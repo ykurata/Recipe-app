@@ -15,7 +15,7 @@ import {
   MDBRow
 } from 'mdbreact';
 
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
 
 const ProfileDetail = (props) => {
   const [profile, setProfile] = useState({});

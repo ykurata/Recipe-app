@@ -13,7 +13,7 @@ import {
   MDBIcon,
 } from 'mdbreact';
 
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
 
 const Image = (props) => {
 	const [image, setImage] = useState(null);

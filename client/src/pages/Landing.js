@@ -1,6 +1,6 @@
 import React from 'react';
 import { MDBMask, MDBView } from 'mdbreact';
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
 
 import image from '../images/salad.jpg';
 

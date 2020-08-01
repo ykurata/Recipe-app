@@ -1,17 +1,17 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
-import Landing from "./components/Landing";
-import Form from "./components/Form";
-import Update from "./components/Update";
-import ProfileForm from "./components/ProfileForm";
-import ProfileDetail from "./components/ProfileDetail";
-import List from "./components/List";
-import MyRecipes from "./components/MyRecipes";
-import Detail from "./components/Detail";
-import Image from "./components/Image";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import Landing from "./pages/Landing";
+import Form from "./pages/Form";
+import Update from "./pages/Update";
+import ProfileForm from "./pages/ProfileForm";
+import ProfileDetail from "./pages/ProfileDetail";
+import List from "./pages/List";
+import MyRecipes from "./pages/MyRecipes";
+import Detail from "./pages/Detail";
+import Image from "./pages/Image";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {

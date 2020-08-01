@@ -11,7 +11,7 @@ import {
   MDBCol,
   MDBRow
 } from 'mdbreact';
-import Navbar from "./Navbar"
+import Navbar from "../components/Navbar"
 
 const MyRecipes = () => {
   const [recipes, setRecipes] = useState([]);
