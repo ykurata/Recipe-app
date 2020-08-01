@@ -224,25 +224,22 @@ textarea {
   margin-bottom: 1rem;
 }
 
-
 /* Profile Detail */
-.top {
-  padding-top: 5rem;
+#profile-detail .col-md-12 {
+  text-align: center;
+  margin-top: 8rem;
+  align-items: center;
 }
-
-.name {
-  font-size: 1.9rem;
-  font-weight: 700;
+#profile-detail .profile-card {
+  width: 50%;
+  margin: auto;
+}
+#profile-detail .card-title {
   margin-top: 1rem;
 }
-
-.title {
-  font-weight: 700;
-  margin-top: 3rem;
-}
-
-#profile-detail .card {
-  width: 36rem;
+#profile-detail .user-recipe {
+  margin-top: 2rem;
+  align-items: center;
 }
 
 @media (max-width: 768px) {
