@@ -10,10 +10,12 @@ import {
   MDBRow
 } from 'mdbreact';
 
+import NoRecipe from "./NoRecipe";
+
 const ListItems = (props) => {
   let list;
   if (props.data.length === 0) {
-    list = <p>No Recipes</p>
+    list = <NoRecipe />
   } else {
     list = props.data.map((item, index) => 
       <MDBCol lg="4" md="4" sm="6" key={index}>

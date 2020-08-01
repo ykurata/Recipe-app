@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { 
-  MDBBtn, 
-  MDBCard,
-  MDBCardBody, 
-  MDBCardImage, 
-  MDBCardTitle, 
-  MDBCardText, 
-  MDBContainer,
-  MDBCol,
-  MDBRow
-} from 'mdbreact';
-import Navbar from "../components/Navbar"
+import { MDBContainer } from 'mdbreact';
 
-const MyRecipes = () => {
+import Navbar from "../components/Navbar"
+import ListItems from "../components/ListItems";
+
+const MyRecipes = (props) => {
   const [recipes, setRecipes] = useState([]);
   const token = localStorage.getItem("jwtToken");
 
@@ -27,30 +19,11 @@ const MyRecipes = () => {
       });
   }, []);
 
-  let recipe;
-  recipe = recipes.map((item, index) => (
-    <MDBCol lg="4" md="4" sm="6" key={index}>
-      <MDBCard className="recipe-card">
-        <MDBCardImage className="img-fluid list-image" src={item.recipeImage}/>
-        <MDBCardBody>
-          <MDBCardTitle>{item.name}</MDBCardTitle>
-          <p>By {item.userId.name}</p>
-          <MDBCardText>
-            Ingredients: {item.ingredients.replace(/\s/g,' ')}
-          </MDBCardText>
-          <MDBBtn href={`/${item._id}`}>Detail</MDBBtn>
-        </MDBCardBody>
-      </MDBCard>
-    </MDBCol>
-  ));
-
   return (
     <div>
       <Navbar/>
       <MDBContainer className="list-container">
-        <MDBRow>
-          {recipe}
-        </MDBRow>
+        <ListItems data={recipes} />
       </MDBContainer>
     </div>
   );

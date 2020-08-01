@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { 
-  MDBBtn, 
-  MDBCard,
-  MDBCardBody, 
-  MDBCardImage, 
-  MDBCardTitle, 
-  MDBCardText, 
-  MDBContainer,
-  MDBCol,
-  MDBRow
-} from 'mdbreact';
+import { MDBContainer } from 'mdbreact';
 
 import Navbar from "../components/Navbar"
 import ListItems from "../components/ListItems";
