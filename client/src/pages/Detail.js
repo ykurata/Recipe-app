@@ -41,7 +41,6 @@ const Detail = (props) => {
   useEffect(() => {
     axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
-      console.log(res.data.reviews)
       setRecipe(res.data);
       setRecipeUserId(res.data.userId._id);
       setUsername(res.data.userId.name);
@@ -51,8 +50,6 @@ const Detail = (props) => {
       console.log(err);
     });
   }, []);
-
-  
 
   // Send a like 
   const sendLike = () => {

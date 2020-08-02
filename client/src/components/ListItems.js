@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { 
   MDBBtn, 
   MDBCard,
@@ -19,7 +20,8 @@ const ListItems = (props) => {
   } else {
     list = props.data.map((item, index) => 
       <MDBCol lg="4" md="4" sm="6" key={index}>
-        <MDBCard className="recipe-card">
+        <Link to={`/${item._id}`}>
+        <MDBCard className="recipe-card"  >
           <MDBCardImage className="img-fluid list-image" src={item.recipeImage}/>
           <MDBCardBody>
             <MDBCardTitle>{item.name}</MDBCardTitle>
@@ -27,9 +29,10 @@ const ListItems = (props) => {
             <MDBCardText className="ingredients">
               Ingredients: {item.ingredients.replace(/\s/g,' ')}
             </MDBCardText>
-            <MDBBtn href={`/${item._id}`}>Detail</MDBBtn>
+            {/* <MDBBtn href={`/${item._id}`}>Detail</MDBBtn> */}
           </MDBCardBody>
         </MDBCard>
+        </Link>
       </MDBCol>
     );
   }
