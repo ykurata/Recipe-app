@@ -13,7 +13,9 @@ const upload = require("./service/upload");
 // POST profile photo
 router.post("/photo", upload.single("photo"), auth, (req, res, next) => {
   Profile.findOne({ userId: req.user }, (err, profile) => {
-    if (err) return next(err);
+    if (!req.file) {
+      return console.log("no image selected");
+    }
     if (profile) {
       profile.photo = req.file.location;
       profile.save()
