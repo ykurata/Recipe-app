@@ -43,18 +43,16 @@ img {
   margin-top: 10rem;
 }
 .recipe-card {
-  min-width: 20rem;
   max-height: 30rem;
   margin: 1rem 0;
 }
 .list-image {
   max-height: 18rem;
   min-height: 18rem;
-  min-width: 22rem;
-  max-width: 20rem;
+  width: 30rem;
   object-fit: cover;
 }
-.ingredients {
+.ingredients, .card-title {
   display: block;
   overflow: hidden;
   white-space: nowrap;
