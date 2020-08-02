@@ -49,39 +49,9 @@ const ProfileForm = (props) => {
       .catch(err => {
         console.log(err);
       });
-  }, [])
+  }, []);
 
-
-  const handleSubmit = e => {
-    e.preventDefault();
-   
-    if (empty === true) {
-      axios.post(`/profile/${userId}`, description, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        toast.success("Created!" , {
-          position: "top-right",
-          autoClose: 2000
-        });
-      })
-      .catch(err => {
-        setValidationError(err.response.data);
-        console.log(err.response.data);
-      });
-    } else {
-      axios.put(`/profile/update/${userId}`, description, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        toast.success("Updated!" , {
-          position: "top-right",
-          autoClose: 2000
-        });
-      })
-      .catch(err => {
-        setValidationError(err.response.data);
-        console.log(err.response);
-      });
-    }
-  }
-
+  // Submit profile photo
   const submitPhoto = e => {
     e.preventDefault();
 
@@ -101,6 +71,44 @@ const ProfileForm = (props) => {
     .catch(err => {
       console.log(err.response.data);
     });
+  }
+
+  // Create and update profile description
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    const newDescription = {
+      description: description
+    };
+   
+    if (empty === true) {
+      axios.post(`/profile/${userId}`, newDescription, { headers: { Authorization: `Bearer ${token}` }})
+      .then(res => {
+        toast.success("Created!" , {
+          position: "top-right",
+          autoClose: 2000
+        });
+      })
+      .catch(err => {
+        setValidationError(err.response.data);
+        console.log(err.response.data);
+      });
+    } else {
+      const updatedDescription = {
+        description: description
+      };
+      axios.put(`/profile/update/${userId}`, updatedDescription, { headers: { Authorization: `Bearer ${token}` }})
+      .then(res => {
+        toast.success("Updated!" , {
+          position: "top-right",
+          autoClose: 2000
+        });
+      })
+      .catch(err => {
+        setValidationError(err.response.data);
+        console.log(err.response);
+      });
+    }
   }
 
   return (

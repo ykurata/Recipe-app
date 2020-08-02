@@ -69,7 +69,7 @@ const Navbar = () => {
                     <img
                       src={user.photo}
                       alt=""
-                      className="rounded-circle img-fluid md-avatar"
+                      className="rounded-circle img-fluid nav-avatar"
                     />
                   :  
                     <MDBIcon icon="user" />

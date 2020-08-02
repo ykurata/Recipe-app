@@ -56,7 +56,7 @@ const ProfileDetail = (props) => {
     <div>
       <Navbar/>
 
-      <MDBContainer id="profile-detail">
+      <MDBContainer fulid="true" id="profile-detail">
         <MDBRow>
           <MDBCol md="12">
             <MDBCard className="profile-card">

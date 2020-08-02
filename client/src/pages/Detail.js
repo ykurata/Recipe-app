@@ -41,18 +41,16 @@ const Detail = (props) => {
   useEffect(() => {
     axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
-      console.log(res.data.reviews)
       setRecipe(res.data);
       setRecipeUserId(res.data.userId._id);
       setUsername(res.data.userId.name);
       setReviews(res.data.reviews);
+      setLikes(res.data.likes.length);
     })
     .catch(err => {
       console.log(err);
     });
   }, []);
-
-  
 
   // Send a like 
   const sendLike = () => {
@@ -173,6 +171,7 @@ const Detail = (props) => {
                   <ToastContainer />
                   <MDBBtn
                     href={`/update/${recipe._id}`}
+                    style={{color: 'white'}}
                   >
                     Update
                   </MDBBtn>

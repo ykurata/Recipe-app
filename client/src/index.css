@@ -8,6 +8,10 @@ html, body {
   color: #555555;
   background-color: #ebeff5;
 }
+a, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: inherit;
+}
 .error {
   color: red;
   margin-bottom: 0;
@@ -20,10 +24,11 @@ img {
 .navbar {
   min-height: 4rem;
 }
-.md-avatar {
+.nav-avatar {
   vertical-align: middle;
   width: 50px;
-  height: 50px;
+  max-height: 50px;
+  object-fit: cover;
 }
 
 /* Landing page */
@@ -43,18 +48,19 @@ img {
   margin-top: 10rem;
 }
 .recipe-card {
-  min-width: 20rem;
   max-height: 30rem;
   margin: 1rem 0;
+}
+.recipe-card:hover {
+  background-color: #f0f3f5;
 }
 .list-image {
   max-height: 18rem;
   min-height: 18rem;
-  min-width: 22rem;
-  max-width: 20rem;
+  width: 35rem;
   object-fit: cover;
 }
-.ingredients {
+.ingredients, .card-title {
   display: block;
   overflow: hidden;
   white-space: nowrap;
@@ -135,26 +141,6 @@ textarea {
   white-space: pre-wrap;
 }
 
-/* Update Form */
-#update {
-  width: 50%;object-fit: cover;
-  margin: auto;
-}
-#update .updateMain {
-  padding-top: 5rem;
-}
-#update .time {
-  text-align: left;
-}
-#update .time-input {
-  width : 40%;
-  display: inline-block;
-  margin-right: 1rem;
-}
-#update .time-label {
-  display: inline-block;
-}
-
 /* Recipe Image  */
 #image {
   margin-top: 6rem;
@@ -230,7 +216,7 @@ textarea {
   margin-top: 8rem;
   align-items: center;
 }
-#profile-detail .profile-card {
+.profile-card {
   width: 50%;
   margin: auto;
 }
@@ -243,8 +229,14 @@ textarea {
 }
 
 @media (max-width: 768px) {
-  .main {
-    width: 80%;
+  .login-card {
+    width: 90%;
+  }
+  #form {
+    width: 90%;
+  }
+  .profile-card {
+    width: 70%;
   }
 }
 
@@ -265,16 +257,6 @@ textarea {
   #update {
     width: 90%;
   }
-  #form img {
-    object-fit: cover; 
-    object-position: center; /* Center the image within the element */
-    width: 100%;
-    max-height: 300px;
-    margin-bottom: 3rem;
-  }
-  .main {
-    width: 100%;
-  }
   /* Upload Image page */
   #image img {
     width: 300px;
@@ -291,6 +273,10 @@ textarea {
     font-size: 5rem;
     color: #c2c6cf;
     margin-top: 6rem;
+  }
+  /* profile detail page */
+  .profile-card {
+    width: 100%;
   }
 }
 

@@ -22,7 +22,7 @@ const List = () => {
   return (
     <div>
       <Navbar/>
-      <MDBContainer className="list-container">
+      <MDBContainer fluid className="list-container">
         <ListItems data={recipes} />
       </MDBContainer>
     </div>
