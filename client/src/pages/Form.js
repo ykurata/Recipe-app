@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,9 +11,9 @@ import {
   MDBIcon,
 } from 'mdbreact';
 
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
 
-const Update  = (props) => {
+const Form  = (props) => {
   const [userInput, setUserInput] = useState({
     name: "",
     estimatedTime: "",
@@ -30,31 +30,17 @@ const Update  = (props) => {
     });
   }
 
-  useEffect(() => {
-    axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
-    .then(res => {
-      setUserInput({
-        name: res.data.name,
-        estimatedTime: res.data.estimatedTime.toString(),
-        ingredients: res.data.ingredients,
-        steps: res.data.steps
-      })
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }, []);
-
-
   const onSubmit = e => {
     e.preventDefault();
   
-    axios.put(`/recipes/update/${props.match.params.id}`, userInput, { headers: { Authorization: `Bearer ${token}` }})
+    axios.post("/recipes", userInput, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
-        toast.success("Successfully Updated!" , {
+        console.log(res.data)
+        toast.success("Created a recipe!" , {
           position: "top-right",
-          autoClose: 3000
+          autoClose: 2000
         }); 
+        window.location = `/image/${res.data._id}`;
       })
       .catch(err => {
         setValidationErrors(err.response.data);
@@ -68,7 +54,7 @@ const Update  = (props) => {
         <MDBRow>
           <MDBCol md="12">
             <form onSubmit={onSubmit}>
-              <p className="h4 text-center mb-4">Update Recipe</p>
+              <p className="h4 text-center mb-4">Create Recipe</p>
               <label htmlFor="defaultFormContactNameEx" className="grey-text">
                 Recipe name
               </label>
@@ -81,7 +67,6 @@ const Update  = (props) => {
                 type="text" 
                 id="name" 
                 className="form-control" 
-                value={userInput.name}
               />
               <br />
               <label htmlFor="defaultFormContactEmailEx" className="grey-text">
@@ -97,7 +82,6 @@ const Update  = (props) => {
                 id="estimatedTime" 
                 className="form-control" 
                 placeholder="min"
-                value={userInput.estimatedTime}
               />
               <br />
               <label htmlFor="defaultFormContactSubjectEx" className="grey-text">
@@ -113,7 +97,6 @@ const Update  = (props) => {
                 id="ingredients" 
                 className="form-control" 
                 rows="3"
-                value={userInput.ingredients}
               />
               <br />
               <label htmlFor="defaultFormContactMessageEx" className="grey-text">
@@ -129,7 +112,6 @@ const Update  = (props) => {
                 id="steps" 
                 className="form-control" 
                 rows="5" 
-                value={userInput.steps}
               />
               <div className="text-center mt-4">
                 <MDBBtn type="submit">
@@ -146,4 +128,4 @@ const Update  = (props) => {
   );
 }
 
-export default Update;
+export default Form;

@@ -4,7 +4,6 @@ import axios from 'axios';
 import Moment from 'react-moment';
 
 import { 
-  MDBBtn, 
   MDBCard,
   MDBCardBody, 
   MDBCardImage, 
@@ -15,7 +14,8 @@ import {
   MDBRow
 } from 'mdbreact';
 
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
+import ListItems from "../components/ListItems";
 
 const ProfileDetail = (props) => {
   const [profile, setProfile] = useState({});
@@ -51,24 +51,6 @@ const ProfileDetail = (props) => {
         console.log(err);
       });
   }, []);
- 
-
-  let userRecipe;
-  userRecipe = recipes.map((item, index) => (
-    <MDBCol lg="4" md="4" sm="6" key={index}>
-      <MDBCard className="recipe-card">
-        <MDBCardImage className="img-fluid list-image" src={item.recipeImage}/>
-        <MDBCardBody>
-          <MDBCardTitle>{item.name}</MDBCardTitle>
-          <p>By {item.userId.name}</p>
-          <MDBCardText className="ingredients">
-            Ingredients: {item.ingredients.replace(/\s/g,' ')}
-          </MDBCardText>
-          <MDBBtn href={`/${item._id}`}>Detail</MDBBtn>
-        </MDBCardBody>
-      </MDBCard>
-    </MDBCol>
-  ));
 
   return (
     <div>
@@ -95,7 +77,9 @@ const ProfileDetail = (props) => {
           <MDBCol md="12" className="user-recipe">
             <h4>{name}' s Recipes</h4>
           </MDBCol>
-          {userRecipe}
+          <MDBContainer>
+            <ListItems data={recipes} />
+          </MDBContainer>  
         </MDBRow>
       </MDBContainer>
     </div>
