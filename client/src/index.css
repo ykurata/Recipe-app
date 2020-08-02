@@ -243,8 +243,8 @@ textarea {
 }
 
 @media (max-width: 768px) {
-  .main {
-    width: 80%;
+  .login-card {
+    width: 90%;
   }
 }
 
