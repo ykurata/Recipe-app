@@ -45,6 +45,7 @@ const Detail = (props) => {
       setRecipeUserId(res.data.userId._id);
       setUsername(res.data.userId.name);
       setReviews(res.data.reviews);
+      setLikes(res.data.likes.length);
     })
     .catch(err => {
       console.log(err);
@@ -170,6 +171,7 @@ const Detail = (props) => {
                   <ToastContainer />
                   <MDBBtn
                     href={`/update/${recipe._id}`}
+                    style={{color: 'white'}}
                   >
                     Update
                   </MDBBtn>
