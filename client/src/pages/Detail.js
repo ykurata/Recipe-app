@@ -34,23 +34,25 @@ const Detail = (props) => {
 
 
   const onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    setReview(e.target.value);
   }
   
   // GET a recipe
   useEffect(() => {
     axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
-      console.log(res.data)
+      console.log(res.data.reviews)
       setRecipe(res.data);
       setRecipeUserId(res.data.userId._id);
       setUsername(res.data.userId.name);
-      reviews(res.data.reviews);
+      setReviews(res.data.reviews);
     })
     .catch(err => {
       console.log(err);
     });
-  }, [])
+  }, []);
+
+  
 
   // Send a like 
   const sendLike = () => {
@@ -106,17 +108,18 @@ const Detail = (props) => {
     const newReview = {
       text: review
     }
-
+  
     axios.put(`/recipes/review/${props.match.params.id}`, newReview, { headers: { Authorization: `Bearer ${token}` }})
       .then(res => {
         toast.success("Sent a Review!" , {
           position: "top-right",
           autoClose: 2000
-        }); 
+        });
         axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
           .then(res => {
             setRecipe(res.data);
             setReviews(res.data.reviews);
+            setReview("");
           })
           .catch(err => {
             console.log(err);
@@ -125,7 +128,6 @@ const Detail = (props) => {
       .catch(err => {
         setReviewError(err.response.data.error);
       });
-      setReview("");
   };
 
   const showMore = () => {
@@ -143,7 +145,7 @@ const Detail = (props) => {
             <p>Created By <Link to={`/profile/${recipeUserId}`} id={recipeUserId}>{username}</Link></p>
           </MDBCol>
           <MDBRow>
-            <MDBCol md="12" lg="6">
+            <MDBCol md="12" lg="6" className="detail-image">
               <img src={recipe.recipeImage} className="img-thumbnail img-fluid" alt="Recipe" />
               <h6 className="time">Estimated Time {recipe.estimatedTime} min</h6>
             </MDBCol>
@@ -231,7 +233,7 @@ const Detail = (props) => {
           }
           
           {/* Display 5 reviews each*/}
-          {reviews !== 0 ? (
+          {reviews.length > 0 ? (
             <MDBCol md="12" className="review">
               <h5 className="title-review">Reviews ({reviews.length}) </h5>
 
