@@ -238,7 +238,7 @@ const Detail = (props) => {
               <h5 className="title-review">Reviews ({reviews.length}) </h5>
 
               {reviews.slice(0, itemsToShow).map((review, i) => 
-                <MDBCard className="card" key={i}>
+                <MDBCard key={i}>
                   <MDBCardBody className="card-review">
                     <span className="reviewer-name">{review.user.name} <Moment format="MM/DD/YYYY">{review.createdAt}</Moment></span><br></br>
                     {review.text}
