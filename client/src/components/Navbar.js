@@ -87,7 +87,7 @@ const Navbar = () => {
                     : 
                     <div>
                       <MDBDropdownItem href="/login">Log in</MDBDropdownItem>
-                      <MDBDropdownItem href="/login">Sign Up</MDBDropdownItem>
+                      <MDBDropdownItem href="/signup">Sign Up</MDBDropdownItem>
                     </div>
                   }
                 </MDBDropdownMenu>

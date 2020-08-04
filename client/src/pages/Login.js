@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../actions/authActions';
-import { useHistory } from "react-router-dom";
 
 import { 
   MDBContainer, 
@@ -21,13 +20,10 @@ const Login = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const errors = useSelector(state => state.errors);
-  const history = useHistory();
-
-  console.log(auth)
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      history.push("/list");
+      props.history.push("/list");
     }
   });
   
