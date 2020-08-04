@@ -8,8 +8,6 @@ import {
   MDBContainer,
   MDBRow, 
   MDBCol,
-  MDBCard, 
-  MDBCardBody, 
   MDBIcon,
 } from 'mdbreact';
 
@@ -18,7 +16,7 @@ import Navbar from "../components/Navbar";
 const ProfileForm = (props) => {
   const [image, setImage] = useState(null);
   const [sendImage, setSendImage] = useState(null);
-  const [profil, setProfile] = useState({});
+  const [profile, setProfile] = useState({});
   const [empty, setEmpty] = useState(false);
   const [description, setDescription] = useState("");
   const [validationError, setValidationError] = useState([]);

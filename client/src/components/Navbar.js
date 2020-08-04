@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../actions/authActions';
+
 import { 
   MDBDropdown,
   MDBDropdownToggle,
@@ -21,6 +24,7 @@ const Navbar = () => {
   const [user, setUser] = useState("");
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("jwtToken");
+  const dispatch = useDispatch();
   
   const onClick = () => {
     setCollapse(!collapse);
@@ -38,8 +42,7 @@ const Navbar = () => {
 
   const handleLogout = e => {
     e.preventDefault();
-    localStorage.clear();
-    window.location.href = "/";
+    dispatch(logoutUser());
   };
 
   return (
