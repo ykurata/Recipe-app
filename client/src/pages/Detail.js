@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { 
   getRecipe,
   postReview,
+  sendLike
 } from '../actions/recipeActions';
 
 import {Link } from "react-router-dom";
@@ -26,7 +27,6 @@ const Detail = (props) => {
   const [recipeUserId, setRecipeUserId] = useState("");
   const [username, setUsername] = useState("");
   const [review, setReview] = useState("");
-  const [likes, setLikes] = useState("");
   const token =  localStorage.getItem("jwtToken");
   const userId = localStorage.getItem("userId");
   const [reviewError, setReviewError] = useState("");
@@ -36,7 +36,8 @@ const Detail = (props) => {
   const [expanded, setExpended] = useState(false);
   const recipe = useSelector(state => state.recipe.recipe);
   const reviews = useSelector(state => state.recipe.reviews);
-  const error = useSelector(state => state.errors);
+  const likes = useSelector(state => state.recipe.likes);
+  const error = useSelector(state => state.errors.error);
   const dispatch = useDispatch();
   
   // Handle review input
@@ -50,24 +51,8 @@ const Detail = (props) => {
   }, []);
 
   // Send a like 
-  const sendLike = () => {
-    axios.put(`/recipes/like/${props.match.params.id}`, userId, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        toast.success("You sent a Like!" , {
-          position: "top-right",
-          autoClose: 2000
-        }); 
-        axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
-          .then(res => {
-            setLikes(res.data.likes.length);
-          })
-          .catch(err => {
-            console.log(err);
-          }); 
-      })
-      .catch(err => {
-        // setError(err.response.data.error);
-      });
+  const postLike = () => {
+    dispatch(sendLike(props.match.params.id, userId, token));
   };
   
   // DELETE a recipe
@@ -174,12 +159,14 @@ const Detail = (props) => {
               {userId !== recipeUserId ?
                 <MDBContainer className="button-div text-center">
                     <ToastContainer />
-                    <span className="likes-num">{likes}</span><i className="fas fa-heart icon" onClick={sendLike} type="button">Like</i>
+                    <span className="likes-num">{likes}</span><i className="fas fa-heart icon" onClick={postLike} type="button">Like</i>
+                   
                     <i className="fas fa-pen icon reviewIcon" onClick={showInput}>Write a Review</i>
-                    {/* {error ?
+                    {error ?
                       <p className="error">{error}</p>
                     : null  
-                    } */}
+                    }
+                   
                 </MDBContainer>
               : null  
               }

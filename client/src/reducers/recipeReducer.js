@@ -6,7 +6,8 @@ import {
 const initialState = {
   recipes: [],
   recipe: {},
-  reviews: []
+  reviews: [],
+  likes: ''
 }
 
 export default function(state = initialState, action) {
@@ -20,7 +21,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         recipe: action.payload,
-        reviews: action.payload.reviews
+        reviews: action.payload.reviews,
+        likes: action.payload.likes.length
       }  
     default:
       return state;  
