@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { 
   getRecipe,
   postReview,
-  sendLike
+  sendLike,
+  deleteRecipe
 } from '../actions/recipeActions';
 
 import {Link } from "react-router-dom";
@@ -25,7 +26,6 @@ import Navbar from "../components/Navbar";
 
 const Detail = (props) => {
   const [recipeUserId, setRecipeUserId] = useState("");
-  const [username, setUsername] = useState("");
   const [review, setReview] = useState("");
   const token =  localStorage.getItem("jwtToken");
   const userId = localStorage.getItem("userId");
@@ -37,6 +37,7 @@ const Detail = (props) => {
   const recipe = useSelector(state => state.recipe.recipe);
   const reviews = useSelector(state => state.recipe.reviews);
   const likes = useSelector(state => state.recipe.likes);
+  const username = useSelector(state => state.recipe.username);
   const error = useSelector(state => state.errors.error);
   const dispatch = useDispatch();
   
@@ -57,17 +58,7 @@ const Detail = (props) => {
   
   // DELETE a recipe
   const deleteRecipe = () => {
-    axios.delete(`/recipes/delete/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
-    .then(res => {
-      toast.success("Successfully deleted!" , {
-        position: "top-right",
-        autoClose: 2000
-      }); 
-      window.location = "/my-recipes";
-    })
-    .catch(err => {
-      console.log(err.response.data);
-    })
+    dispatch(deleteRecipe(props.match.params.id, token));
   };
   
   // Display text input field by clicking a button

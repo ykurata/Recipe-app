@@ -7,7 +7,8 @@ const initialState = {
   recipes: [],
   recipe: {},
   reviews: [],
-  likes: ''
+  likes: '',
+  username: '',
 }
 
 export default function(state = initialState, action) {
@@ -22,7 +23,8 @@ export default function(state = initialState, action) {
         ...state,
         recipe: action.payload,
         reviews: action.payload.reviews,
-        likes: action.payload.likes.length
+        likes: action.payload.likes.length,
+        username: action.payload.userId.name
       }  
     default:
       return state;  

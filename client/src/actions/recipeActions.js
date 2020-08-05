@@ -81,3 +81,17 @@ export const sendLike = (recipeId, userId, token) => dispatch => {
       })
     });
 };
+
+export const deleteRecipe = (recipeId, token) => dispatch => {
+  axios.delete(`/recipes/delete/${recipeId}`, { headers: { Authorization: `Bearer ${token}` }})
+    .then(res => {
+      toast.success("Successfully deleted!" , {
+        position: "top-right",
+        autoClose: 2000
+      }); 
+      window.location = "/my-recipes";
+    })
+    .catch(err => {
+      console.log(err.response.data);
+    })
+}
