@@ -1,10 +1,12 @@
 import {
-  GET_RECIPES
+  GET_RECIPES,
+  GET_RECIPE,
 } from '../actions/types';
 
 const initialState = {
   recipes: [],
-  recipe: {}
+  recipe: {},
+  reviews: []
 }
 
 export default function(state = initialState, action) {
@@ -14,6 +16,12 @@ export default function(state = initialState, action) {
         ...state,
         recipes: action.payload
       }
+    case GET_RECIPE:
+      return {
+        ...state,
+        recipe: action.payload,
+        reviews: action.payload.reviews
+      }  
     default:
       return state;  
   }

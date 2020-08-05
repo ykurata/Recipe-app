@@ -8,7 +8,6 @@ import Navbar from "../components/Navbar"
 import ListItems from "../components/ListItems";
 
 const List = () => {
-  const token = localStorage.getItem("jwtToken");
   const recipes = useSelector(state => state.recipe.recipes);
   const dispatch = useDispatch();
 
