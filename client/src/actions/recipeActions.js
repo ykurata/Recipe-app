@@ -33,6 +33,19 @@ export const getRecipe = (recipeId) => dispatch => {
     });
 };
 
+export const getRecipesByUserId = (token) => dispatch => {
+  axios.get('/recipes/my-recipes', { headers: { Authorization: `Bearer ${token}` }})
+    .then(res => {
+      dispatch({
+        type: GET_RECIPES,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 export const createRecipe = (userInput, token) => dispatch => {
   axios.post("/recipes", userInput, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
