@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getProfile } from '../actions/profileActions';
 import { logoutUser } from '../actions/authActions';
 
 import { 
@@ -21,24 +21,20 @@ import {
 const Navbar = () => {
   const [collapse, setCollapse] = useState(false);
   const [isWideEnough, setIsWideEnough] = useState(false);
-  const [user, setUser] = useState("");
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("jwtToken");
   const dispatch = useDispatch();
+  const user = useSelector(state => state.profile);
   
   const onClick = () => {
     setCollapse(!collapse);
   };
   
   useEffect(() => {
-    axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        setUser(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    dispatch(getProfile(userId, token));
   }, []);
+
+  console.log(user)
 
   const handleLogout = e => {
     e.preventDefault();

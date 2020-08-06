@@ -4,3 +4,4 @@ export const GET_RECIPES = "GET_RECIPES";
 export const GET_RECIPE = "GET_RECIPE";
 export const POST_REVIEW = "POST_REVIEW";
 export const Loading = "Loading";
+export const GET_PROFILE = "GET_PROFILE";
