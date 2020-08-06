@@ -33,6 +33,37 @@ export const getRecipe = (recipeId) => dispatch => {
     });
 };
 
+export const createRecipe = (userInput, token) => dispatch => {
+  axios.post("/recipes", userInput, { headers: { Authorization: `Bearer ${token}` }})
+    .then(res => {
+      toast.success("Created a recipe!" , {
+        position: "top-right",
+        autoClose: 2000
+      }); 
+      window.location = `/image/${res.data._id}`;
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const submitRecipeImage = (recipeId, FormData, token) => dispatch => {
+  axios.post(`/recipes/image/${recipeId}`, FormData, { headers: { Authorization: `Bearer ${token}` }})
+    .then(res => {
+      toast.success("Posted an image!" , {
+        position: "top-right",
+        autoClose: 2000
+      }); 
+      window.location = "/my-recipes";
+    })
+    .catch(err => {
+      console.log(err);
+    });	
+};
+
 export const postReview = (recipeId, review, token) => dispatch => {
   axios.put(`/recipes/review/${recipeId}`, review, { headers: { Authorization: `Bearer ${token}` }} )
     .then(res => {

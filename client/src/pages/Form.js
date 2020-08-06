@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
+import { createRecipe } from '../actions/recipeActions';
+
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { 
@@ -20,8 +22,9 @@ const Form  = (props) => {
     ingredients: "",
     steps: "",
   });
-  const [validationErrors, setValidationErrors] = useState([]);
   const token = localStorage.getItem("jwtToken");
+  const dispatch = useDispatch();
+  const errors = useSelector(state => state.errors);
     
   const onChange = e => {
     setUserInput({
@@ -32,19 +35,7 @@ const Form  = (props) => {
 
   const onSubmit = e => {
     e.preventDefault();
-  
-    axios.post("/recipes", userInput, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        console.log(res.data)
-        toast.success("Created a recipe!" , {
-          position: "top-right",
-          autoClose: 2000
-        }); 
-        window.location = `/image/${res.data._id}`;
-      })
-      .catch(err => {
-        setValidationErrors(err.response.data);
-      });
+    dispatch(createRecipe(userInput, token));
   }
 
   return (
@@ -58,8 +49,8 @@ const Form  = (props) => {
               <label htmlFor="defaultFormContactNameEx" className="grey-text">
                 Recipe name
               </label>
-              {validationErrors ? 
-                <p className="error">{validationErrors.name}</p>
+              {errors ? 
+                <p className="error">{errors.name}</p>
               : null}
               <input 
                 name="name"
@@ -72,8 +63,8 @@ const Form  = (props) => {
               <label htmlFor="defaultFormContactEmailEx" className="grey-text">
                 Estimated Time
               </label>
-              {validationErrors ? 
-                <p className="error">{validationErrors.estimatedTime}</p>
+              {errors ? 
+                <p className="error">{errors.estimatedTime}</p>
               : null}
               <input 
                 name="estimatedTime"
@@ -87,8 +78,8 @@ const Form  = (props) => {
               <label htmlFor="defaultFormContactSubjectEx" className="grey-text">
                 Ingredients
               </label>
-              {validationErrors ? 
-                <p className="error">{validationErrors.ingredients}</p>
+              {errors ? 
+                <p className="error">{errors.ingredients}</p>
               : null}
               <textarea 
                 name="ingredients" 
@@ -102,8 +93,8 @@ const Form  = (props) => {
               <label htmlFor="defaultFormContactMessageEx" className="grey-text">
                 Steps
               </label>
-              {validationErrors ? 
-                <p className="error">{validationErrors.steps}</p>
+              {errors ? 
+                <p className="error">{errors.steps}</p>
               : null}
               <textarea 
                 name="steps"  

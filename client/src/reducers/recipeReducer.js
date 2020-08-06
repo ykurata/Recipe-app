@@ -1,6 +1,7 @@
 import {
   GET_RECIPES,
   GET_RECIPE,
+  Loading,
 } from '../actions/types';
 
 const initialState = {
@@ -9,6 +10,8 @@ const initialState = {
   reviews: [],
   likes: '',
   username: '',
+  userId: '',
+  loading: false
 }
 
 export default function(state = initialState, action) {
@@ -24,7 +27,12 @@ export default function(state = initialState, action) {
         recipe: action.payload,
         reviews: action.payload.reviews,
         likes: action.payload.likes.length,
-        username: action.payload.userId.name
+        username: action.payload.userId.name,
+        userId: action.payload.userId._id
+      }  
+    case Loading: 
+      return {
+        loading: true
       }  
     default:
       return state;  

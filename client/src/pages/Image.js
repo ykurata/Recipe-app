@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { submitRecipeImage } from '../actions/recipeActions';
+
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { 
@@ -19,7 +21,8 @@ const Image = (props) => {
 	const [image, setImage] = useState(null);
 	const [sendImage, setSendImage] = useState(null);
 	const [error, setError] = useState("");
-	const token = localStorage.getItem("jwtToken");
+  const token = localStorage.getItem("jwtToken");
+  const dispatch = useDispatch();
 
 	const imageChange = e => {
     setSendImage(e.target.files[0]);
@@ -34,18 +37,7 @@ const Image = (props) => {
 		} else {
 			const formData = new FormData();
 			formData.append("recipeImage", sendImage);
-
-			axios.post(`/recipes/image/${props.match.params.id}`, formData, { headers: { Authorization: `Bearer ${token}` }})
-				.then(res => {
-					toast.success("Posted an image!" , {
-						position: "top-right",
-						autoClose: 2000
-					}); 
-					window.location = "/my-recipes";
-				})
-				.catch(err => {
-					console.log(err);
-				});	
+      dispatch(submitRecipeImage(props.match.params.id, formData, token));
 		}
 	}
 

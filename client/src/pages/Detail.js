@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   getRecipe,
@@ -25,10 +24,7 @@ import {
 import Navbar from "../components/Navbar";
 
 const Detail = (props) => {
-  const [recipeUserId, setRecipeUserId] = useState("");
   const [review, setReview] = useState("");
-  const token =  localStorage.getItem("jwtToken");
-  const userId = localStorage.getItem("userId");
   const [reviewError, setReviewError] = useState("");
   const [show, setShow] = useState(false);
   const [showButton, setShowButton] = useState(false);
@@ -38,8 +34,11 @@ const Detail = (props) => {
   const reviews = useSelector(state => state.recipe.reviews);
   const likes = useSelector(state => state.recipe.likes);
   const username = useSelector(state => state.recipe.username);
+  const recipeUserId = useSelector(state => state.recipe.userId);
   const error = useSelector(state => state.errors.error);
   const dispatch = useDispatch();
+  const token =  localStorage.getItem("jwtToken");
+  const userId = localStorage.getItem("userId");
   
   // Handle review input
   const onChange = e => {
@@ -57,7 +56,7 @@ const Detail = (props) => {
   };
   
   // DELETE a recipe
-  const deleteRecipe = () => {
+  const handleDelete = () => {
     dispatch(deleteRecipe(props.match.params.id, token));
   };
   
@@ -138,7 +137,7 @@ const Detail = (props) => {
                     outline
                     type="button" 
                     className="delete"
-                    onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) deleteRecipe() } }
+                    onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) handleDelete() } }
                   >
                     Delete
                   </MDBBtn>
