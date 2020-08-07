@@ -24,7 +24,7 @@ const Navbar = () => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("jwtToken");
   const dispatch = useDispatch();
-  const user = useSelector(state => state.profile);
+  const user = useSelector(state => state.profile.profile);
   
   const onClick = () => {
     setCollapse(!collapse);
@@ -33,8 +33,6 @@ const Navbar = () => {
   useEffect(() => {
     dispatch(getProfile(userId, token));
   }, []);
-
-  console.log(user)
 
   const handleLogout = e => {
     e.preventDefault();

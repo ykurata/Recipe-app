@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile } from '../actions/profileActions';
+import { getRecipesByUserId } from '../actions/recipeActions';
 import Moment from 'react-moment';
 
 import { 
   MDBCard,
   MDBCardBody, 
-  MDBCardImage, 
   MDBCardTitle, 
   MDBCardText, 
   MDBContainer,
@@ -17,38 +18,19 @@ import Navbar from "../components/Navbar";
 import ListItems from "../components/ListItems";
 
 const ProfileDetail = (props) => {
-  const [profile, setProfile] = useState({});
-  const [recipes, setRecipes] = useState([]);
-  const [name, setName] = useState("");
-  const [image, setImage] = useState(null);
-  const [empty, setEmpty] = useState(false);
   const token = localStorage.getItem("jwtToken");
   const userId = localStorage.getItem("userId");
+  const dispatch = useDispatch();
+  const profile = useSelector(state => state.profile.profile);
+  const username = useSelector(state => state.profile.username);
+  const recipes = useSelector(state => state.recipe.recipes);
   
   useEffect(() => {
-    axios.get(`/profile/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        if (res.data) {
-          setProfile(res.data);
-          setImage(res.data.photo);
-        } else {
-          setEmpty(true);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [])
+    dispatch(getProfile(userId, token));
+  }, []);
   
   useEffect(() => {
-    axios.get(`/recipes/userid/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        setRecipes(res.data);
-        setName(res.data[0].userId.name);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    dispatch(getRecipesByUserId(token));
   }, []);
 
   return (
@@ -61,12 +43,12 @@ const ProfileDetail = (props) => {
             <MDBCard className="profile-card">
               <MDBCardBody>
                 <img 
-                  src={image} 
+                  src={profile.photo} 
                   alt=""
                   className="rounded-circle img-fluid image"
                 />
                 <MDBCardTitle>
-                  {name}
+                  {username}
                 </MDBCardTitle>
                 <p>Joined <Moment format="MMMM YYYY">{profile.createdAt}</Moment></p> 
                 <MDBCardText>{profile.description}</MDBCardText>
@@ -74,7 +56,7 @@ const ProfileDetail = (props) => {
             </MDBCard>
           </MDBCol>
           <MDBCol md="12" className="user-recipe">
-            <h4>{name}' s Recipes</h4>
+            <h4>{username}' s Recipes</h4>
           </MDBCol>
           <MDBContainer>
             <ListItems data={recipes} />
