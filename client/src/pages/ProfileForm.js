@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProfile } from '../actions/profileActions';
+import { getProfile, postAvatar, createProfile, updateProfile } from '../actions/profileActions';
 
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { 
@@ -17,16 +16,17 @@ import {
 import Navbar from "../components/Navbar";
 
 const ProfileForm = (props) => {
-  const [image, setImage] = useState(null);
+  
   const [sendImage, setSendImage] = useState(null);
   const [empty, setEmpty] = useState(false);
   const [description, setDescription] = useState("");
-  const [validationError, setValidationError] = useState([]);
-  const [error, setError] = useState("");
+  const [imageError, setImageError] = useState("");
   const token = localStorage.getItem("jwtToken");
   const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
   const profile = useSelector(state => state.profile.profile);
+  const error = useSelector(state => state.errors);
+  const [image, setImage] = useState(profile.photo);
 
   const onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -49,21 +49,12 @@ const ProfileForm = (props) => {
     e.preventDefault();
 
     if (sendImage === null) {
-      setError("Please select an image");
+      setImageError("Please select an image");
     }
     const formData = new FormData();
     formData.append("photo", sendImage);
-  
-    axios.post("/profile/photo", formData, { headers: { Authorization: `Bearer ${token}` }})
-    .then(res => {
-      toast.success("Successfully Sent a Photo!" , {
-        position: "top-right",
-        autoClose: 2000
-      }); 
-    })
-    .catch(err => {
-      console.log(err.response.data);
-    });
+    
+    dispatch(postAvatar(formData, token));
   }
 
   // Create and update profile description
@@ -75,33 +66,13 @@ const ProfileForm = (props) => {
     };
    
     if (empty === true) {
-      axios.post(`/profile/${userId}`, newDescription, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        toast.success("Created!" , {
-          position: "top-right",
-          autoClose: 2000
-        });
-      })
-      .catch(err => {
-        setValidationError(err.response.data);
-        console.log(err.response.data);
-      });
+      dispatch(createProfile(userId, newDescription, token));
     } else {
       const updatedDescription = {
         description: description
       };
-      axios.put(`/profile/update/${userId}`, updatedDescription, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        toast.success("Updated!" , {
-          position: "top-right",
-          autoClose: 2000
-        });
-      })
-      .catch(err => {
-        setValidationError(err.response.data);
-        console.log(err.response);
-      });
-    }
+      dispatch(updateProfile(userId, updatedDescription, token));
+    };
   }
 
   return (
@@ -114,10 +85,10 @@ const ProfileForm = (props) => {
           </MDBCol>
           <MDBCol md="12" lg="6">
             <form onSubmit={submitPhoto}>
-              {profile.photo ? 
+              {image !== undefined ? 
                 <div className="image-div">
                   <img 
-                    src={profile.photo} 
+                    src={image} 
                     alt=""
                     className="rounded-circle img-fluid image"
                   />
@@ -127,7 +98,7 @@ const ProfileForm = (props) => {
                 </div>
               }  
                 {error ? 
-                  <div><label className="error">{error}</label></div>
+                  <div><label className="error">{imageError}</label></div>
                 : null}
                 <label className="btn btn-outline-info select">
                   Select Image
@@ -147,8 +118,8 @@ const ProfileForm = (props) => {
           </MDBCol>
           <MDBCol md="12" lg="6">
             <form className="text-center" onSubmit={handleSubmit}>
-              {validationError ? 
-                <p className="error">{validationError.description}</p>
+              {error ? 
+                <p className="error">{error.description}</p>
               : null}
               <textarea onChange={onChange}  value={profile.description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
               <ToastContainer />
