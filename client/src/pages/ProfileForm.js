@@ -16,7 +16,7 @@ import {
 import Navbar from "../components/Navbar";
 
 const ProfileForm = (props) => {
-  
+  const [image, setImage] = useState(null);
   const [sendImage, setSendImage] = useState(null);
   const [empty, setEmpty] = useState(false);
   const [description, setDescription] = useState("");
@@ -26,17 +26,17 @@ const ProfileForm = (props) => {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.profile.profile);
   const error = useSelector(state => state.errors);
-  const [image, setImage] = useState(profile.photo);
+  const avatar = useSelector(state => state.profile.avatar);
 
   const onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    setDescription({ [e.target.name]: e.target.value });
   }
   
   const imageChange = e => {
     setImage(URL.createObjectURL(e.target.files[0]));
     setSendImage(e.target.files[0]);
   };
-  
+
   useEffect(() => {
     dispatch(getProfile(userId, token));
     if (profile === {}) {
@@ -60,18 +60,11 @@ const ProfileForm = (props) => {
   // Create and update profile description
   const handleSubmit = e => {
     e.preventDefault();
-
-    const newDescription = {
-      description: description
-    };
    
     if (empty === true) {
-      dispatch(createProfile(userId, newDescription, token));
+      dispatch(createProfile(userId, description, token));
     } else {
-      const updatedDescription = {
-        description: description
-      };
-      dispatch(updateProfile(userId, updatedDescription, token));
+      dispatch(updateProfile(userId, description, token));
     };
   }
 
@@ -85,7 +78,7 @@ const ProfileForm = (props) => {
           </MDBCol>
           <MDBCol md="12" lg="6">
             <form onSubmit={submitPhoto}>
-              {image !== undefined ? 
+              {image !== null ? 
                 <div className="image-div">
                   <img 
                     src={image} 
