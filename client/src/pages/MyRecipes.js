@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRecipesByUserId } from '../actions/recipeActions';
+import { getMyRecipes } from '../actions/recipeActions';
 
 import { MDBContainer } from 'mdbreact';
 
@@ -13,7 +13,7 @@ const MyRecipes = (props) => {
   const recipes = useSelector(state => state.recipe.recipes);
 
   useEffect(() => {
-    dispatch(getRecipesByUserId(token));
+    dispatch(getMyRecipes(token));
   }, []);
 
   return (

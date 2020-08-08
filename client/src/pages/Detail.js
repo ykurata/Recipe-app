@@ -44,7 +44,7 @@ const Detail = (props) => {
   const onChange = e => {
     setReview(e.target.value);
   }
-
+  
   // GET a recipe
   useEffect(() => {
     dispatch(getRecipe(props.match.params.id));

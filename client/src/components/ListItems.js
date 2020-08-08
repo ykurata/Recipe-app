@@ -38,7 +38,7 @@ const ListItems = (props) => {
   }
   
   return (
-    <MDBRow>
+    <MDBRow className="d-flex justify-content-center">
       {list}
     </MDBRow>
   ); 

@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getProfile } from '../actions/profileActions';
+
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,13 +19,14 @@ import Navbar from "../components/Navbar";
 const ProfileForm = (props) => {
   const [image, setImage] = useState(null);
   const [sendImage, setSendImage] = useState(null);
-  const [profile, setProfile] = useState({});
   const [empty, setEmpty] = useState(false);
   const [description, setDescription] = useState("");
   const [validationError, setValidationError] = useState([]);
   const [error, setError] = useState("");
   const token = localStorage.getItem("jwtToken");
   const userId = localStorage.getItem("userId");
+  const dispatch = useDispatch();
+  const profile = useSelector(state => state.profile.profile);
 
   const onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -32,21 +36,12 @@ const ProfileForm = (props) => {
     setImage(URL.createObjectURL(e.target.files[0]));
     setSendImage(e.target.files[0]);
   };
-
+  
   useEffect(() => {
-    axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        if (res.data) {
-          setProfile(res.data);
-          setDescription(res.data.description);
-          setImage(res.data.photo);
-        } else {
-          setEmpty(true)
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    dispatch(getProfile(userId, token));
+    if (profile === {}) {
+      setEmpty(true);
+    }
   }, []);
 
   // Submit profile photo
@@ -119,10 +114,10 @@ const ProfileForm = (props) => {
           </MDBCol>
           <MDBCol md="12" lg="6">
             <form onSubmit={submitPhoto}>
-              {image ? 
+              {profile.photo ? 
                 <div className="image-div">
                   <img 
-                    src={image} 
+                    src={profile.photo} 
                     alt=""
                     className="rounded-circle img-fluid image"
                   />
@@ -155,7 +150,7 @@ const ProfileForm = (props) => {
               {validationError ? 
                 <p className="error">{validationError.description}</p>
               : null}
-              <textarea onChange={onChange}  value={description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
+              <textarea onChange={onChange}  value={profile.description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
               <ToastContainer />
               <MDBBtn type="submit">Submit</MDBBtn>
               <MDBBtn outline href="/" >Cancel</MDBBtn>
