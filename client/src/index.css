@@ -91,6 +91,7 @@ h5 {
 }
 .detail-content {
   padding-bottom: 3rem;
+  white-space: pre-line;
 }
 #detail .delete {
   margin-left: 2rem;

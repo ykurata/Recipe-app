@@ -78,6 +78,22 @@ export const createRecipe = (userInput, token) => dispatch => {
     });
 };
 
+export const updateRecipe = (recipeId, userInput, token) => dispatch => {
+  axios.put(`/recipes/update/${recipeId}`, userInput, { headers: { Authorization: `Bearer ${token}` }})
+    .then(res => {
+      toast.success("Successfully Updated!" , {
+        position: "top-right",
+        autoClose: 3000
+      }); 
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+}
+
 export const submitRecipeImage = (recipeId, FormData, token) => dispatch => {
   axios.post(`/recipes/image/${recipeId}`, FormData, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getRecipe, updateRecipe } from '../actions/recipeActions';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { 
@@ -20,9 +22,11 @@ const Update  = (props) => {
     ingredients: "",
     steps: "",
   });
-  const [validationErrors, setValidationErrors] = useState([]);
   const token = localStorage.getItem("jwtToken");
-    
+  const dispatch = useDispatch();
+  const recipe = useSelector(state => state.recipe.recipe);
+  const errors = useSelector(state => state.errors);
+
   const onChange = e => {
     setUserInput({
       ...userInput,
@@ -31,6 +35,7 @@ const Update  = (props) => {
   }
 
   useEffect(() => {
+    // dispatch(getRecipe(props.match.params.id, token));
     axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
       setUserInput({
@@ -45,20 +50,19 @@ const Update  = (props) => {
     });
   }, []);
 
-
   const onSubmit = e => {
     e.preventDefault();
-  
-    axios.put(`/recipes/update/${props.match.params.id}`, userInput, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        toast.success("Successfully Updated!" , {
-          position: "top-right",
-          autoClose: 3000
-        }); 
-      })
-      .catch(err => {
-        setValidationErrors(err.response.data);
-      });
+    dispatch(updateRecipe(props.match.params.id, userInput, token));
+    // axios.put(`/recipes/update/${props.match.params.id}`, userInput, { headers: { Authorization: `Bearer ${token}` }})
+    //   .then(res => {
+    //     toast.success("Successfully Updated!" , {
+    //       position: "top-right",
+    //       autoClose: 3000
+    //     }); 
+    //   })
+    //   .catch(err => {
+    //     setValidationErrors(err.response.data);
+    //   });
   }
 
   return (
@@ -72,8 +76,8 @@ const Update  = (props) => {
               <label htmlFor="defaultFormContactNameEx" className="grey-text">
                 Recipe name
               </label>
-              {validationErrors ? 
-                <p className="error">{validationErrors.name}</p>
+              {errors ? 
+                <p className="error">{errors.name}</p>
               : null}
               <input 
                 name="name"
@@ -87,8 +91,8 @@ const Update  = (props) => {
               <label htmlFor="defaultFormContactEmailEx" className="grey-text">
                 Estimated Time
               </label>
-              {validationErrors ? 
-                <p className="error">{validationErrors.estimatedTime}</p>
+              {errors ? 
+                <p className="error">{errors.estimatedTime}</p>
               : null}
               <input 
                 name="estimatedTime"
@@ -103,8 +107,8 @@ const Update  = (props) => {
               <label htmlFor="defaultFormContactSubjectEx" className="grey-text">
                 Ingredients
               </label>
-              {validationErrors ? 
-                <p className="error">{validationErrors.ingredients}</p>
+              {errors ? 
+                <p className="error">{errors.ingredients}</p>
               : null}
               <textarea 
                 name="ingredients" 
@@ -119,8 +123,8 @@ const Update  = (props) => {
               <label htmlFor="defaultFormContactMessageEx" className="grey-text">
                 Steps
               </label>
-              {validationErrors ? 
-                <p className="error">{validationErrors.steps}</p>
+              {errors ? 
+                <p className="error">{errors.steps}</p>
               : null}
               <textarea 
                 name="steps"  
