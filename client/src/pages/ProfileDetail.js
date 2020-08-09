@@ -24,8 +24,6 @@ const ProfileDetail = (props) => {
   const profile = useSelector(state => state.profile.profile);
   const recipes = useSelector(state => state.recipe.recipes);
   const username = useSelector(state => state.recipe.username);
-  
-  console.log(username)
 
   useEffect(() => {
     dispatch(getProfile(props.match.params.id, token));

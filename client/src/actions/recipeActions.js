@@ -49,7 +49,6 @@ export const getMyRecipes = (token) => dispatch => {
 export const getRecipesByUserId = (userId, token) => dispatch => {
   axios.get(`/recipes/userid/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
-      console.log(res.data)
       dispatch({
         type: GET_RECIPES,
         payload: res.data
