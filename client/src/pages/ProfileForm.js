@@ -26,8 +26,7 @@ const ProfileForm = (props) => {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.profile.profile);
   const error = useSelector(state => state.errors);
-  const avatar = useSelector(state => state.profile.avatar);
-
+  
   const onChange = e => {
     setDescription({ [e.target.name]: e.target.value });
   }

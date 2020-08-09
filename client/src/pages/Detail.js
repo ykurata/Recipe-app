@@ -9,7 +9,7 @@ import {
 
 import {Link } from "react-router-dom";
 import Moment from 'react-moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRecipe, updateRecipe } from '../actions/recipeActions';
+import { updateRecipe } from '../actions/recipeActions';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,7 +24,6 @@ const Update  = (props) => {
   });
   const token = localStorage.getItem("jwtToken");
   const dispatch = useDispatch();
-  const recipe = useSelector(state => state.recipe.recipe);
   const errors = useSelector(state => state.errors);
 
   const onChange = e => {
@@ -53,16 +52,6 @@ const Update  = (props) => {
   const onSubmit = e => {
     e.preventDefault();
     dispatch(updateRecipe(props.match.params.id, userInput, token));
-    // axios.put(`/recipes/update/${props.match.params.id}`, userInput, { headers: { Authorization: `Bearer ${token}` }})
-    //   .then(res => {
-    //     toast.success("Successfully Updated!" , {
-    //       position: "top-right",
-    //       autoClose: 3000
-    //     }); 
-    //   })
-    //   .catch(err => {
-    //     setValidationErrors(err.response.data);
-    //   });
   }
 
   return (
