@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import axios from 'axios';
-import jwt_decode from "jwt-decode";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser } from '../actions/authActions';
+
 import { 
   MDBContainer, 
   MDBRow, 
@@ -16,8 +17,15 @@ const Login = (props) => {
     email: "",
     password: ""
   });
-  const [validationError, setValidationError] = useState([]);
-  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const errors = useSelector(state => state.errors);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      props.history.push("/list");
+    }
+  });
   
   const onChange = e => {
     setUserInput({ 
@@ -28,18 +36,7 @@ const Login = (props) => {
   
   const onSubmit = e => {
     e.preventDefault();
-
-    axios.post("/users/login", userInput)
-      .then(res => {
-        localStorage.setItem("jwtToken", res.data.token);
-        const decoded = jwt_decode(res.data.token);
-        localStorage.setItem("userId", decoded.id);
-        props.history.push("/list");
-      })
-      .catch(err => {
-        setValidationError(err.response.data);
-        setError(err.response.data.error);
-      });
+    dispatch(loginUser(userInput));
   };
 
   const demoLogin = e => {
@@ -48,20 +45,8 @@ const Login = (props) => {
       email: "yasuko@gmail.com",
       password: "testpassword"
     };
-    axios.post("/users/login", demoUser)
-      .then(res => {
-        localStorage.setItem("jwtToken", res.data.token);
-        const decoded = jwt_decode(res.data.token);
-        localStorage.setItem("userId", decoded.id);
-        props.history.push("/list");
-      })
-      .catch(err => {
-        setValidationError(err.response.data);
-        setError(err.response.data.error);
-      });
-
+    dispatch(loginUser(demoUser));
   }
-
 
   return (
     <MDBContainer className="login-form">
@@ -72,12 +57,12 @@ const Login = (props) => {
               <form onSubmit={onSubmit}>
                 <p className="h4 text-center py-4">Log In</p>
                 <div className="grey-text">
-                  {validationError ?
-                    <p className="error">{validationError.email}</p>
+                  {errors?
+                    <p className="error">{errors.email}</p>
                   : null  
                   }
-                  {error ?
-                    <p className="error">{error}</p>
+                  {errors?
+                    <p className="error">{errors.error}</p>
                   : null  
                   }
                   <MDBInput
@@ -92,8 +77,8 @@ const Login = (props) => {
                     value={userInput.email}
                     onChange={onChange}
                   />
-                  {validationError ?
-                    <p className="error">{validationError.password}</p>
+                  {errors ?
+                    <p className="error">{errors.password}</p>
                   : null  
                   }
                   <MDBInput

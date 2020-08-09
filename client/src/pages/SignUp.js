@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import axios from 'axios';
-import jwt_decode from "jwt-decode";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { registerUser } from '../actions/authActions';
+
 import { 
   MDBContainer, 
   MDBRow, 
@@ -13,13 +14,14 @@ import {
 
 const SignUp = (props) => {
   const [userInput, setUserInput] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
     password2: ""
   });
-  const [validationError, setValidationError] = useState([]);
-  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const errors = useSelector(state => state.errors);
 
   const onChange = e => {
     setUserInput({ 
@@ -27,21 +29,16 @@ const SignUp = (props) => {
       [e.target.name]: e.target.value 
     });
   }
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      props.history.push("/list");
+    }
+  });
   
   const onSubmit = e => {
     e.preventDefault();
-
-    axios.post("/users/register", userInput)
-      .then(res => {
-        localStorage.setItem("jwtToken", res.data.token);
-        const decoded = jwt_decode(res.data.token);
-        localStorage.setItem("userId", decoded.id);
-        props.history.push("/list");
-      })
-      .catch(err => {
-        setValidationError(err.response.data);
-        setError(err.response.data.error);
-      });
+    dispatch(registerUser(userInput));
   };
 
   return (
@@ -53,12 +50,12 @@ const SignUp = (props) => {
               <form onSubmit={onSubmit}>
                 <p className="h4 text-center py-4">Sign Up</p>
                 <div className="grey-text">
-                  {validationError ?
-                    <p className="error">{validationError.name}</p>
+                  {errors ?
+                    <p className="error">{errors.name}</p>
                   : null  
                   }
-                  {error ?
-                    <p className="error">{error}</p>
+                  {errors ?
+                    <p className="error">{errors.error}</p>
                   : null  
                   }
                   <MDBInput
@@ -69,12 +66,12 @@ const SignUp = (props) => {
                     validate
                     error="wrong"
                     success="right"
-                    name="username"
-                    value={userInput.username}
+                    name="name"
+                    value={userInput.name}
                     onChange={onChange}
                   />
-                  {validationError ?
-                    <p className="error">{validationError.email}</p>
+                  {errors ?
+                    <p className="error">{errors.email}</p>
                   : null  
                   }
                   <MDBInput
@@ -89,8 +86,8 @@ const SignUp = (props) => {
                     value={userInput.email}
                     onChange={onChange}
                   />
-                  {validationError ?
-                    <p className="error">{validationError.password}</p>
+                  {errors ?
+                    <p className="error">{errors.password}</p>
                   : null  
                   }
                   <MDBInput
@@ -103,8 +100,8 @@ const SignUp = (props) => {
                     value={userInput.password}
                     onChange={onChange}
                   />
-                  {validationError ?
-                    <p className="error">{validationError.password2}</p>
+                  {errors ?
+                    <p className="error">{errors.password2}</p>
                   : null  
                   }
                   <MDBInput

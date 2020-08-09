@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { getProfile } from '../actions/profileActions';
+import { logoutUser } from '../actions/authActions';
+
 import { 
   MDBDropdown,
   MDBDropdownToggle,
@@ -18,28 +21,22 @@ import {
 const Navbar = () => {
   const [collapse, setCollapse] = useState(false);
   const [isWideEnough, setIsWideEnough] = useState(false);
-  const [user, setUser] = useState("");
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("jwtToken");
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.profile.profile);
   
   const onClick = () => {
     setCollapse(!collapse);
   };
   
   useEffect(() => {
-    axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        setUser(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    dispatch(getProfile(userId, token));
   }, []);
 
   const handleLogout = e => {
     e.preventDefault();
-    localStorage.clear();
-    window.location.href = "/";
+    dispatch(logoutUser());
   };
 
   return (
@@ -65,7 +62,7 @@ const Navbar = () => {
             <MDBNavItem>
               <MDBDropdown>
                 <MDBDropdownToggle nav caret>
-                  {token && user ?
+                  {token && user !== "" ?
                     <img
                       src={user.photo}
                       alt=""
@@ -84,7 +81,7 @@ const Navbar = () => {
                     : 
                     <div>
                       <MDBDropdownItem href="/login">Log in</MDBDropdownItem>
-                      <MDBDropdownItem href="/login">Sign Up</MDBDropdownItem>
+                      <MDBDropdownItem href="/signup">Sign Up</MDBDropdownItem>
                     </div>
                   }
                 </MDBDropdownMenu>

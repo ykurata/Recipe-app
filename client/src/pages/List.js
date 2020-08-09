@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getRecipes } from '../actions/recipeActions';
+
 import { MDBContainer } from 'mdbreact';
 
 import Navbar from "../components/Navbar"
 import ListItems from "../components/ListItems";
 
 const List = () => {
-  const [recipes, setRecipes] = useState([]);
-  const token = localStorage.getItem("jwtToken");
+  const recipes = useSelector(state => state.recipe.recipes);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get('/recipes/list', { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        setRecipes(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    dispatch(getRecipes());
   }, []);
 
   return (

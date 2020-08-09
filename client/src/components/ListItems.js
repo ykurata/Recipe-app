@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  MDBBtn, 
   MDBCard,
   MDBCardBody, 
   MDBCardImage, 
@@ -29,7 +28,6 @@ const ListItems = (props) => {
             <MDBCardText className="ingredients">
               Ingredients: {item.ingredients.replace(/\s/g,' ')}
             </MDBCardText>
-            {/* <MDBBtn href={`/${item._id}`}>Detail</MDBBtn> */}
           </MDBCardBody>
         </MDBCard>
         </Link>
@@ -38,7 +36,7 @@ const ListItems = (props) => {
   }
   
   return (
-    <MDBRow>
+    <MDBRow className="d-flex justify-content-center">
       {list}
     </MDBRow>
   ); 

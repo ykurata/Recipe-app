@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { 
+  getRecipe,
+  postReview,
+  sendLike,
+  deleteRecipe
+} from '../actions/recipeActions';
+
 import {Link } from "react-router-dom";
 import Moment from 'react-moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { 
@@ -17,75 +24,40 @@ import {
 import Navbar from "../components/Navbar";
 
 const Detail = (props) => {
-  const [recipe, setRecipe] = useState({});
-  const [recipeUserId, setRecipeUserId] = useState("");
-  const [username, setUsername] = useState("");
   const [review, setReview] = useState("");
-  const [likes, setLikes] = useState("");
-  const [reviews, setReviews] = useState([]);
-  const token =  localStorage.getItem("jwtToken");
-  const userId = localStorage.getItem("userId");
-  const [error, setError] = useState("");
   const [reviewError, setReviewError] = useState("");
   const [show, setShow] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [itemsToShow, setItemsToShow] = useState(5);
   const [expanded, setExpended] = useState(false);
-
-
+  const recipe = useSelector(state => state.recipe.recipe);
+  const reviews = useSelector(state => state.recipe.reviews);
+  const likes = useSelector(state => state.recipe.likes);
+  const username = useSelector(state => state.recipe.username);
+  const recipeUserId = useSelector(state => state.recipe.userId);
+  const error = useSelector(state => state.errors.error);
+  const dispatch = useDispatch();
+  const token =  localStorage.getItem("jwtToken");
+  const userId = localStorage.getItem("userId");
+  
+  // Handle review input
   const onChange = e => {
     setReview(e.target.value);
   }
   
   // GET a recipe
   useEffect(() => {
-    axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
-    .then(res => {
-      setRecipe(res.data);
-      setRecipeUserId(res.data.userId._id);
-      setUsername(res.data.userId.name);
-      setReviews(res.data.reviews);
-      setLikes(res.data.likes.length);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    dispatch(getRecipe(props.match.params.id));
   }, []);
 
   // Send a like 
-  const sendLike = () => {
-    axios.put(`/recipes/like/${props.match.params.id}`, userId, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        toast.success("You sent a Like!" , {
-          position: "top-right",
-          autoClose: 2000
-        }); 
-        axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
-          .then(res => {
-            setLikes(res.data.likes.length);
-          })
-          .catch(err => {
-            console.log(err);
-          }); 
-      })
-      .catch(err => {
-        setError(err.response.data.error);
-      });
+  const postLike = () => {
+    dispatch(sendLike(props.match.params.id, userId, token));
   };
   
   // DELETE a recipe
-  const deleteRecipe = () => {
-    axios.delete(`/recipes/delete/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
-    .then(res => {
-      toast.success("Successfully deleted!" , {
-        position: "top-right",
-        autoClose: 2000
-      }); 
-      window.location = "/my-recipes";
-    })
-    .catch(err => {
-      console.log(err.response.data);
-    })
+  const handleDelete = () => {
+    dispatch(deleteRecipe(props.match.params.id, token));
   };
   
   // Display text input field by clicking a button
@@ -100,32 +72,18 @@ const Detail = (props) => {
     setShowButton(true);
   };
   
-  // Post a review 
+  // Submit a review 
   const sendReview = e => {
     e.preventDefault();
-    const newReview = {
-      text: review
+    if (review === "") {
+      setReviewError("Please enter a review")
+    } else {
+      const newReview = {
+        text: review
+      }
+      dispatch(postReview(props.match.params.id, newReview, token));
+      setReview("");
     }
-  
-    axios.put(`/recipes/review/${props.match.params.id}`, newReview, { headers: { Authorization: `Bearer ${token}` }})
-      .then(res => {
-        toast.success("Sent a Review!" , {
-          position: "top-right",
-          autoClose: 2000
-        });
-        axios.get(`/recipes/get/${props.match.params.id}`, { headers: { Authorization: `Bearer ${token}` }})
-          .then(res => {
-            setRecipe(res.data);
-            setReviews(res.data.reviews);
-            setReview("");
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch(err => {
-        setReviewError(err.response.data.error);
-      });
   };
 
   const showMore = () => {
@@ -179,7 +137,7 @@ const Detail = (props) => {
                     outline
                     type="button" 
                     className="delete"
-                    onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) deleteRecipe() } }
+                    onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) handleDelete() } }
                   >
                     Delete
                   </MDBBtn>
@@ -191,12 +149,14 @@ const Detail = (props) => {
               {userId !== recipeUserId ?
                 <MDBContainer className="button-div text-center">
                     <ToastContainer />
-                    <span className="likes-num">{likes}</span><i className="fas fa-heart icon" onClick={sendLike} type="button">Like</i>
+                    <span className="likes-num">{likes}</span><i className="fas fa-heart icon" onClick={postLike} type="button">Like</i>
+                   
                     <i className="fas fa-pen icon reviewIcon" onClick={showInput}>Write a Review</i>
                     {error ?
                       <p className="error">{error}</p>
                     : null  
                     }
+                   
                 </MDBContainer>
               : null  
               }
@@ -236,7 +196,7 @@ const Detail = (props) => {
             <MDBCol md="12" className="review">
               <h5 className="title-review">Reviews ({reviews.length}) </h5>
 
-              {reviews.slice(0, itemsToShow).map((review, i) => 
+              {recipe.reviews.slice(0, itemsToShow).map((review, i) => 
                 <MDBCard key={i}>
                   <MDBCardBody className="card-review">
                     <span className="reviewer-name">{review.user.name} <Moment format="MM/DD/YYYY">{review.createdAt}</Moment></span><br></br>
