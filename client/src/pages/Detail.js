@@ -19,6 +19,7 @@ import {
   MDBCol,
   MDBCard, 
   MDBCardBody, 
+  MDBIcon
 } from 'mdbreact';
 
 import Navbar from "../components/Navbar";
@@ -98,71 +99,77 @@ const Detail = (props) => {
         <MDBRow>
           <MDBCol md="12" className="text-center">
             <h2>{recipe.name}</h2>
-            <p>Created By <Link to={`/profile/${recipeUserId}`} id={recipeUserId}>{username}</Link></p>
+            <p>Created By <Link to={`/profile/${recipeUserId}`}>{username}</Link></p>
           </MDBCol>
-          <MDBRow>
-            <MDBCol md="12" lg="6" className="detail-image">
-              <img src={recipe.recipeImage} className="img-thumbnail img-fluid" alt="Recipe" />
-              <h6 className="time">Estimated Time {recipe.estimatedTime} min</h6>
-            </MDBCol>
-            <MDBCol md="12" lg="6">
-              <MDBContainer className="detail-content">
-                <h5>Ingredients</h5>
-                <MDBCard>
-                  <MDBCardBody>
-                    {recipe.ingredients}
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBContainer>
-              <MDBContainer className="detail-content">
-                <h5>Steps</h5>
-                <MDBCard>
-                  <MDBCardBody>
-                    {recipe.steps}
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBContainer>
+          
+          <MDBCol md="12" lg="6" className="detail-image">
+            {recipe.recipeImage ? 
+              <div>
+                <img src={recipe.recipeImage} className="img-thumbnail img-fluid" alt="Recipe" />
+                <h6 className="time">Estimated Time {recipe.estimatedTime} min</h6>
+              </div>
+            : <div className="no-image">
+                <MDBIcon far icon="image" />
+                <div>No Image</div>
+              </div>
+            }
+          </MDBCol>
+          <MDBCol md="12" lg="6">
+            <MDBContainer className="detail-content">
+              <h5>Ingredients</h5>
+              <MDBCard>
+                <MDBCardBody>
+                  {recipe.ingredients}
+                </MDBCardBody>
+              </MDBCard>
+            </MDBContainer>
+            <MDBContainer className="detail-content">
+              <h5>Steps</h5>
+              <MDBCard>
+                <MDBCardBody>
+                  {recipe.steps}
+                </MDBCardBody>
+              </MDBCard>
+            </MDBContainer>
 
-              {/* Display Update & Delete buttons only for a user who created the recipe */}
-              {userId === recipeUserId ?
-                <MDBContainer className="button-div">
+            {/* Display Update & Delete buttons only for a user who created the recipe */}
+            {userId === recipeUserId ?
+              <MDBContainer className="button-div">
+                <ToastContainer />
+                <MDBBtn
+                  href={`/update/${recipe._id}`}
+                  style={{color: 'white'}}
+                >
+                  Update
+                </MDBBtn>
+                <MDBBtn 
+                  outline
+                  type="button" 
+                  className="delete"
+                  onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) handleDelete() } }
+                >
+                  Delete
+                </MDBBtn>
+              </MDBContainer>
+            : null  
+            }
+            
+            {/* Display Like & Write a Review buttons  */}
+            {userId !== recipeUserId ?
+              <MDBContainer className="button-div text-center">
                   <ToastContainer />
-                  <MDBBtn
-                    href={`/update/${recipe._id}`}
-                    style={{color: 'white'}}
-                  >
-                    Update
-                  </MDBBtn>
-                  <MDBBtn 
-                    outline
-                    type="button" 
-                    className="delete"
-                    onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) handleDelete() } }
-                  >
-                    Delete
-                  </MDBBtn>
-                </MDBContainer>
-              : null  
-              }
-              
-              {/* Display Like & Write a Review buttons  */}
-              {userId !== recipeUserId ?
-                <MDBContainer className="button-div text-center">
-                    <ToastContainer />
-                    <span className="likes-num">{likes}</span><i className="fas fa-heart icon" onClick={postLike} type="button">Like</i>
-                   
-                    <i className="fas fa-pen icon reviewIcon" onClick={showInput}>Write a Review</i>
-                    {error ?
-                      <p className="error">{error}</p>
-                    : null  
-                    }
-                   
-                </MDBContainer>
-              : null  
-              }
-              
-            </MDBCol>
-          </MDBRow>
+                  <span className="likes-num">{likes}</span><i className="fas fa-heart icon" onClick={postLike} type="button">Like</i>
+                  
+                  <i className="fas fa-pen icon reviewIcon" onClick={showInput}>Write a Review</i>
+                  {error ?
+                    <p className="error">{error}</p>
+                  : null  
+                  }
+                  
+              </MDBContainer>
+            : null  
+            }
+          </MDBCol>
           
           {/* Review input field */}
           {show === true ? (
