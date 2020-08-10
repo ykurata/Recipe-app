@@ -154,6 +154,8 @@ textarea {
 #image .card {
   margin-top: 1rem;
   margin-bottom: 1rem;
+  width: 80%;
+  margin: auto;
 }
 #image img {
   width: 400px;
@@ -243,6 +245,9 @@ textarea {
   }
   .profile-card {
     width: 70%;
+  }
+  #image .card {
+    width: 100%;
   }
 }
 

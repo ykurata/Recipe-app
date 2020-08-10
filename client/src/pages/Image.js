@@ -50,7 +50,7 @@ const Image = (props) => {
             <form onSubmit={onSubmit}>
               <p className="h4 text-center mb-4">Recipe Image</p>
               <MDBCard className="card">
-                <MDBCardBody className="card-body text-center">
+                <MDBCardBody className="text-center">
                   {error ? 
                       <p className="image-error">{error}</p>
                     : null
