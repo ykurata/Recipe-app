@@ -82,8 +82,9 @@ export const updateRecipe = (recipeId, userInput, token) => dispatch => {
     .then(res => {
       toast.success("Successfully Updated!" , {
         position: "top-right",
-        autoClose: 3000
+        autoClose: 2000
       }); 
+      window.location = `/image/${res.data._id}`;
     })
     .catch(err => {
       dispatch({

@@ -38,7 +38,7 @@ router.post("/", auth, (req, res) => {
 
 
 // Post a recipe image
-router.post("/image/:id", upload.single('recipeImage'), auth, (req, res) => {
+router.post("/image/:id", upload.single('recipeImage'), auth, (req, res, next) => {
   Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
     if (err) return next(err);
     recipe.recipeImage = req.file.location
@@ -70,12 +70,12 @@ router.put("/update/:id", auth, (req, res) => {
     recipe.steps = req.body.steps
     
     recipe.save()
-    .then(res => {
-      res.status(200).json(res);
-    })
-    .catch(err => {
-      res.json(err);
-    });
+      .then(recipe => {
+        res.status(200).json(recipe);
+      })
+      .catch(err => {
+        res.json(err);
+      });
   });
 });
 

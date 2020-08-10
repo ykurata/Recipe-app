@@ -7,6 +7,7 @@ import {
   MDBCardTitle, 
   MDBCardText, 
   MDBCol,
+  MDBIcon,
   MDBRow
 } from 'mdbreact';
 
@@ -20,7 +21,7 @@ const ListItems = (props) => {
     list = props.data.map((item, index) => 
       <MDBCol lg="4" md="4" sm="6" key={index}>
         <Link to={`/${item._id}`}>
-        <MDBCard className="recipe-card"  >
+        <MDBCard className="recipe-card" >
           <MDBCardImage className="img-fluid list-image" src={item.recipeImage}/>
           <MDBCardBody>
             <MDBCardTitle>{item.name}</MDBCardTitle>

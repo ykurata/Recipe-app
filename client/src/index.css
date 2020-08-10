@@ -81,6 +81,11 @@ img {
 }
 .detail-image {
   text-align: center;
+  margin-bottom: 2rem;
+}
+.detail-default-icon {
+  margin-top: 9rem;
+  color: grey
 }
 p {
   color: grey;
@@ -279,6 +284,10 @@ textarea {
   .profile-card {
     width: 100%;
   }
+  /* recipe detail  */
+  .detail-default-icon {
+    margin-top: 7rem;
+  }
 }
 
 @media (max-width: 360px) {
@@ -297,6 +306,10 @@ textarea {
   #image .no-image i {
     font-size: 5rem;
     color: #c2c6cf;
+    margin-top: 5rem;
+  }
+  /* recipe detail  */
+  .detail-default-icon {
     margin-top: 5rem;
   }
 }

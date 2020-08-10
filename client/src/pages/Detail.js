@@ -108,9 +108,11 @@ const Detail = (props) => {
                 <img src={recipe.recipeImage} className="img-thumbnail img-fluid" alt="Recipe" />
                 <h6 className="time">Estimated Time {recipe.estimatedTime} min</h6>
               </div>
-            : <div className="no-image">
-                <MDBIcon far icon="image" />
-                <div>No Image</div>
+            : <div>
+                <div className="no-image">
+                  <MDBIcon far icon="image" size="5x" className="detail-default-icon" />
+                </div>
+                <h6 className="time">Estimated Time {recipe.estimatedTime} min</h6>
               </div>
             }
           </MDBCol>
