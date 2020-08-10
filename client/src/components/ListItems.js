@@ -7,15 +7,18 @@ import {
   MDBCardTitle, 
   MDBCardText, 
   MDBCol,
-  MDBIcon,
   MDBRow
 } from 'mdbreact';
 
 import NoRecipe from "./NoRecipe";
+import Loading from "./Loading";
 
 const ListItems = (props) => {
+  console.log(props.loading)
   let list;
-  if (props.data.length === 0) {
+  if (props.data.length === 0 && props.loading === true) {
+    list = <Loading />
+  } else if (props.data.length === 0 && props.loading === false)   {
     list = <NoRecipe />
   } else {
     list = props.data.map((item, index) => 
