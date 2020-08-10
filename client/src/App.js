@@ -16,6 +16,7 @@ import List from "./pages/List";
 import MyRecipes from "./pages/MyRecipes";
 import Detail from "./pages/Detail";
 import Image from "./pages/Image";
+import Loading from "./components/Loading";
 import PrivateRoute from "./components/PrivateRoute";
 
 import store from './store';
@@ -43,6 +44,7 @@ function App() {
           <PrivateRoute path="/profile/:id" component={ProfileDetail} />
           <PrivateRoute path="/profile" component={ProfileForm} />
           <Route exact path="/" component={Landing} />
+          <Route exact path="loading" component={Loading} />
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
           <Route path="/list" component={List} />

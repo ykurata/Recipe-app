@@ -236,6 +236,12 @@ textarea {
   align-items: center;
 }
 
+/* Loading  */
+.loading {
+  margin-top: 6rem;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .login-card {
     width: 90%;

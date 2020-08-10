@@ -11,7 +11,7 @@ const initialState = {
   likes: '',
   username: '',
   userId: '',
-  loading: false
+  loading: true
 }
 
 export default function(state = initialState, action) {
@@ -19,7 +19,8 @@ export default function(state = initialState, action) {
     case GET_RECIPES:
       return {
         ...state,
-        recipes: action.payload
+        recipes: action.payload,
+        loading: false
       }
     case GET_RECIPE:
       return {
@@ -28,7 +29,8 @@ export default function(state = initialState, action) {
         reviews: action.payload.reviews,
         likes: action.payload.likes.length,
         username: action.payload.userId.name,
-        userId: action.payload.userId._id
+        userId: action.payload.userId._id,
+        loading: false
       }  
     case Loading: 
       return {
