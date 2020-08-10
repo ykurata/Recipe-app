@@ -81,6 +81,11 @@ img {
 }
 .detail-image {
   text-align: center;
+  margin-bottom: 2rem;
+}
+.detail-default-icon {
+  margin-top: 9rem;
+  color: grey
 }
 p {
   color: grey;
@@ -149,6 +154,8 @@ textarea {
 #image .card {
   margin-top: 1rem;
   margin-bottom: 1rem;
+  width: 80%;
+  margin: auto;
 }
 #image img {
   width: 400px;
@@ -239,6 +246,9 @@ textarea {
   .profile-card {
     width: 70%;
   }
+  #image .card {
+    width: 100%;
+  }
 }
 
 @media (max-width: 576px) {
@@ -279,6 +289,10 @@ textarea {
   .profile-card {
     width: 100%;
   }
+  /* recipe detail  */
+  .detail-default-icon {
+    margin-top: 7rem;
+  }
 }
 
 @media (max-width: 360px) {
@@ -297,6 +311,10 @@ textarea {
   #image .no-image i {
     font-size: 5rem;
     color: #c2c6cf;
+    margin-top: 5rem;
+  }
+  /* recipe detail  */
+  .detail-default-icon {
     margin-top: 5rem;
   }
 }

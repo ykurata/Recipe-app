@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { submitRecipeImage } from '../actions/recipeActions';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitRecipeImage, getRecipe } from '../actions/recipeActions';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,8 +28,19 @@ const Image = (props) => {
 	const imageChange = e => {
     setSendImage(e.target.files[0]);
 		setImage(URL.createObjectURL(e.target.files[0]));
-	}
-	
+  }
+  
+  // GET a recipe
+  useEffect(() => {
+    axios.get(`/recipes/get/${props.match.params.id}`)
+    .then(res => {
+      setImage(res.data.recipeImage);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }, []);
+  
 	const onSubmit = e => {
 		e.preventDefault();
 
@@ -50,12 +62,12 @@ const Image = (props) => {
             <form onSubmit={onSubmit}>
               <p className="h4 text-center mb-4">Recipe Image</p>
               <MDBCard className="card">
-                <MDBCardBody className="card-body text-center">
+                <MDBCardBody className="text-center">
                   {error ? 
                       <p className="image-error">{error}</p>
                     : null
                   }
-                  {sendImage ? 
+                  {image ? 
                     <img src={image} alt="..." className="img-thumbnail" />
                   : 
                     <div className="no-image text-center">
