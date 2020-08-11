@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { registerUser } from '../actions/authActions';
+import { loginUser, registerUser } from '../actions/authActions';
 
 import { 
   MDBContainer, 
@@ -40,6 +40,15 @@ const SignUp = (props) => {
     e.preventDefault();
     dispatch(registerUser(userInput));
   };
+
+  const demoLogin = e => {
+    e.preventDefault();
+    const demoUser = {
+      email: "yasuko@gmail.com",
+      password: "testpassword"
+    };
+    dispatch(loginUser(demoUser));
+  }
 
   return (
     <MDBContainer className="login-form">
@@ -118,6 +127,9 @@ const SignUp = (props) => {
                 <div className="text-center py-4 mt-3">
                   <MDBBtn type="submit">
                     Sign Up
+                  </MDBBtn>
+                  <MDBBtn outline onClick={demoLogin}>
+                    Demo User
                   </MDBBtn>
                 </div>
                 <p className="text-center">
