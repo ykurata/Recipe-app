@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProfile, postAvatar, createProfile, updateProfile } from '../actions/profileActions';
+import { postAvatar, createProfile, updateProfile } from '../actions/profileActions';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +17,7 @@ import {
 import Navbar from "../components/Navbar";
 
 const ProfileForm = (props) => {
+  const [profile, setProfile] = useState("");
   const [image, setImage] = useState(null);
   const [sendImage, setSendImage] = useState(null);
   const [empty, setEmpty] = useState(false);
@@ -24,11 +26,10 @@ const ProfileForm = (props) => {
   const token = localStorage.getItem("jwtToken");
   const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
-  const profile = useSelector(state => state.profile.profile);
   const error = useSelector(state => state.errors);
   
   const onChange = e => {
-    setDescription({ [e.target.name]: e.target.value });
+    setDescription(e.target.value);
   }
   
   const imageChange = e => {
@@ -37,10 +38,17 @@ const ProfileForm = (props) => {
   };
 
   useEffect(() => {
-    dispatch(getProfile(userId, token));
-    if (profile === {}) {
-      setEmpty(true);
-    }
+    axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
+      .then(res => {
+        if (res.data === null) {
+          setEmpty(true);
+        }
+        setProfile(res.data);
+        setImage(res.data.photo);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, []);
 
   // Submit profile photo
@@ -56,14 +64,19 @@ const ProfileForm = (props) => {
     dispatch(postAvatar(formData, token));
   }
 
+  
   // Create and update profile description
   const handleSubmit = e => {
     e.preventDefault();
+
+    const data = {
+      description: description
+    }
    
     if (empty === true) {
-      dispatch(createProfile(userId, description, token));
+      dispatch(createProfile(userId, data, token));
     } else {
-      dispatch(updateProfile(userId, description, token));
+      dispatch(updateProfile(userId, data, token));
     };
   }
 
@@ -77,7 +90,7 @@ const ProfileForm = (props) => {
           </MDBCol>
           <MDBCol md="12" lg="6">
             <form onSubmit={submitPhoto}>
-              {image !== null ? 
+              {image !== null && image !== undefined ? 
                 <div className="image-div">
                   <img 
                     src={image} 
@@ -113,7 +126,11 @@ const ProfileForm = (props) => {
               {error ? 
                 <p className="error">{error.description}</p>
               : null}
-              <textarea onChange={onChange}  value={profile.description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
+              {profile !== null ? 
+                <textarea onChange={onChange}  value={profile.description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
+              : <textarea onChange={onChange} value={description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
+              }
+              
               <ToastContainer />
               <MDBBtn type="submit">Submit</MDBBtn>
               <MDBBtn outline href="/" >Cancel</MDBBtn>

@@ -14,7 +14,6 @@ import NoRecipe from "./NoRecipe";
 import Loading from "./Loading";
 
 const ListItems = (props) => {
-  console.log(props.loading)
   let list;
   if (props.data.length === 0 && props.loading === true) {
     list = <Loading />
