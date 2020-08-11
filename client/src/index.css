@@ -254,6 +254,12 @@ textarea {
   text-align: center;
 }
 
+/* page-not-found */
+.page-not-found {
+  padding-top: 8rem;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .login-card {
     width: 90%;

@@ -17,6 +17,7 @@ import MyRecipes from "./pages/MyRecipes";
 import Detail from "./pages/Detail";
 import Image from "./pages/Image";
 import Loading from "./components/Loading";
+import PageNotFound from "./pages/PageNotFound";
 import PrivateRoute from "./components/PrivateRoute";
 
 import store from './store';
@@ -38,17 +39,18 @@ function App() {
       <BrowserRouter>
         <Switch>
           <PrivateRoute exact path="/create" component={Form} />
-          <PrivateRoute path="/image/:id" component={Image} />
-          <PrivateRoute path="/update/:id" component={Update} />
-          <PrivateRoute path="/my-recipes" component={MyRecipes} />
-          <PrivateRoute path="/profile/:id" component={ProfileDetail} />
-          <PrivateRoute path="/profile" component={ProfileForm} />
+          <PrivateRoute exact path="/image/:id" component={Image} />
+          <PrivateRoute exact path="/update/:id" component={Update} />
+          <PrivateRoute exact path="/my-recipes" component={MyRecipes} />
+          <PrivateRoute exact path="/profile/:id" component={ProfileDetail} />
+          <PrivateRoute exact path="/profile" component={ProfileForm} />
           <Route exact path="/" component={Landing} />
+          <Route exact path="/detail/:id" component={Detail} />
           <Route exact path="loading" component={Loading} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/login" component={Login} />
-          <Route path="/list" component={List} />
-          <Route path="/:id" component={Detail} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/list" component={List} />
+          <Route component={PageNotFound} />
         </Switch>
       </BrowserRouter>
     </Provider>
