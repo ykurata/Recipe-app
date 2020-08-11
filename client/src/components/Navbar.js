@@ -38,7 +38,7 @@ const Navbar = () => {
     e.preventDefault();
     dispatch(logoutUser());
   };
-
+  
   return (
     <div>
       <MDBNavbar className="navbar" color="default-color" dark expand="md" fixed="top">
@@ -62,7 +62,7 @@ const Navbar = () => {
             <MDBNavItem>
               <MDBDropdown>
                 <MDBDropdownToggle nav caret>
-                  {token && user !== "" ?
+                  {token && user.photo ?
                     <img
                       src={user.photo}
                       alt=""

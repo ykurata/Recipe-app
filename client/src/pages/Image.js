@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { submitRecipeImage, getRecipe } from '../actions/recipeActions';
+import { useDispatch } from 'react-redux';
+import { submitRecipeImage } from '../actions/recipeActions';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
