@@ -93,6 +93,12 @@ img {
   margin-top: 9rem;
   color: grey
 }
+.username-link {
+  color: #1063e0 !important;
+}
+.username-link:hover {
+  color: #6399eb !important;
+}
 p {
   color: grey;
 }

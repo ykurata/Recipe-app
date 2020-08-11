@@ -99,7 +99,7 @@ const Detail = (props) => {
         <MDBRow>
           <MDBCol md="12" className="text-center">
             <h2>{recipe.name}</h2>
-            <p>Created By <Link to={`/profile/${recipeUserId}`}>{username}</Link></p>
+            <p>Created By <Link to={`/profile/${recipeUserId}`} className="username-link">{username}</Link></p>
           </MDBCol>
           
           <MDBCol md="12" lg="6" className="detail-image">
