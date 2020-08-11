@@ -32,7 +32,7 @@ const ProfileDetail = (props) => {
   useEffect(() => {
     dispatch(getRecipesByUserId(props.match.params.id, token));
   }, []);
-
+  
   return (
     <div>
       <Navbar/>
@@ -42,7 +42,7 @@ const ProfileDetail = (props) => {
           <MDBCol md="12">
             <MDBCard className="profile-card">
               <MDBCardBody>
-                {profile ? 
+                {profile.photo !== undefined ? 
                   <img 
                     src={profile.photo} 
                     alt=""
