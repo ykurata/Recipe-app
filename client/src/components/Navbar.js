@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProfile } from '../actions/profileActions';
+import { getUserProfile } from '../actions/profileActions';
 import { logoutUser } from '../actions/authActions';
 
 import { 
@@ -21,17 +21,16 @@ import {
 const Navbar = () => {
   const [collapse, setCollapse] = useState(false);
   const [isWideEnough, setIsWideEnough] = useState(false);
-  const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("jwtToken");
   const dispatch = useDispatch();
-  const user = useSelector(state => state.profile.profile);
+  const user = useSelector(state => state.profile.loginUserProfle);
   
   const onClick = () => {
     setCollapse(!collapse);
   };
   
   useEffect(() => {
-    dispatch(getProfile(userId, token));
+    dispatch(getUserProfile(token));
   }, []);
 
   const handleLogout = e => {

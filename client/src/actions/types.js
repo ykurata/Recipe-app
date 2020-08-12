@@ -5,3 +5,4 @@ export const GET_RECIPE = "GET_RECIPE";
 export const POST_REVIEW = "POST_REVIEW";
 export const Loading = "Loading";
 export const GET_PROFILE = "GET_PROFILE";
+export const GET_LOGIN_USER_PROFILE = "GET_LOGIN_USER_PROFILE";
