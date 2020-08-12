@@ -5,6 +5,7 @@ import { GET_PROFILE, GET_ERRORS } from '../actions/types';
 export const getProfile = (userId, token) => dispatch => {
   axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
+      console.log(res.data)
       dispatch({
         type: GET_PROFILE,
         payload: res.data

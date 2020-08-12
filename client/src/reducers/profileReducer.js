@@ -1,9 +1,7 @@
 import { GET_PROFILE } from '../actions/types';
 
 const initialState = {
-  profile: "",
-  username: "",
-  avatar: ""
+  profile: ""
 }
 
 export default function(state = initialState, action){
@@ -11,9 +9,7 @@ export default function(state = initialState, action){
     case GET_PROFILE:
       return {
         ...state,
-        profile: action.payload,
-        username: action.payload.userId.name,
-        avatar: action.payload.photo
+        profile: action.payload
       }
     default: 
       return state;

@@ -62,7 +62,7 @@ const Navbar = () => {
             <MDBNavItem>
               <MDBDropdown>
                 <MDBDropdownToggle nav caret>
-                  {token && user.photo ?
+                  {token && user ?
                     <img
                       src={user.photo}
                       alt=""
