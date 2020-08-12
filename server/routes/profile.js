@@ -116,6 +116,15 @@ router.get("/all", auth, (req, res, next) => {
   });
 });
 
+// Get login user's profile 
+router.get("/user", auth, (req, res, next) => {
+  Profile.findOne({ userId: req.user })
+    .populate("userId", "name")
+    .exec((err, profile) => {
+      if (err) return next(err);
+      res.status(200).json(profile);
+    });
+});
 
 // GET a specific profile
 router.get("/:userId", auth, (req, res, next) => {

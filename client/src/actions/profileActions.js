@@ -1,13 +1,25 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { GET_PROFILE, GET_ERRORS } from '../actions/types';
+import { GET_PROFILE, GET_LOGIN_USER_PROFILE, GET_ERRORS } from '../actions/types';
 
 export const getProfile = (userId, token) => dispatch => {
   axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
-      console.log(res.data)
       dispatch({
         type: GET_PROFILE,
+        payload: res.data
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+export const getUserProfile = (token) => dispatch => {
+  axios.get('/profile/user', { headers: { Authorization: `Bearer ${token}` }})
+    .then(res => {
+      dispatch({
+        type: GET_LOGIN_USER_PROFILE,
         payload: res.data
       })
     })
