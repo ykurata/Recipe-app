@@ -3,11 +3,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 
 import { 
-  MDBBtn,
-  MDBContainer,
-  MDBRow, 
-  MDBCol,
-  MDBIcon,
+  MDBContainer
 } from 'mdbreact';
 
 
