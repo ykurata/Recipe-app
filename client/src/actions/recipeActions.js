@@ -5,6 +5,7 @@ import {
   GET_ERRORS,
   GET_RECIPES,
   GET_RECIPE,
+  SEND_PIC
 } from './types';
 
 export const getRecipes = () => dispatch => {
@@ -95,6 +96,7 @@ export const updateRecipe = (recipeId, userInput, token) => dispatch => {
 }
 
 export const submitRecipeImage = (recipeId, FormData, token) => dispatch => {
+  dispatch({ type: SEND_PIC });
   axios.post(`/recipes/image/${recipeId}`, FormData, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
       toast.success("Posted an image!" , {

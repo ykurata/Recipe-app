@@ -27,6 +27,7 @@ const ProfileForm = (props) => {
   const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
   const error = useSelector(state => state.errors);
+  const loading = useSelector(state => state.profile.loading);
   
   const onChange = e => {
     setDescription(e.target.value);
@@ -54,7 +55,7 @@ const ProfileForm = (props) => {
   // Submit profile photo
   const submitPhoto = e => {
     e.preventDefault();
-
+    
     if (sendImage === null) {
       setImageError("Please select an image");
     }
@@ -116,9 +117,15 @@ const ProfileForm = (props) => {
                 </label>
             
               <ToastContainer />
-              <div className="text-center select">
-                <MDBBtn type="submit">Send the Image</MDBBtn>
-              </div> 
+              {loading === false ? 
+                <div className="text-center select">
+                  <MDBBtn type="submit">Send the Image</MDBBtn>
+                </div> 
+              : <MDBBtn className="btn btn-primary" type="button" disabled>
+                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Loading...
+                </MDBBtn>
+              }
             </form>
           </MDBCol>
           <MDBCol md="12" lg="6">

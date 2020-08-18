@@ -2,6 +2,7 @@ import {
   GET_RECIPES,
   GET_RECIPE,
   Loading,
+  SEND_PIC
 } from '../actions/types';
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
   likes: '',
   username: '',
   userId: '',
-  loading: true
+  loading: true,
+  sendImage: false
 }
 
 export default function(state = initialState, action) {
@@ -35,6 +37,11 @@ export default function(state = initialState, action) {
     case Loading: 
       return {
         loading: true
+      }  
+    case SEND_PIC:
+      return {
+        ...state,
+        sendImage: true
       }  
     default:
       return state;  

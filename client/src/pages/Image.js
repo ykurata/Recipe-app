@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { submitRecipeImage } from '../actions/recipeActions';
 
 import { ToastContainer } from 'react-toastify';
@@ -24,6 +24,7 @@ const Image = (props) => {
 	const [error, setError] = useState("");
   const token = localStorage.getItem("jwtToken");
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.recipe.sendImage);
 
 	const imageChange = e => {
     setSendImage(e.target.files[0]);
@@ -86,10 +87,17 @@ const Image = (props) => {
                     </label>
                   </MDBContainer>
                   <MDBContainer className="container text-center">
-                    <MDBBtn type="submit">
-                      Submit
-                      <MDBIcon far icon="paper-plane" className="ml-2" />
-                    </MDBBtn>
+                    {loading === false ?
+                      <MDBBtn type="submit">
+                        Submit
+                        <MDBIcon far icon="paper-plane" className="ml-2" />
+                      </MDBBtn>
+                    : <MDBBtn className="btn btn-primary" type="button" disabled>
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                      </MDBBtn>  
+                    }
+                    
                   </MDBContainer>
                   <ToastContainer/>
                 </MDBCardBody>
