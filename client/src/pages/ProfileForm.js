@@ -121,10 +121,10 @@ const ProfileForm = (props) => {
                 <div className="text-center select">
                   <MDBBtn type="submit">Send the Image</MDBBtn>
                 </div> 
-              : <button className="btn btn-primary" type="button" disabled>
+              : <MDBBtn className="btn btn-primary" type="button" disabled>
                   <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   Loading...
-                </button>
+                </MDBBtn>
               }
             </form>
           </MDBCol>
