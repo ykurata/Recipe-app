@@ -1,8 +1,14 @@
-import { GET_PROFILE, GET_LOGIN_USER_PROFILE } from '../actions/types';
+import { 
+  GET_PROFILE, 
+  GET_LOGIN_USER_PROFILE,
+  POST_AVATAR,
+  SEND_PIC,
+} from '../actions/types';
 
 const initialState = {
   loginUserProfle: "",
-  profile: ""
+  profile: "",
+  loading: false
 }
 
 export default function(state = initialState, action){
@@ -16,6 +22,16 @@ export default function(state = initialState, action){
       return {
         ...state,
         loginUserProfle: action.payload
+      }  
+    case SEND_PIC: 
+      return {
+        ...state,
+        loading: true
+      }  
+    case POST_AVATAR:
+      return {
+        ...state,
+        loading: false
       }  
     default: 
       return state;

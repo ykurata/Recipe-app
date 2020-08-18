@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { GET_PROFILE, GET_LOGIN_USER_PROFILE, GET_ERRORS } from '../actions/types';
+import { 
+  GET_PROFILE, 
+  GET_LOGIN_USER_PROFILE, 
+  GET_ERRORS,
+  POST_AVATAR,
+  SEND_PIC
+} from '../actions/types';
 
 export const getProfile = (userId, token) => dispatch => {
   axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
@@ -29,8 +35,13 @@ export const getUserProfile = (token) => dispatch => {
 }
 
 export const postAvatar = (avatar, token) => dispatch => {
+  dispatch({ type: SEND_PIC });
   axios.post("/profile/photo", avatar, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => {
+      dispatch({
+        type: POST_AVATAR,
+        payload: res.data
+      });
       toast.success("Successfully Sent a Photo!" , {
         position: "top-right",
         autoClose: 2000
