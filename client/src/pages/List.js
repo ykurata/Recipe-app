@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getRecipes } from "../actions/recipeActions";
 
-import { MDBCol, MDBContainer } from "mdbreact";
+import { MDBCol, MDBContainer, MDBInputGroup, MDBBtn } from "mdbreact";
 
 import Navbar from "../components/Navbar";
 import ListItems from "../components/ListItems";
@@ -34,14 +34,24 @@ const List = () => {
     <div>
       <Navbar />
       <MDBCol md="6" className="search">
-        <input
+        <MDBInputGroup
+          hint="Dish name or Ingredients..."
+          containerClassName="mb-3"
+          onChange={onChange}
+          append={
+            <MDBBtn outline className="m-0 px-3 py-2 z-depth-0">
+              Search
+            </MDBBtn>
+          }
+        />
+        {/* <input
           className="form-control"
           type="text"
           placeholder="Search by dish name or ingredients..."
           aria-label="Search"
           onChange={onChange}
           value={search}
-        />
+        /> */}
       </MDBCol>
       <MDBContainer className="list-container">
         <ListItems data={filteredRecipes} loading={loading} />
