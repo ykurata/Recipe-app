@@ -278,6 +278,11 @@ textarea {
   #image .card {
     width: 100%;
   }
+  /* Recipe list page */
+  .list-image {
+    max-height: 10rem;
+    min-height: 10rem;
+  }
 }
 
 @media (max-width: 576px) {
@@ -296,6 +301,11 @@ textarea {
   }
   #update {
     width: 90%;
+  }
+  /* Recipe list page */
+  .list-image {
+    max-height: 15rem;
+    min-height: 15rem;
   }
   /* Upload Image page */
   #image img {
