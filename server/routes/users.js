@@ -128,4 +128,22 @@ router.get("/list", (req, res) => {
     });
 });
 
+router.put("/update/:id", (req, res) => {
+  User.findOne({ _id: req.params.id })
+    .then((user) => {
+      user.isAdmin = req.body.isAdmin;
+      user
+        .save()
+        .then((user) => {
+          res.status(200).json(user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 module.exports = router;
