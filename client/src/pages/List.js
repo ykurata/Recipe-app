@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getRecipes } from "../actions/recipeActions";
 
-import { MDBCol, MDBContainer, MDBInputGroup, MDBBtn, MDBIcon } from "mdbreact";
+import { MDBCol, MDBContainer } from "mdbreact";
 
 import Navbar from "../components/Navbar";
 import ListItems from "../components/ListItems";

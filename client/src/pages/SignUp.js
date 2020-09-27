@@ -1,54 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { loginUser, registerUser } from '../actions/authActions';
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser, registerUser } from "../actions/authActions";
 
-import { 
-  MDBContainer, 
-  MDBRow, 
-  MDBCol, 
-  MDBInput, 
-  MDBBtn, 
-  MDBCard, 
-  MDBCardBody 
-} from 'mdbreact';
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+} from "mdbreact";
 
 const SignUp = (props) => {
   const [userInput, setUserInput] = useState({
     name: "",
     email: "",
     password: "",
-    password2: ""
+    password2: "",
   });
+  const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
-  const errors = useSelector(state => state.errors);
+  const auth = useSelector((state) => state.auth);
+  const errors = useSelector((state) => state.errors);
 
-  const onChange = e => {
-    setUserInput({ 
+  const onChange = (e) => {
+    setUserInput({
       ...userInput,
-      [e.target.name]: e.target.value 
+      [e.target.name]: e.target.value,
     });
-  }
+  };
+
+  const handleChecked = (e) => {
+    setChecked(!checked);
+  };
 
   useEffect(() => {
     if (auth.isAuthenticated) {
       props.history.push("/list");
     }
   });
-  
-  const onSubmit = e => {
+
+  const onSubmit = (e) => {
     e.preventDefault();
     dispatch(registerUser(userInput));
   };
 
-  const demoLogin = e => {
+  const demoLogin = (e) => {
     e.preventDefault();
     const demoUser = {
       email: "yasuko@gmail.com",
-      password: "testpassword"
+      password: "testpassword",
     };
     dispatch(loginUser(demoUser));
-  }
+  };
 
   return (
     <MDBContainer className="login-form">
@@ -59,14 +64,8 @@ const SignUp = (props) => {
               <form onSubmit={onSubmit}>
                 <p className="h4 text-center py-4">Sign Up</p>
                 <div className="grey-text">
-                  {errors ?
-                    <p className="error">{errors.name}</p>
-                  : null  
-                  }
-                  {errors ?
-                    <p className="error">{errors.error}</p>
-                  : null  
-                  }
+                  {errors ? <p className="error">{errors.name}</p> : null}
+                  {errors ? <p className="error">{errors.error}</p> : null}
                   <MDBInput
                     label="Your name"
                     icon="user"
@@ -79,10 +78,7 @@ const SignUp = (props) => {
                     value={userInput.name}
                     onChange={onChange}
                   />
-                  {errors ?
-                    <p className="error">{errors.email}</p>
-                  : null  
-                  }
+                  {errors ? <p className="error">{errors.email}</p> : null}
                   <MDBInput
                     label="Your email"
                     icon="envelope"
@@ -95,10 +91,7 @@ const SignUp = (props) => {
                     value={userInput.email}
                     onChange={onChange}
                   />
-                  {errors ?
-                    <p className="error">{errors.password}</p>
-                  : null  
-                  }
+                  {errors ? <p className="error">{errors.password}</p> : null}
                   <MDBInput
                     label="Your password"
                     icon="lock"
@@ -109,10 +102,7 @@ const SignUp = (props) => {
                     value={userInput.password}
                     onChange={onChange}
                   />
-                  {errors ?
-                    <p className="error">{errors.password2}</p>
-                  : null  
-                  }
+                  {errors ? <p className="error">{errors.password2}</p> : null}
                   <MDBInput
                     label="Confirm Your password"
                     icon="lock"
@@ -123,11 +113,23 @@ const SignUp = (props) => {
                     value={userInput.password2}
                     onChange={onChange}
                   />
+                  <div className="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      className="custom-control-input"
+                      id="defaultUnchecked"
+                      onChange={handleChecked}
+                    />
+                    <label
+                      className="custom-control-label"
+                      htmlFor="defaultUnchecked"
+                    >
+                      Admin User
+                    </label>
+                  </div>
                 </div>
                 <div className="text-center py-4 mt-3">
-                  <MDBBtn type="submit">
-                    Sign Up
-                  </MDBBtn>
+                  <MDBBtn type="submit">Sign Up</MDBBtn>
                   <MDBBtn outline onClick={demoLogin}>
                     Demo User
                   </MDBBtn>
