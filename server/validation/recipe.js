@@ -5,6 +5,7 @@ module.exports = function validateRecipeInput(data) {
   let errors = {};
   // Convert empty fields to an empty string so we can use validator functions
   data.name = !isEmpty(data.name) ? data.name : "";
+  data.category = !isEmpty(data.category) ? data.category : "";
   data.estimatedTime = !isEmpty(data.estimatedTime) ? data.estimatedTime : "";
   data.ingredients = !isEmpty(data.ingredients) ? data.ingredients : "";
   data.steps = !isEmpty(data.steps) ? data.steps : "";
@@ -12,6 +13,11 @@ module.exports = function validateRecipeInput(data) {
   // Name checks
   if (Validator.isEmpty(data.name)) {
     errors.name = "Recipe Title is required";
+  }
+
+  // Category checks
+  if (Validator.isEmpty(data.category)) {
+    errors.category = "Category is required";
   }
 
   // Estimated Time checks
@@ -32,9 +38,9 @@ module.exports = function validateRecipeInput(data) {
   if (Validator.isEmpty(data.steps)) {
     errors.steps = "Steps are required";
   }
-  
+
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
