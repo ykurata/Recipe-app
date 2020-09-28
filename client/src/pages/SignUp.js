@@ -18,8 +18,9 @@ const SignUp = (props) => {
     email: "",
     password: "",
     password2: "",
+    isAdmin: false,
   });
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const errors = useSelector((state) => state.errors);
@@ -32,7 +33,7 @@ const SignUp = (props) => {
   };
 
   const handleChecked = (e) => {
-    setChecked(!checked);
+    setUserInput({ isAdmin: !userInput.isAdmin });
   };
 
   useEffect(() => {
