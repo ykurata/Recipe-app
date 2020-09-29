@@ -18,6 +18,12 @@ import {
   MDBCollapse,
   MDBNavItem,
   MDBNavLink,
+  MDBContainer,
+  MDBBtn,
+  MDBModal,
+  MDBModalBody,
+  MDBModalHeader,
+  MDBModalFooter,
 } from "mdbreact";
 
 const Navbar = () => {
@@ -27,6 +33,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.profile.loginUserProfle);
   const isAdmin = useSelector((state) => state.profile.isAdmin);
+  const [modal, setModal] = useState(false);
 
   const onClick = () => {
     setCollapse(!collapse);
@@ -39,6 +46,10 @@ const Navbar = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logoutUser());
+  };
+
+  const toggle = (e) => {
+    setModal(!modal);
   };
 
   return (
@@ -68,7 +79,26 @@ const Navbar = () => {
             </MDBNavItem>
             {isAdmin === true ? (
               <MDBNavItem>
-                <MDBNavLink to="/my-recipes">Create Category</MDBNavLink>
+                <MDBNavLink onClick={toggle} to="#">
+                  Create Category
+                </MDBNavLink>
+                <MDBModal isOpen={modal} toggle={toggle} centered>
+                  <MDBModalHeader toggle={toggle}>
+                    MDBModal title
+                  </MDBModalHeader>
+                  <MDBModalBody>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  </MDBModalBody>
+                  <MDBModalFooter>
+                    <MDBBtn color="secondary" onClick={toggle}>
+                      Close
+                    </MDBBtn>
+                    <MDBBtn color="primary">Save changes</MDBBtn>
+                  </MDBModalFooter>
+                </MDBModal>
               </MDBNavItem>
             ) : null}
           </MDBNavbarNav>
