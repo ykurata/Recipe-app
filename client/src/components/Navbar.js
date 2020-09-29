@@ -26,6 +26,7 @@ const Navbar = () => {
   const token = localStorage.getItem("jwtToken");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.profile.loginUserProfle);
+  const isAdmin = useSelector((state) => state.profile.isAdmin);
 
   const onClick = () => {
     setCollapse(!collapse);
@@ -65,6 +66,11 @@ const Navbar = () => {
             <MDBNavItem>
               <MDBNavLink to="/my-recipes">My Recipes</MDBNavLink>
             </MDBNavItem>
+            {isAdmin === true ? (
+              <MDBNavItem>
+                <MDBNavLink to="/my-recipes">Create Category</MDBNavLink>
+              </MDBNavItem>
+            ) : null}
           </MDBNavbarNav>
           <MDBNavbarNav right>
             <MDBNavItem>

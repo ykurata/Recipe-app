@@ -18,32 +18,33 @@ router.post("/photo", upload.single("photo"), auth, (req, res, next) => {
     }
     if (profile) {
       profile.photo = req.file.location;
-      profile.save()
-        .then(profile => {
+      profile
+        .save()
+        .then((profile) => {
           res.status(200).json(profile);
         })
-        .catch(err => {
+        .catch((err) => {
           res.status(400).json(err);
-        })
+        });
     } else {
       const newProfile = new Profile({
         userId: req.user,
-        photo: req.file.location
+        photo: req.file.location,
       });
 
-      newProfile.save()
-        .then(profile => {
+      newProfile
+        .save()
+        .then((profile) => {
           res.status(200).json(profile);
         })
-        .catch(err => {
+        .catch((err) => {
           res.status(400).json(err);
         });
     }
-  })
+  });
 });
 
-
-// create a profile 
+// create a profile
 router.post("/:id", auth, (req, res, next) => {
   // Form validation
   const { errors, isValid } = validateProfileInput(req.body);
@@ -55,32 +56,33 @@ router.post("/:id", auth, (req, res, next) => {
   Profile.findOne({ userId: req.params.id }, (err, profile) => {
     if (err) return next(err);
     if (profile) {
-      profile.description = req.body.description
+      profile.description = req.body.description;
 
-      profile.save()
-        .then(profile => {
+      profile
+        .save()
+        .then((profile) => {
           res.status(200).json(profile);
         })
-        .catch(err => {
+        .catch((err) => {
           res.status(400).json(err);
         });
     } else {
       const newProfile = new Profile({
         userId: req.user,
-        description: req.body.description
+        description: req.body.description,
       });
 
-      newProfile.save()
-        .then(profile => {
+      newProfile
+        .save()
+        .then((profile) => {
           res.status(200).json(profile);
         })
-        .catch(err => {
+        .catch((err) => {
           res.status(400).json(err);
         });
     }
   });
 });
-
 
 // update a profile
 router.put("/update/:id", auth, (req, res, next) => {
@@ -95,31 +97,31 @@ router.put("/update/:id", auth, (req, res, next) => {
     if (err) return next(err);
     profile.description = req.body.description;
 
-    profile.save()
-      .then(profile => {
+    profile
+      .save()
+      .then((profile) => {
         res.status(200).json(profile);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(400).json(err);
       });
   });
 });
 
-
-// GET all profiles 
+// GET all profiles
 router.get("/all", auth, (req, res, next) => {
   Profile.find({})
-  .populate("userId", "name")
-  .exec(function(err, profile){
-    if (err) return next(err);
-    res.status(200).json(profile);
-  });
+    .populate("userId", "name")
+    .exec(function (err, profile) {
+      if (err) return next(err);
+      res.status(200).json(profile);
+    });
 });
 
-// Get login user's profile 
+// Get login user's profile
 router.get("/user", auth, (req, res, next) => {
   Profile.findOne({ userId: req.user })
-    .populate("userId", "name")
+    .populate("userId")
     .exec((err, profile) => {
       if (err) return next(err);
       res.status(200).json(profile);
@@ -129,17 +131,16 @@ router.get("/user", auth, (req, res, next) => {
 // GET a specific profile
 router.get("/:userId", auth, (req, res, next) => {
   Profile.findOne({ userId: req.params.userId })
-  .populate("userId", "name")
-  .exec((err, profile) => {
-    if (err) return next(err);
-    res.status(200).json(profile);
-  });
-});    
-
+    .populate("userId", "name")
+    .exec((err, profile) => {
+      if (err) return next(err);
+      res.status(200).json(profile);
+    });
+});
 
 // DELETE a profile
 router.delete("/delete/:id", auth, (req, res, next) => {
-  Profile.remove({ _id: req.params.id}, function(err, profile) {
+  Profile.remove({ _id: req.params.id }, function (err, profile) {
     if (err) return next(err);
     res.send(204);
   });
