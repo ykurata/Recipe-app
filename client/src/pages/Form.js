@@ -57,7 +57,7 @@ const Form = (props) => {
                 Category
               </label>
               {errors ? <p className="error">{errors.category}</p> : null}
-              <select className="browser-default custom-select">
+              <select className="browser-default custom-select mb-4">
                 <option>Choose category</option>
                 <option value="1">Option 1</option>
                 <option value="2">Option 2</option>
