@@ -8,3 +8,5 @@ export const GET_PROFILE = "GET_PROFILE";
 export const GET_LOGIN_USER_PROFILE = "GET_LOGIN_USER_PROFILE";
 export const POST_AVATAR = "POST_AVATAR";
 export const SEND_PIC = "SEND_PIC";
+export const POST_CATEGORY = "POST_CATEGORY";
+export const GET_CATEGORIES = "GET_CATEGORIES";

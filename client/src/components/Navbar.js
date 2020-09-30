@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserProfile } from "../actions/profileActions";
 import { logoutUser } from "../actions/authActions";
+import { createCategory } from "../actions/categoryActions";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import logo from "../images/logo.jpg";
 
@@ -18,7 +22,6 @@ import {
   MDBCollapse,
   MDBNavItem,
   MDBNavLink,
-  MDBContainer,
   MDBBtn,
   MDBModal,
   MDBModalBody,
@@ -35,6 +38,7 @@ const Navbar = () => {
   const isAdmin = useSelector((state) => state.profile.isAdmin);
   const [modal, setModal] = useState(false);
   const [category, setCategory] = useState("");
+  const error = useSelector((state) => state.errors);
 
   const onClick = () => {
     setCollapse(!collapse);
@@ -57,8 +61,10 @@ const Navbar = () => {
     setCategory(e.target.value);
   };
 
-  const saveCategory = (e) => {
+  // Create a new category
+  const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(createCategory(category, token));
   };
 
   return (
@@ -92,24 +98,30 @@ const Navbar = () => {
                   Create Category
                 </MDBNavLink>
                 <MDBModal isOpen={modal} toggle={toggle} centered>
-                  <MDBModalHeader toggle={toggle}>
-                    Create Category
-                  </MDBModalHeader>
-                  <MDBModalBody>
-                    <div className="form-group">
-                      <label htmlFor="example1">Category Name</label>
-                      <input
-                        type="text"
-                        id="example1"
-                        className="form-control form-control-lg"
-                        value={category}
-                        onChange={onChange}
-                      />
-                    </div>
-                  </MDBModalBody>
-                  <MDBModalFooter>
-                    <MDBBtn color="primary">Save</MDBBtn>
-                  </MDBModalFooter>
+                  <form onSubmit={handleSubmit}>
+                    <MDBModalHeader toggle={toggle}>
+                      Create Category
+                    </MDBModalHeader>
+                    <MDBModalBody>
+                      <div className="form-group">
+                        <label htmlFor="example1">Category Name</label>
+                        {error ? <p className="error">{error.title}</p> : null}
+                        <input
+                          type="text"
+                          id="example1"
+                          className="form-control form-control-lg"
+                          value={category}
+                          onChange={onChange}
+                        />
+                      </div>
+                    </MDBModalBody>
+                    <MDBModalFooter>
+                      <MDBBtn type="submit" color="primary">
+                        Save
+                    </MDBBtn>
+                      <ToastContainer />
+                    </MDBModalFooter>
+                  </form>
                 </MDBModal>
               </MDBNavItem>
             ) : null}
@@ -125,8 +137,8 @@ const Navbar = () => {
                       className="rounded-circle img-fluid nav-avatar"
                     />
                   ) : (
-                    <MDBIcon icon="user" />
-                  )}
+                      <MDBIcon icon="user" />
+                    )}
                 </MDBDropdownToggle>
                 <MDBDropdownMenu className="dropdown-default">
                   {token ? (
@@ -137,11 +149,11 @@ const Navbar = () => {
                       </MDBDropdownItem>
                     </div>
                   ) : (
-                    <div>
-                      <MDBDropdownItem href="/login">Log in</MDBDropdownItem>
-                      <MDBDropdownItem href="/signup">Sign Up</MDBDropdownItem>
-                    </div>
-                  )}
+                      <div>
+                        <MDBDropdownItem href="/login">Log in</MDBDropdownItem>
+                        <MDBDropdownItem href="/signup">Sign Up</MDBDropdownItem>
+                      </div>
+                    )}
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavItem>
