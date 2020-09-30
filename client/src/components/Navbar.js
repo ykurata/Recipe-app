@@ -34,6 +34,7 @@ const Navbar = () => {
   const user = useSelector((state) => state.profile.loginUserProfle);
   const isAdmin = useSelector((state) => state.profile.isAdmin);
   const [modal, setModal] = useState(false);
+  const [category, setCategory] = useState("");
 
   const onClick = () => {
     setCollapse(!collapse);
@@ -50,6 +51,14 @@ const Navbar = () => {
 
   const toggle = (e) => {
     setModal(!modal);
+  };
+
+  const onChange = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const saveCategory = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -84,19 +93,22 @@ const Navbar = () => {
                 </MDBNavLink>
                 <MDBModal isOpen={modal} toggle={toggle} centered>
                   <MDBModalHeader toggle={toggle}>
-                    MDBModal title
+                    Create Category
                   </MDBModalHeader>
                   <MDBModalBody>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    <div className="form-group">
+                      <label htmlFor="example1">Category Name</label>
+                      <input
+                        type="text"
+                        id="example1"
+                        className="form-control form-control-lg"
+                        value={category}
+                        onChange={onChange}
+                      />
+                    </div>
                   </MDBModalBody>
                   <MDBModalFooter>
-                    <MDBBtn color="secondary" onClick={toggle}>
-                      Close
-                    </MDBBtn>
-                    <MDBBtn color="primary">Save changes</MDBBtn>
+                    <MDBBtn color="primary">Save</MDBBtn>
                   </MDBModalFooter>
                 </MDBModal>
               </MDBNavItem>
