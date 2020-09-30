@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createRecipe } from "../actions/recipeActions";
+import { getCategories } from "../actions/categoryActions";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +21,11 @@ const Form = (props) => {
   const token = localStorage.getItem("jwtToken");
   const dispatch = useDispatch();
   const errors = useSelector((state) => state.errors);
+  const categories = useSelector(state => state.category.categories);
+
+  useEffect(() => {
+    dispatch(getCategories(token));
+  }, []);
 
   const onChange = (e) => {
     setUserInput({
@@ -32,6 +38,15 @@ const Form = (props) => {
     e.preventDefault();
     dispatch(createRecipe(userInput, token));
   };
+
+  let options;
+  if (categories.length > 0) {
+    options = categories.map((item, index) =>
+      <option key={index} value={item.title}>{item.title}</option>
+    )
+  } else {
+    options = <option>No Options</option>
+  }
 
   return (
     <div>
@@ -58,10 +73,7 @@ const Form = (props) => {
               </label>
               {errors ? <p className="error">{errors.category}</p> : null}
               <select className="browser-default custom-select mb-4">
-                <option>Choose category</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+                {options}
               </select>
               <br />
               <label htmlFor="defaultFormContactEmailEx" className="grey-text">
