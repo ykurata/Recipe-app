@@ -37,7 +37,7 @@ const Navbar = () => {
   const user = useSelector((state) => state.profile.loginUserProfle);
   const isAdmin = useSelector((state) => state.profile.isAdmin);
   const [modal, setModal] = useState(false);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState({ title: "" });
   const error = useSelector((state) => state.errors);
 
   const onClick = () => {
@@ -58,13 +58,14 @@ const Navbar = () => {
   };
 
   const onChange = (e) => {
-    setCategory(e.target.value);
+    setCategory({ title: e.target.value });
   };
 
   // Create a new category
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createCategory(category, token));
+    setCategory({ title: "" });
   };
 
   return (
@@ -108,9 +109,10 @@ const Navbar = () => {
                         {error ? <p className="error">{error.title}</p> : null}
                         <input
                           type="text"
-                          id="example1"
+                          id="category"
+                          name="category"
                           className="form-control form-control-lg"
-                          value={category}
+                          value={category.title}
                           onChange={onChange}
                         />
                       </div>
