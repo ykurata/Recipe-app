@@ -9,8 +9,7 @@ const Recipe = require("../models/Recipe");
 const auth = require("./middleware/utils");
 const upload = require("./service/upload");
 
-
-// Create a recipe 
+// Create a recipe
 router.post("/", auth, (req, res) => {
   // Form validation
   const { errors, isValid } = validateRecipeInput(req.body);
@@ -22,36 +21,43 @@ router.post("/", auth, (req, res) => {
   const newRecipe = new Recipe({
     userId: req.user,
     name: req.body.name,
+    category: req.body.category,
     estimatedTime: req.body.estimatedTime,
     ingredients: req.body.ingredients,
-    steps: req.body.steps
+    steps: req.body.steps,
   });
- 
-  newRecipe.save()
-    .then(recipe => {
+
+  newRecipe
+    .save()
+    .then((recipe) => {
       res.status(200).json(recipe);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 });
 
-
 // Post a recipe image
-router.post("/image/:id", upload.single('recipeImage'), auth, (req, res, next) => {
-  Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
-    if (err) return next(err);
-    recipe.recipeImage = req.file.location
+router.post(
+  "/image/:id",
+  upload.single("recipeImage"),
+  auth,
+  (req, res, next) => {
+    Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
+      if (err) return next(err);
+      recipe.recipeImage = req.file.location;
 
-    recipe.save()
-      .then(recipe => {
-        res.status(200).json(recipe);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  });
-});
+      recipe
+        .save()
+        .then((recipe) => {
+          res.status(200).json(recipe);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }
+);
 
 // Update a recipe
 router.put("/update/:id", auth, (req, res) => {
@@ -64,16 +70,18 @@ router.put("/update/:id", auth, (req, res) => {
 
   Recipe.findOne({ _id: req.params.id }, (err, recipe) => {
     if (err) return next(err);
-    recipe.name = req.body.name,
-    recipe.estimatedTime = req.body.estimatedTime,
-    recipe.ingredients = req.body.ingredients,
-    recipe.steps = req.body.steps
-    
-    recipe.save()
-      .then(recipe => {
+    (recipe.name = req.body.name),
+      (recipe.category = req.body.category),
+      (recipe.estimatedTime = req.body.estimatedTime),
+      (recipe.ingredients = req.body.ingredients),
+      (recipe.steps = req.body.steps);
+
+    recipe
+      .save()
+      .then((recipe) => {
         res.status(200).json(recipe);
       })
-      .catch(err => {
+      .catch((err) => {
         res.json(err);
       });
   });
@@ -82,104 +90,104 @@ router.put("/update/:id", auth, (req, res) => {
 // Post like to a recipe
 router.put("/like/:id", auth, (req, res) => {
   Recipe.findOne({ _id: req.params.id })
-  .then(recipe => {
-    if (recipe.likes.filter(like => like.user.toString() === req.user).length > 0) {
-      return res.status(404).json({ error: "You already liked the recipe"});
-    } else {
-      const newLike = {
-        user: req.user
+    .then((recipe) => {
+      if (
+        recipe.likes.filter((like) => like.user.toString() === req.user)
+          .length > 0
+      ) {
+        return res.status(404).json({ error: "You already liked the recipe" });
+      } else {
+        const newLike = {
+          user: req.user,
+        };
+        recipe.likes.push(newLike);
+        recipe
+          .save()
+          .then((recipe) => {
+            res.status(200).json(recipe);
+          })
+          .catch((err) => {
+            res.status(404).json(err);
+          });
       }
-      recipe.likes.push(newLike);
-      recipe.save()
-        .then(recipe => {
-          res.status(200).json(recipe);
-        })
-        .catch(err => {
-          res.status(404).json(err);
-        });
-    }
-  })
-  .catch(err => {
-    res.json(err);
-  });
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
-
 
 // Post a review to a recipe
 router.put("/review/:id", auth, (req, res, next) => {
   Recipe.findOne({ _id: req.params.id })
-  .then(recipe => {
-    const newReview = {
-      user: req.user,
-      text: req.body.text
-    }
-    recipe.reviews.push(newReview);
-    recipe.save()
-      .then(recipe => {
-        res.status(200).json(recipe);
-      })
-      .catch(err => {
-        res.status(404).json(err);
-      });
-  })
-  .catch(err => {
-    res.json(err);
-  });
+    .then((recipe) => {
+      const newReview = {
+        user: req.user,
+        text: req.body.text,
+      };
+      recipe.reviews.push(newReview);
+      recipe
+        .save()
+        .then((recipe) => {
+          res.status(200).json(recipe);
+        })
+        .catch((err) => {
+          res.status(404).json(err);
+        });
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
-
-// Get all recipes 
+// Get all recipes
 router.get("/list", (req, res, next) => {
   Recipe.find({})
     .populate("userId", "name")
-    .exec(function(err, recipes){
+    .exec(function (err, recipes) {
       if (err) return next(err);
       res.json(recipes);
-    })
+    });
 });
 
-// Get a specific recipes 
+// Get a specific recipes
 router.get("/get/:id", (req, res, next) => {
   Recipe.findOne({ _id: req.params.id })
     .populate("userId", "name")
     .populate("reviews.user", "name")
-    .exec(function(err, recipe) {
+    .exec(function (err, recipe) {
       if (err) return next(err);
       res.json(recipe);
     });
 });
-
 
 // Get logged in user's recipes
 router.get("/my-recipes", auth, (req, res, next) => {
   Recipe.find({ userId: req.user })
     .populate("userId", "name")
     .populate("reviews.user", "name")
-    .exec(function(err, recipe) {
+    .exec(function (err, recipe) {
       if (err) return next(err);
       res.json(recipe);
     });
-});    
-
+});
 
 // Get recipes by userId
 router.get("/userid/:id", auth, (req, res, next) => {
   Recipe.find({ userId: req.params.id })
     .populate("userId", "name")
     .populate("reviews.user", "name")
-    .exec(function(err, recipe) {
+    .exec(function (err, recipe) {
       if (err) return next(err);
       res.json(recipe);
-    }); 
-}) 
-
+    });
+});
 
 // Delete a recipe
 router.delete("/delete/:id", auth, (req, res, next) => {
-  Recipe.remove({ _id: req.params.id}, (err, recipe) => {
+  Recipe.remove({ _id: req.params.id }, (err, recipe) => {
     if (err) return next(err);
     res.json({ message: "Successfully deleted" });
-  })
-})
+  });
+});
 
 module.exports = router;
