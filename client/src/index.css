@@ -73,6 +73,9 @@ img {
 }
 
 /* Search input */
+.search-container {
+  display: flex;
+}
 .search {
   padding-top: 8rem;
   margin: auto;
@@ -307,6 +310,14 @@ textarea {
     max-height: 15rem;
     min-height: 15rem;
   }
+  .search-container {
+    display: inline-block;
+  }
+  .search-input {
+    padding-top: 2rem;
+    margin: auto;
+  }
+  
   /* Upload Image page */
   #image img {
     width: 300px;
