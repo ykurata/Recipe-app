@@ -72,7 +72,7 @@ const Form = (props) => {
                 Category
               </label>
               {errors ? <p className="error">{errors.category}</p> : null}
-              <select className="browser-default custom-select mb-4">
+              <select name="category" onChange={onChange} className="browser-default custom-select mb-4">
                 {options}
               </select>
               <br />

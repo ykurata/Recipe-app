@@ -32,14 +32,15 @@ const List = () => {
     const query = search.toLowerCase();
     return (
       item.name.toLowerCase().indexOf(query) >= 0 ||
-      item.ingredients.toLowerCase().indexOf(query) >= 0
+      item.ingredients.toLowerCase().indexOf(query) >= 0 ||
+      item.category.toLowerCase().indexOf(query) >= 0
     );
   });
 
   let options;
   if (categories.length > 0) {
     options = categories.map((item, index) =>
-      <option onChange={onChange} key={index} value={item.title}>{item.title}</option>
+      <option key={index} value={item.title}>{item.title}</option>
     )
   } else {
     options = <option>No Options</option>
@@ -50,7 +51,7 @@ const List = () => {
       <Navbar />
       <MDBContainer className="search-container">
         <MDBCol lg="6" md="6" xs="12" className="search">
-          <select className="browser-default custom-select">
+          <select onChange={onChange} className="browser-default custom-select">
             <option>Search by Category</option>
             {options}
           </select>
