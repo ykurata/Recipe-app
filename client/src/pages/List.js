@@ -32,17 +32,27 @@ const List = () => {
   return (
     <div>
       <Navbar />
+      <MDBContainer className="search-container">
+        <MDBCol lg="6" md="6" xs="12" className="search">
+          <select className="browser-default custom-select">
+            <option>Search by Category</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
+        </MDBCol>
+        <MDBCol lg="6" md="6" xs="12" className="search search-input">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Search by dish name or ingredients..."
+            aria-label="Search"
+            onChange={onChange}
+            value={search}
+          />
+        </MDBCol>
+      </MDBContainer>
 
-      <MDBCol md="6" className="search">
-        <input
-          className="form-control"
-          type="text"
-          placeholder="Search by dish name or ingredients..."
-          aria-label="Search"
-          onChange={onChange}
-          value={search}
-        />
-      </MDBCol>
 
       <MDBContainer className="list-container">
         <ListItems data={filteredRecipes} loading={loading} />
