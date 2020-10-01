@@ -29,11 +29,12 @@ const SignUp = (props) => {
     setUserInput({
       ...userInput,
       [e.target.name]: e.target.value,
+
     });
   };
 
   const handleChecked = (e) => {
-    setUserInput({ isAdmin: !userInput.isAdmin });
+    setUserInput({ ...userInput, isAdmin: !userInput.isAdmin });
   };
 
   useEffect(() => {
@@ -44,6 +45,7 @@ const SignUp = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(userInput);
     dispatch(registerUser(userInput));
   };
 
