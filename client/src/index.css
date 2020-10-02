@@ -71,6 +71,9 @@ img {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.my-recipe-title {
+  margin-top: 8rem;
+}
 
 /* Search input */
 .search-container {
@@ -281,7 +284,7 @@ textarea {
   #image .card {
     width: 100%;
   }
-  /* Recipe list page */
+  /* Recipe page */
   .list-image {
     max-height: 10rem;
     min-height: 10rem;
@@ -316,6 +319,9 @@ textarea {
   .search-input {
     padding-top: 2rem;
     margin: auto;
+  }
+  .my-recipe-title {
+    margin-top: 5rem;
   }
   
   /* Upload Image page */

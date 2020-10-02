@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { 
+import {
   getRecipe,
   postReview,
   sendLike,
   deleteRecipe
 } from '../actions/recipeActions';
 
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { 
+import {
   MDBBtn,
   MDBContainer,
-  MDBRow, 
+  MDBRow,
   MDBCol,
-  MDBCard, 
-  MDBCardBody, 
+  MDBCard,
+  MDBCardBody,
   MDBIcon
 } from 'mdbreact';
 
@@ -38,14 +38,14 @@ const Detail = (props) => {
   const recipeUserId = useSelector(state => state.recipe.userId);
   const error = useSelector(state => state.errors.error);
   const dispatch = useDispatch();
-  const token =  localStorage.getItem("jwtToken");
+  const token = localStorage.getItem("jwtToken");
   const userId = localStorage.getItem("userId");
-  
+
   // Handle review input
   const onChange = e => {
     setReview(e.target.value);
   }
-  
+
   // GET a recipe
   useEffect(() => {
     dispatch(getRecipe(props.match.params.id));
@@ -55,14 +55,14 @@ const Detail = (props) => {
   const postLike = () => {
     dispatch(sendLike(props.match.params.id, userId, token));
   };
-  
+
   // DELETE a recipe
   const handleDelete = () => {
     dispatch(deleteRecipe(props.match.params.id, token));
   };
-  
+
   // Display text input field by clicking a button
-  const showInput = e =>  {
+  const showInput = e => {
     e.preventDefault();
     setShow(true);
   };
@@ -72,7 +72,7 @@ const Detail = (props) => {
     e.preventDefault();
     setShowButton(true);
   };
-  
+
   // Submit a review 
   const sendReview = e => {
     e.preventDefault();
@@ -90,29 +90,31 @@ const Detail = (props) => {
   const showMore = () => {
     setItemsToShow(itemsToShow + 5);
   }
-  
+
   return (
-    <div> 
+    <div>
       <Navbar></Navbar>
-      
+
       <MDBContainer id="detail">
         <MDBRow>
           <MDBCol md="12" className="text-center">
             <h2>{recipe.name}</h2>
             <p>Created By <Link to={`/profile/${recipeUserId}`} className="username-link">{username}</Link></p>
           </MDBCol>
-          
+
           <MDBCol md="12" lg="6" className="detail-image">
-            {recipe.recipeImage ? 
+            {recipe.recipeImage ?
               <div>
                 <img src={recipe.recipeImage} className="img-thumbnail img-fluid" alt="Recipe" />
-                <h6 className="time">Estimated Time {recipe.estimatedTime} min</h6>
+                <h6 className="time">Estimated Time <span style={{ fontWeight: "bold", color: "grey" }}>{recipe.estimatedTime} min</span></h6>
+                <h6>Category: <span style={{ fontWeight: "bold", color: "grey" }}>{recipe.category}</span></h6>
               </div>
-            : <div>
+              : <div>
                 <div className="no-image">
                   <MDBIcon far icon="image" size="5x" className="detail-default-icon" />
                 </div>
-                <h6 className="time">Estimated Time {recipe.estimatedTime} min</h6>
+                <h6 className="time">Estimated Time <span style={{ fontWeight: "bold", color: "grey" }}>{recipe.estimatedTime}</span> min</h6>
+                <h6>Category: <span style={{ fontWeight: "bold", color: "grey" }}>{recipe.category}</span></h6>
               </div>
             }
           </MDBCol>
@@ -140,39 +142,39 @@ const Detail = (props) => {
                 <ToastContainer />
                 <MDBBtn
                   href={`/update/${recipe._id}`}
-                  style={{color: 'white'}}
+                  style={{ color: 'white' }}
                 >
                   Update
                 </MDBBtn>
-                <MDBBtn 
+                <MDBBtn
                   outline
-                  type="button" 
+                  type="button"
                   className="delete"
-                  onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) handleDelete() } }
+                  onClick={(e) => { if (window.confirm('Are you sure you want to delete this recipe?')) handleDelete() }}
                 >
                   Delete
                 </MDBBtn>
               </MDBContainer>
-            : null  
+              : null
             }
-            
+
             {/* Display Like & Write a Review buttons  */}
             {userId !== recipeUserId ?
               <MDBContainer className="button-div text-center">
-                  <ToastContainer />
-                  <span className="likes-num">{likes}</span><i className="fas fa-heart icon" onClick={postLike} type="button">Like</i>
-                  
-                  <i className="fas fa-pen icon reviewIcon" onClick={showInput}>Write a Review</i>
-                  {error ?
-                    <p className="error">{error}</p>
-                  : null  
-                  }
-                  
+                <ToastContainer />
+                <span className="likes-num">{likes}</span><i className="fas fa-heart icon" onClick={postLike} type="button">Like</i>
+
+                <i className="fas fa-pen icon reviewIcon" onClick={showInput}>Write a Review</i>
+                {error ?
+                  <p className="error">{error}</p>
+                  : null
+                }
+
               </MDBContainer>
-            : null  
+              : null
             }
           </MDBCol>
-          
+
           {/* Review input field */}
           {show === true ? (
             <MDBCol md="12" className="text-center review">
@@ -183,29 +185,29 @@ const Detail = (props) => {
                 {reviewError ? (
                   <p className="error">{reviewError}</p>
                 ) : (
-                  null
-                )  
+                    null
+                  )
                 }
                 {/* Show submit button by clicking textarea */}
                 {showButton === true ? (
                   <MDBBtn type="submit" className="review-button">Submit</MDBBtn>
                 ) : (
-                  null  
-                )
+                    null
+                  )
                 }
               </form>
             </MDBCol>
-          ) : ( 
-            null 
-          ) 
+          ) : (
+              null
+            )
           }
-          
+
           {/* Display 5 reviews each*/}
           {reviews.length > 0 ? (
             <MDBCol md="12" className="review">
               <h5 className="title-review">Reviews ({reviews.length}) </h5>
 
-              {recipe.reviews.slice(0, itemsToShow).map((review, i) => 
+              {recipe.reviews.slice(0, itemsToShow).map((review, i) =>
                 <MDBCard key={i}>
                   <MDBCardBody className="card-review">
                     <span className="reviewer-name">{review.user.name} <Moment format="MM/DD/YYYY">{review.createdAt}</Moment></span><br></br>
@@ -213,19 +215,19 @@ const Detail = (props) => {
                   </MDBCardBody>
                 </MDBCard>
               )}
-              
+
               {reviews.length > 5 ? (
                 <MDBBtn onClick={showMore} className="review-button">
                   Show More
                 </MDBBtn>
-              ) : ( 
-                null 
-              )  
+              ) : (
+                  null
+                )
               }
             </MDBCol>
-          ):(
-            null
-          ) 
+          ) : (
+              null
+            )
           }
 
         </MDBRow>

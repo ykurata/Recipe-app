@@ -53,23 +53,8 @@ const MyRecipes = (props) => {
   return (
     <div>
       <Navbar />
-      <MDBContainer className="search-container">
-        <MDBCol lg="6" md="6" xs="12" className="search">
-          <select onChange={onChange} className="browser-default custom-select">
-            <option>Search by Category</option>
-            {options}
-          </select>
-        </MDBCol>
-        <MDBCol lg="6" md="6" xs="12" className="search search-input">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Search by dish name or ingredients..."
-            aria-label="Search"
-            onChange={onChange}
-            value={search}
-          />
-        </MDBCol>
+      <MDBContainer className="my-recipe-title">
+        <p className="h4 text-center mt-3">My Recipes</p>
       </MDBContainer>
       <MDBContainer className="list-container">
         <ListItems data={filteredRecipes} loading={loading} />
