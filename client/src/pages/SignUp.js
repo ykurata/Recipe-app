@@ -52,7 +52,7 @@ const SignUp = (props) => {
   const demoLogin = (e) => {
     e.preventDefault();
     const demoUser = {
-      email: "demouser@email.com",
+      email: "demouser1@email.com",
       password: "password",
     };
     dispatch(loginUser(demoUser));
