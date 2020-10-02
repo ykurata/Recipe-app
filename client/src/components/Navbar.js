@@ -41,6 +41,7 @@ const Navbar = () => {
   const error = useSelector((state) => state.errors);
 
   console.log(isAdmin);
+  console.log(user)
 
   const onClick = () => {
     setCollapse(!collapse);
