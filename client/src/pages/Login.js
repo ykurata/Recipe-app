@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../actions/authActions';
 
-import { 
-  MDBContainer, 
-  MDBRow, 
-  MDBCol, 
-  MDBInput, 
-  MDBBtn, 
-  MDBCard, 
-  MDBCardBody 
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBBtn,
+  MDBCard,
+  MDBCardBody
 } from 'mdbreact';
 
 const Login = (props) => {
@@ -26,14 +26,14 @@ const Login = (props) => {
       props.history.push("/list");
     }
   });
-  
+
   const onChange = e => {
-    setUserInput({ 
+    setUserInput({
       ...userInput,
-      [e.target.name]: e.target.value 
+      [e.target.name]: e.target.value
     });
   }
-  
+
   const onSubmit = e => {
     e.preventDefault();
     dispatch(loginUser(userInput));
@@ -42,8 +42,8 @@ const Login = (props) => {
   const demoLogin = e => {
     e.preventDefault();
     const demoUser = {
-      email: "yasuko@gmail.com",
-      password: "testpassword"
+      email: "demouser@email.com",
+      password: "password"
     };
     dispatch(loginUser(demoUser));
   }
@@ -57,13 +57,13 @@ const Login = (props) => {
               <form onSubmit={onSubmit}>
                 <p className="h4 text-center py-4">Log In</p>
                 <div className="grey-text">
-                  {errors?
+                  {errors ?
                     <p className="error">{errors.email}</p>
-                  : null  
+                    : null
                   }
-                  {errors?
+                  {errors ?
                     <p className="error">{errors.error}</p>
-                  : null  
+                    : null
                   }
                   <MDBInput
                     label="Your email"
@@ -79,7 +79,7 @@ const Login = (props) => {
                   />
                   {errors ?
                     <p className="error">{errors.password}</p>
-                  : null  
+                    : null
                   }
                   <MDBInput
                     label="Your password"
@@ -93,7 +93,7 @@ const Login = (props) => {
                   />
                 </div>
                 <div className="text-center py-4 mt-3">
-                  <MDBBtn  type="submit">
+                  <MDBBtn type="submit">
                     Log In
                   </MDBBtn>
                   <MDBBtn outline onClick={demoLogin}>
