@@ -7,7 +7,6 @@ import {
 
 const initialState = {
   loginUserProfle: "",
-  isAdmin: false,
   profile: "",
   loading: false,
 };
@@ -22,8 +21,7 @@ export default function (state = initialState, action) {
     case GET_LOGIN_USER_PROFILE:
       return {
         ...state,
-        loginUserProfle: action.payload,
-        isAdmin: action.payload.userId.isAdmin,
+        loginUserProfle: action.payload
       };
     case SEND_PIC:
       return {

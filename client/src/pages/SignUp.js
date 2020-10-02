@@ -45,7 +45,6 @@ const SignUp = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(userInput);
     dispatch(registerUser(userInput));
   };
 

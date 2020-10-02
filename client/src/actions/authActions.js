@@ -2,9 +2,10 @@ import axios from 'axios';
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { 
+import {
   GET_ERRORS,
   SET_CURRENT_USER,
+  GET_LOGIN_USER
 } from './types';
 
 
@@ -36,7 +37,7 @@ export const registerUser = userData => dispatch => {
 }
 
 export const loginUser = userData => dispatch => {
-  axios.post('/users/login', userData)  
+  axios.post('/users/login', userData)
     .then(res => {
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
@@ -63,3 +64,17 @@ export const logoutUser = () => dispatch => {
   dispatch(setCurrentUser({}));
   window.location.href = "/";
 };
+
+// Get login user's data
+export const getLoginUser = (userId) => dispatch => {
+  axios.get(`/users/get/${userId}`)
+    .then(res => {
+      dispatch({
+        type: GET_LOGIN_USER,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}

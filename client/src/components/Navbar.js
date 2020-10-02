@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserProfile } from "../actions/profileActions";
-import { logoutUser } from "../actions/authActions";
+import { logoutUser, getLoginUser } from "../actions/authActions";
 import { createCategory } from "../actions/categoryActions";
 
 import { ToastContainer } from "react-toastify";
@@ -33,15 +33,13 @@ const Navbar = () => {
   const [collapse, setCollapse] = useState(false);
   const [isWideEnough, setIsWideEnough] = useState(false);
   const token = localStorage.getItem("jwtToken");
+  const userId = localStorage.getItem("userId");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.profile.loginUserProfle);
-  const isAdmin = useSelector((state) => state.profile.isAdmin);
+  const loginUser = useSelector(state => state.auth.loginUser);
   const [modal, setModal] = useState(false);
   const [category, setCategory] = useState({ title: "" });
   const error = useSelector((state) => state.errors);
-
-  console.log(isAdmin);
-  console.log(user)
 
   const onClick = () => {
     setCollapse(!collapse);
@@ -49,6 +47,10 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(getUserProfile(token));
+  }, []);
+
+  useEffect(() => {
+    dispatch(getLoginUser(userId));
   }, []);
 
   const handleLogout = (e) => {
@@ -96,7 +98,7 @@ const Navbar = () => {
             <MDBNavItem>
               <MDBNavLink to="/my-recipes">My Recipes</MDBNavLink>
             </MDBNavItem>
-            {isAdmin === true ? (
+            {loginUser.isAdmin === true ? (
               <MDBNavItem>
                 <MDBNavLink onClick={toggle} to="#">
                   Create Category
