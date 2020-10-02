@@ -41,8 +41,6 @@ const Navbar = () => {
   const [category, setCategory] = useState({ title: "" });
   const error = useSelector((state) => state.errors);
 
-  console.log(loginUser);
-
   const onClick = () => {
     setCollapse(!collapse);
   };
