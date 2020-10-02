@@ -6,12 +6,12 @@ import { submitRecipeImage } from '../actions/recipeActions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { 
+import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
   MDBContainer,
-  MDBRow, 
+  MDBRow,
   MDBCol,
   MDBIcon,
 } from 'mdbreact';
@@ -19,63 +19,63 @@ import {
 import Navbar from "../components/Navbar";
 
 const Image = (props) => {
-	const [image, setImage] = useState(null);
-	const [sendImage, setSendImage] = useState(null);
-	const [error, setError] = useState("");
+  const [image, setImage] = useState(null);
+  const [sendImage, setSendImage] = useState(null);
+  const [error, setError] = useState("");
   const token = localStorage.getItem("jwtToken");
   const dispatch = useDispatch();
   const loading = useSelector(state => state.recipe.sendImage);
 
-	const imageChange = e => {
+  const imageChange = e => {
     setSendImage(e.target.files[0]);
-		setImage(URL.createObjectURL(e.target.files[0]));
+    setImage(URL.createObjectURL(e.target.files[0]));
   }
-  
+
   // GET a recipe
   useEffect(() => {
     axios.get(`/recipes/get/${props.match.params.id}`)
-    .then(res => {
-      setImage(res.data.recipeImage);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .then(res => {
+        setImage(res.data.recipeImage);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, []);
-  
-	const onSubmit = e => {
-		e.preventDefault();
 
-		if (sendImage === null) {
-			setError("Please select an image");
-		} else {
-			const formData = new FormData();
-			formData.append("recipeImage", sendImage);
+  const onSubmit = e => {
+    e.preventDefault();
+
+    if (sendImage === null) {
+      setError("Please select an image");
+    } else {
+      const formData = new FormData();
+      formData.append("recipeImage", sendImage);
       dispatch(submitRecipeImage(props.match.params.id, formData, token));
-		}
-	}
+    }
+  }
 
-	return (
-		<div>
-			<Navbar/>
-			<MDBContainer id="image">
+  return (
+    <div>
+      <Navbar />
+      <MDBContainer id="image">
         <MDBRow>
           <MDBCol>
             <form onSubmit={onSubmit}>
               <p className="h4 text-center mb-4">Recipe Image</p>
               <MDBCard className="card">
                 <MDBCardBody className="text-center">
-                  {error ? 
-                      <p className="image-error">{error}</p>
+                  {error ?
+                    <p className="image-error">{error}</p>
                     : null
                   }
-                  {image ? 
+                  {image ?
                     <img src={image} alt="..." className="img-thumbnail" />
-                  : 
+                    :
                     <div className="no-image text-center">
                       <i className="far fa-image fa-5x"></i>
                     </div>
                   }
-                  <MDBContainer className="text-center">
+                  <MDBContainer className="text-center mb-2">
                     <label className="btn btn-outline-info">
                       Select Image
                       <input
@@ -85,29 +85,29 @@ const Image = (props) => {
                         hidden
                       />
                     </label>
-                  </MDBContainer>
-                  <MDBContainer className="container text-center">
                     {loading === false ?
                       <MDBBtn type="submit">
                         Submit
                         <MDBIcon far icon="paper-plane" className="ml-2" />
                       </MDBBtn>
-                    : <MDBBtn className="btn btn-primary" type="button" disabled>
+                      : <MDBBtn className="btn btn-primary" type="button" disabled>
                         <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Loading...
-                      </MDBBtn>  
+                      </MDBBtn>
                     }
-                    
                   </MDBContainer>
-                  <ToastContainer/>
+                  <MDBContainer className="container text-center">
+                    <a href="/list">Cancel</a>
+                  </MDBContainer>
+                  <ToastContainer />
                 </MDBCardBody>
               </MDBCard>
             </form>
           </MDBCol>
         </MDBRow>
-		  </MDBContainer>
-		</div> 	
-	);
+      </MDBContainer>
+    </div>
+  );
 }
 
 export default Image;
