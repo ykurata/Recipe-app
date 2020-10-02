@@ -100,7 +100,7 @@ const Navbar = () => {
             <MDBNavItem>
               <MDBNavLink to="/my-recipes">My Recipes</MDBNavLink>
             </MDBNavItem>
-            {loginUser.isAdmin === true ? (
+            {loginUser && loginUser.isAdmin === true ? (
               <MDBNavItem>
                 <MDBNavLink onClick={toggle} to="#">
                   Create Category
