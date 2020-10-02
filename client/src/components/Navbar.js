@@ -40,6 +40,8 @@ const Navbar = () => {
   const [category, setCategory] = useState({ title: "" });
   const error = useSelector((state) => state.errors);
 
+  console.log(isAdmin);
+
   const onClick = () => {
     setCollapse(!collapse);
   };
