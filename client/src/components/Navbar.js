@@ -38,7 +38,6 @@ const Navbar = () => {
   const user = useSelector((state) => state.profile.loginUserProfle);
   const loginUser = useSelector(state => state.auth.loginUser);
   const [modal, setModal] = useState(false);
-  const [profileModal, setprofileModal] = useState(false);
   const [category, setCategory] = useState({ title: "" });
   const error = useSelector((state) => state.errors);
 
@@ -62,10 +61,6 @@ const Navbar = () => {
   const toggle = (e) => {
     setModal(!modal);
   };
-
-  const profileToggle = e => {
-    setprofileModal(!profileModal);
-  }
 
   const onChange = (e) => {
     setCategory({ title: e.target.value });
@@ -140,18 +135,6 @@ const Navbar = () => {
           </MDBNavbarNav>
           <MDBNavbarNav right>
             <MDBNavItem>
-              <MDBModal isOpen={profileModal} toggle={profileToggle} centered>
-                <MDBModalHeader toggle={profileToggle}>MDBModal title</MDBModalHeader>
-                <MDBModalBody>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat.
-                        </MDBModalBody>
-                <MDBModalFooter>
-                  <MDBBtn color="secondary" onClick={profileToggle}>Close</MDBBtn>
-                  <MDBBtn color="primary">Save changes</MDBBtn>
-                </MDBModalFooter>
-              </MDBModal>
               <MDBDropdown>
                 <MDBDropdownToggle nav caret>
                   {token && user ? (
@@ -167,7 +150,7 @@ const Navbar = () => {
                 <MDBDropdownMenu className="dropdown-default">
                   {token ? (
                     <div>
-                      <MDBDropdownItem href="#" onClick={profileToggle}>Profile</MDBDropdownItem>
+                      <MDBDropdownItem href="/profile">Profile</MDBDropdownItem>
                       <MDBDropdownItem href="/logout" onClick={handleLogout}>
                         Log Out
                       </MDBDropdownItem>
