@@ -6,11 +6,13 @@ import { postAvatar, createProfile, updateProfile } from '../actions/profileActi
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { 
+import {
   MDBBtn,
   MDBContainer,
-  MDBRow, 
+  MDBRow,
   MDBCol,
+  MDBCard,
+  MDBCardBody,
   MDBIcon,
 } from 'mdbreact';
 
@@ -28,18 +30,18 @@ const ProfileForm = (props) => {
   const dispatch = useDispatch();
   const error = useSelector(state => state.errors);
   const loading = useSelector(state => state.profile.loading);
-  
+
   const onChange = e => {
     setDescription(e.target.value);
   }
-  
+
   const imageChange = e => {
     setImage(URL.createObjectURL(e.target.files[0]));
     setSendImage(e.target.files[0]);
   };
 
   useEffect(() => {
-    axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` }})
+    axios.get(`/profile/${userId}`, { headers: { Authorization: `Bearer ${token}` } })
       .then(res => {
         if (res.data === null) {
           setEmpty(true);
@@ -55,17 +57,17 @@ const ProfileForm = (props) => {
   // Submit profile photo
   const submitPhoto = e => {
     e.preventDefault();
-    
+
     if (sendImage === null) {
       setImageError("Please select an image");
     }
     const formData = new FormData();
     formData.append("photo", sendImage);
-    
+
     dispatch(postAvatar(formData, token));
   }
 
-  
+
   // Create and update profile description
   const handleSubmit = e => {
     e.preventDefault();
@@ -73,7 +75,7 @@ const ProfileForm = (props) => {
     const data = {
       description: description
     }
-   
+
     if (empty === true) {
       dispatch(createProfile(userId, data, token));
     } else {
@@ -82,66 +84,74 @@ const ProfileForm = (props) => {
   }
 
   return (
-    <div> 
-      <Navbar/>
+    <div>
+      <Navbar />
       <MDBContainer id="profile-form">
         <MDBRow>
           <MDBCol md="12">
             <h2 className="heading">Edit Profile</h2>
           </MDBCol>
           <MDBCol md="12" lg="6">
-            <form onSubmit={submitPhoto}>
-              {image !== null && image !== undefined ? 
-                <div className="image-div">
-                  <img 
-                    src={image} 
-                    alt=""
-                    className="rounded-circle img-fluid image"
-                  />
-                </div>
-              : <div className="avatar-div">
-                  <MDBIcon icon="user-alt" size="5x" className="default-avatar" />
-                </div>
-              }  
-                {error ? 
-                  <div><label className="error">{imageError}</label></div>
-                : null}
-                <label className="btn btn-outline-info select">
-                  Select Image
+            <MDBCard>
+              <MDBCardBody>
+                <form onSubmit={submitPhoto}>
+                  {image !== null && image !== undefined ?
+                    <div className="image-div">
+                      <img
+                        src={image}
+                        alt=""
+                        className="rounded-circle img-fluid image"
+                      />
+                    </div>
+                    : <div className="avatar-div">
+                      <MDBIcon icon="user-alt" size="5x" className="default-avatar" />
+                    </div>
+                  }
+                  {error ?
+                    <div><label className="error">{imageError}</label></div>
+                    : null}
+                  <label className="btn btn-outline-info select">
+                    Select Image
                   <input
-                    type="file"
-                    name="image"
-                    hidden
-                    onChange={imageChange}
-                  />
-                </label>
-            
-              <ToastContainer />
-              {loading === false ? 
-                <div className="text-center select">
-                  <MDBBtn type="submit">Send the Image</MDBBtn>
-                </div> 
-              : <MDBBtn className="btn btn-primary" type="button" disabled>
-                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      type="file"
+                      name="image"
+                      hidden
+                      onChange={imageChange}
+                    />
+                  </label>
+
+                  <ToastContainer />
+                  {loading === false ?
+                    <div className="text-center select">
+                      <MDBBtn type="submit">Send the Image</MDBBtn>
+                    </div>
+                    : <MDBBtn className="btn btn-primary" type="button" disabled>
+                      <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   Loading...
                 </MDBBtn>
-              }
-            </form>
+                  }
+                </form>
+              </MDBCardBody>
+            </MDBCard>
           </MDBCol>
           <MDBCol md="12" lg="6">
-            <form className="text-center" onSubmit={handleSubmit}>
-              {error ? 
-                <p className="error">{error.description}</p>
-              : null}
-              {profile !== null ? 
-                <textarea onChange={onChange}  value={profile.description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
-              : <textarea onChange={onChange} value={description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
-              }
-              
-              <ToastContainer />
-              <MDBBtn type="submit">Submit</MDBBtn>
-              <MDBBtn outline href="/" >Cancel</MDBBtn>
-            </form>
+            <MDBCard>
+              <MDBCardBody>
+                <form className="text-center" onSubmit={handleSubmit}>
+                  {error ?
+                    <p className="error">{error.description}</p>
+                    : null}
+                  {profile !== null ?
+                    <textarea onChange={onChange} value={profile.description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
+                    : <textarea onChange={onChange} value={description} className="form-control mb-4" name="description" id="description" rows="5" placeholder="Write about yourself..."></textarea>
+                  }
+
+                  <ToastContainer />
+                  <MDBBtn type="submit">Submit</MDBBtn>
+                  <MDBBtn outline href="/" >Cancel</MDBBtn>
+                </form>
+              </MDBCardBody>
+            </MDBCard>
           </MDBCol>
         </MDBRow>
       </MDBContainer>

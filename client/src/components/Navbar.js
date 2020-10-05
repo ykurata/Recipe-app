@@ -150,7 +150,7 @@ const Navbar = () => {
                 <MDBDropdownMenu className="dropdown-default">
                   {token ? (
                     <div>
-                      <MDBDropdownItem href="/Profile">Profile</MDBDropdownItem>
+                      <MDBDropdownItem href="/profile">Profile</MDBDropdownItem>
                       <MDBDropdownItem href="/logout" onClick={handleLogout}>
                         Log Out
                       </MDBDropdownItem>

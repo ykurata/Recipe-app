@@ -7,7 +7,7 @@ body {
   overflow-x: hidden;
   font-family: "Lato", sans-serif;
   color: #555555;
-  background-color: #f0f0f0;
+  background-color:#e8e9eb !important;
 }
 a,
 a:visited,
